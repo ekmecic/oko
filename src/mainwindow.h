@@ -16,13 +16,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:
-    void on_manualThrottleButton_clicked();
-
-    void on_ESTOPButton_clicked();
-
-    void on_scmSPButton_clicked();
-
 private:
     Ui::MainWindow *ui;
 };

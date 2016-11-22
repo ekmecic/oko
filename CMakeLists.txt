@@ -14,9 +14,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
-find_package(Qt5Sql REQUIRED)
+find_package(Qt5Concurrent REQUIRED)
 
-set(QT5_LIBRARIES Qt5::Widgets Qt5::PrintSupport Qt5::Sql)
+set(QT5_LIBRARIES Qt5::Widgets Qt5::PrintSupport Qt5::Concurrent)
 
 #
 # project main

@@ -4,23 +4,22 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
+QT       += core gui concurrent
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = oko
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    funcs.cpp \
-    generatorData.cpp \
-    controllerData.cpp
+SOURCES += src/main.cpp\
+        src/mainwindow.cpp \
+    src/funcs.cpp \
+    src/genBoardInterface.cpp \
+    src/controllerData.cpp
 
-HEADERS  += mainwindow.h \
-    funcs.h \
-    generatorData.h \
-    controllerData.h
+HEADERS  += src/mainwindow.h \
+    src/funcs.h \
+    src/genBoardInterface.h \
+    src/controllerData.h
 
-FORMS    += mainwindow.ui
+FORMS    += src/mainwindow.ui

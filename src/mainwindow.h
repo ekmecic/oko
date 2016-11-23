@@ -1,24 +1,29 @@
 #pragma once
 #define MAINWINDOW_H
 
+#include "./build/ui_mainwindow.h"
+#include "controllerData.h"
 #include "genBoardInterface.h"
+
 #include <QMainWindow>
 #include <QTableWidget>
+#include <QTimer>
+#include <QtConcurrent>
 
 namespace Ui {
-  class MainWindow;
+class MainWindow;
 }
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
- public:
+public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
-  public slots:
-    void onNewDataAvailable();
+public slots:
+  void onNewDataAvailable();
 
- private:
-    Ui::MainWindow *ui;
+private:
+  Ui::MainWindow *ui;
 };

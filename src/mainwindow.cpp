@@ -5,7 +5,6 @@ genBoardInterface *genData = new genBoardInterface();
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
-  ui->dataTable->setColumnWidth(0, 170);
 
   // Put some dummy text in all the gains/setpoints fields
   ui->manualThrottleField->setText("1001%");

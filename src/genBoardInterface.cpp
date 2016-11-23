@@ -1,15 +1,23 @@
 #include "genBoardInterface.h"
 
+genBoardInterface::genBoardInterface(QObject *parent) : QObject(parent) {}
+
 void genBoardInterface::makeNewFakeData() {
-  this->batteryCurrent = makeRandomData();
-  this->busVoltage = makeRandomData();
-  this->measuredPhaseCurrent = makeRandomData();
-  this->commandedPhaseCurrent = makeRandomData();
-  this->speed = makeRandomData();
-  this->throttleOutput = makeRandomData();
-  this->engineTemperature = makeRandomData();
+  for (;;) {
+    this->batteryCurrent = makeRandomData();
+    this->busVoltage = makeRandomData();
+    this->measuredPhaseCurrent = makeRandomData();
+    this->commandedPhaseCurrent = makeRandomData();
+    this->speed = makeRandomData();
+    this->throttleOutput = makeRandomData();
+    this->engineTemperature = makeRandomData();
+
+    emit newDataAvailable();
+    QThread::currentThread()->msleep(200);
+  }
 }
 
+// clang-format off
 double genBoardInterface::getBatteryCurrent() const { return batteryCurrent; }
 double genBoardInterface::getBusVoltage() const { return busVoltage; }
 double genBoardInterface::getMeasuredPhaseCurrent() const { return measuredPhaseCurrent; }
@@ -41,3 +49,4 @@ void genBoardInterface::setEngineTemperature(double engineTemperature) {
 }
 
 double genBoardInterface::makeRandomData() { return double(rand()); }
+// clang-format on

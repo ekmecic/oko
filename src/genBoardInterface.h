@@ -9,20 +9,15 @@
   *************************************************************************/
 
 #pragma once
+#include <QObject>
+#include <QThread>
 #include <cstdlib>
 
-class genBoardInterface {
+class genBoardInterface : public QObject {
+  Q_OBJECT
+
 public:
-  // Default constructor
-  genBoardInterface() {
-    this->batteryCurrent = 0;
-    this->busVoltage = 0;
-    this->measuredPhaseCurrent = 0;
-    this->commandedPhaseCurrent = 0;
-    this->speed = 0;
-    this->throttleOutput = 0;
-    this->engineTemperature = 0;
-  }
+  explicit genBoardInterface(QObject *parent = 0);
 
   void makeNewFakeData();
 
@@ -41,6 +36,9 @@ public:
   void setSpeed(double speed);
   void setThrottleOutput(double throttleOutput);
   void setEngineTemperature(double engineTemperature);
+
+signals:
+  void newDataAvailable();
 
 private:
   // Temporary dummy function to create some fake data

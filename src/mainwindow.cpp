@@ -5,6 +5,10 @@
 #include "genBoardInterface.h"
 
 #include <QTimer>
+#include <QtConcurrent>
+
+
+genBoardInterface *genData = new genBoardInterface();
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -20,14 +24,22 @@ MainWindow::MainWindow(QWidget *parent)
   ui->ccmKIField->setText("2");
   ui->ccmKPField->setText("1");
 
-  genBoardInterface generatorData;
+  connect(genData,
+          &genBoardInterface::newDataAvailable,
+          this,
+          &MainWindow::onNewDataAvailable);
 
-  auto timer = new QTimer();
-  connect(timer, &QTimer::timeout, [&] {
-      updateTable(*MainWindow::ui->dataTable, generatorData);
-  });
-  timer->setInterval(250);
-  timer->start();
+  QtConcurrent::run(genData, &genBoardInterface::makeNewFakeData);
 }
 
 MainWindow::~MainWindow() { delete ui; }
+
+void MainWindow::onNewDataAvailable() {
+  ui->dataTable->setItem(0, 1, new QTableWidgetItem(QString::number(genData->getBatteryCurrent())));
+  ui->dataTable->setItem(1, 1, new QTableWidgetItem(QString::number(genData->getBusVoltage())));
+  ui->dataTable->setItem(2, 1, new QTableWidgetItem(QString::number(genData->getMeasuredPhaseCurrent())));
+  ui->dataTable->setItem(3, 1, new QTableWidgetItem(QString::number(genData->getCommandedPhaseCurrent())));
+  ui->dataTable->setItem(4, 1, new QTableWidgetItem(QString::number(genData->getSpeed())));
+  ui->dataTable->setItem(5, 1, new QTableWidgetItem(QString::number(genData->getThrottleOutput())));
+  ui->dataTable->setItem(6, 1, new QTableWidgetItem(QString::number(genData->getEngineTemperature())));
+}

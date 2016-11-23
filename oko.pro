@@ -13,13 +13,9 @@ TEMPLATE = app
 
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
-    src/funcs.cpp \
     src/genBoardInterface.cpp \
-    src/controllerData.cpp
 
 HEADERS  += src/mainwindow.h \
-    src/funcs.h \
     src/genBoardInterface.h \
-    src/controllerData.h
 
 FORMS    += src/mainwindow.ui

@@ -23,11 +23,9 @@ set(QT5_LIBRARIES Qt5::Widgets Qt5::PrintSupport Qt5::Concurrent)
 #
 set(TARGET ${CMAKE_PROJECT_NAME})
 
-set(SOURCES
-    src/main.cpp
-    src/mainwindow.cpp
-    src/genBoardInterface.h
-    src/genBoardInterface.cpp
+file(GLOB SOURCES
+  src/*.cpp
+  src/*.h
 )
 
 set(UI_SOURCES

@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include "./build/ui_mainwindow.h"
-#include "controllerData.h"
 #include "genBoardInterface.h"
 
 #include <QMainWindow>

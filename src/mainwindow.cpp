@@ -1,12 +1,10 @@
 #include "mainwindow.h"
 #include "./build/ui_mainwindow.h"
 #include "controllerData.h"
-#include "funcs.h"
 #include "genBoardInterface.h"
 
 #include <QTimer>
 #include <QtConcurrent>
-
 
 genBoardInterface *genData = new genBoardInterface();
 

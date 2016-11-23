@@ -30,8 +30,6 @@ set(SOURCES
     src/genBoardInterface.cpp
     src/controllerData.h
     src/controllerData.cpp
-    src/funcs.h
-    src/funcs.cpp
 )
 
 set(UI_SOURCES

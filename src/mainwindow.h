@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "./build/ui_mainwindow.h"
+#include "../lib/qcustomplot.h"
 #include "genBoardInterface.h"
 
 #include <QMainWindow>

@@ -26,6 +26,8 @@ set(TARGET ${CMAKE_PROJECT_NAME})
 file(GLOB SOURCES
   src/*.cpp
   src/*.h
+  lib/*.cpp
+  lib/*.cpp
 )
 
 set(UI_SOURCES

@@ -15,41 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->ccmKIField->setText("2");
   ui->ccmKPField->setText("1");
 
-  QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
-
-  ui->electricalPlot->addGraph();
-  ui->electricalPlot->addGraph();
-  ui->electricalPlot->addGraph();
-  ui->electricalPlot->addGraph();
-  ui->electricalPlot->graph(0)->setName("Battery current (A)");
-  ui->electricalPlot->graph(0)->setPen(QPen(Qt::red));
-  ui->electricalPlot->graph(1)->setName("Bus Voltage (V)");
-  ui->electricalPlot->graph(1)->setPen(QPen(Qt::green));
-  ui->electricalPlot->graph(2)->setName("Measured Phase Current (A)");
-  ui->electricalPlot->graph(2)->setPen(QPen(Qt::blue));
-  ui->electricalPlot->graph(3)->setName("Commanded Phase Current (A)");
-  ui->electricalPlot->graph(3)->setPen(QPen(Qt::black));
-  ui->electricalPlot->xAxis->setTicker(timeTicker);
-  ui->electricalPlot->yAxis->setRange(0, 350);
-
-  ui->mechanicalPlot->addGraph();
-  ui->mechanicalPlot->addGraph();
-  ui->mechanicalPlot->addGraph();
-  ui->mechanicalPlot->graph(0)->setName("Speed (RPM)");
-  ui->mechanicalPlot->graph(0)->setPen(QPen(Qt::red));
-  ui->mechanicalPlot->graph(1)->setName("Throttle Output (%)");
-  ui->mechanicalPlot->graph(1)->setPen(QPen(Qt::green));
-  ui->mechanicalPlot->graph(2)->setName("Engine Temp. (°C)");
-  ui->mechanicalPlot->graph(2)->setPen(QPen(Qt::blue));
-  ui->mechanicalPlot->xAxis->setTicker(timeTicker);
-  ui->mechanicalPlot->yAxis->setRange(0, 350);
-
-  QFont legendFont = font();
-  legendFont.setPointSize(8);
-  ui->mechanicalPlot->legend->setVisible(true);
-  ui->mechanicalPlot->legend->setFont(legendFont);
-  ui->electricalPlot->legend->setVisible(true);
-  ui->electricalPlot->legend->setFont(legendFont);
+  setupPlots();
 
   connect(genData, &genBoardInterface::newDataAvailable, this,
           &MainWindow::onNewDataAvailable);
@@ -90,4 +56,48 @@ void MainWindow::onNewDataAvailable() {
   ui->electricalPlot->replot();
   ui->mechanicalPlot->xAxis->setRange(key, 40, Qt::AlignRight);
   ui->mechanicalPlot->replot();
+}
+
+void MainWindow::setupPlots() {
+  QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+
+  // Add 4 graphs to the plot, one for each of the electrical data streams
+  MainWindow::ui->electricalPlot->addGraph();
+  MainWindow::ui->electricalPlot->addGraph();
+  MainWindow::ui->electricalPlot->addGraph();
+  MainWindow::ui->electricalPlot->addGraph();
+  // Give a name for each graph (for the legend) and give it it's own color
+  MainWindow::ui->electricalPlot->graph(0)->setName("Battery current (A)");
+  MainWindow::ui->electricalPlot->graph(0)->setPen(QPen(Qt::red));
+  MainWindow::ui->electricalPlot->graph(1)->setName("Bus Voltage (V)");
+  MainWindow::ui->electricalPlot->graph(1)->setPen(QPen(Qt::green));
+  MainWindow::ui->electricalPlot->graph(2)->setName("Measured Phase Current (A)");
+  MainWindow::ui->electricalPlot->graph(2)->setPen(QPen(Qt::blue));
+  MainWindow::ui->electricalPlot->graph(3)->setName("Commanded Phase Current (A)");
+  MainWindow::ui->electricalPlot->graph(3)->setPen(QPen(Qt::black));
+  // Make the x-axis dependent on time, and the y-axis an arbitrary number
+  MainWindow::ui->electricalPlot->xAxis->setTicker(timeTicker);
+  MainWindow::ui->electricalPlot->yAxis->setRange(0, 350);
+
+  // Exact same stuff as above, just for the mechanical data plot instead
+  MainWindow::ui->mechanicalPlot->addGraph();
+  MainWindow::ui->mechanicalPlot->addGraph();
+  MainWindow::ui->mechanicalPlot->addGraph();
+  MainWindow::ui->mechanicalPlot->graph(0)->setName("Speed (RPM)");
+  MainWindow::ui->mechanicalPlot->graph(0)->setPen(QPen(Qt::red));
+  MainWindow::ui->mechanicalPlot->graph(1)->setName("Throttle Output (%)");
+  MainWindow::ui->mechanicalPlot->graph(1)->setPen(QPen(Qt::green));
+  MainWindow::ui->mechanicalPlot->graph(2)->setName("Engine Temp. (°C)");
+  MainWindow::ui->mechanicalPlot->graph(2)->setPen(QPen(Qt::blue));
+  MainWindow::ui->mechanicalPlot->xAxis->setTicker(timeTicker);
+  MainWindow::ui->mechanicalPlot->yAxis->setRange(0, 350);
+
+  // Inherit the font of the main window, but make it a little bit smaller
+  QFont legendFont = font();
+  legendFont.setPointSize(8);
+  // Enable legends for both plots and set their fonts to the smaller version
+  MainWindow::ui->electricalPlot->legend->setVisible(true);
+  MainWindow::ui->electricalPlot->legend->setFont(legendFont);
+  MainWindow::ui->mechanicalPlot->legend->setVisible(true);
+  MainWindow::ui->mechanicalPlot->legend->setFont(legendFont);
 }

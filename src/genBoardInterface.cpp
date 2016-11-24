@@ -13,7 +13,7 @@ void genBoardInterface::makeNewFakeData() {
     this->engineTemperature = makeRandomData() * 0.5 + 100;
 
     emit newDataAvailable();
-    QThread::currentThread()->msleep(200);
+    QThread::currentThread()->msleep(50);
   }
 }
 

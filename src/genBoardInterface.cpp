@@ -1,6 +1,14 @@
 #include "src/genBoardInterface.h"
 
-genBoardInterface::genBoardInterface(QObject *parent) : QObject(parent) {}
+genBoardInterface::genBoardInterface(QObject *parent) : QObject(parent) {
+  this->batteryCurrent = 0;
+  this->busVoltage = 0;
+  this->measuredPhaseCurrent = 0;
+  this->commandedPhaseCurrent = 0;
+  this->speed = 0;
+  this->throttleOutput = 0;
+  this->engineTemperature = 0;
+}
 
 void genBoardInterface::makeNewFakeData() {
   for (;;) {

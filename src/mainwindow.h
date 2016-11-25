@@ -2,9 +2,9 @@
 #pragma once
 #define MAINWINDOW_H
 
-#include "../lib/qcustomplot/qcustomplot.h"
-#include "./build/ui_mainwindow.h"
-#include "genBoardInterface.h"
+#include "lib/qcustomplot/qcustomplot.h"
+#include "build/ui_mainwindow.h"
+#include "src/genBoardInterface.h"
 #include "lib/easylogging++/easylogging++.h"
 
 #include <QMainWindow>

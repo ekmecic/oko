@@ -1,4 +1,4 @@
-#include "genBoardInterface.h"
+#include "src/genBoardInterface.h"
 
 genBoardInterface::genBoardInterface(QObject *parent) : QObject(parent) {}
 

@@ -14,10 +14,10 @@ TEMPLATE = app
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/genBoardInterface.cpp \
-    lib/qcustomplot.cpp
+    lib/qcustomplot/qcustomplot.cpp
 
 HEADERS  += src/mainwindow.h \
     src/genBoardInterface.h \
-    lib/qcustomplot.h
+    lib/qcustomplot/qcustomplot.h
 
 FORMS    += src/mainwindow.ui

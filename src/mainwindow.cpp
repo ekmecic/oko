@@ -78,8 +78,10 @@ void MainWindow::setupPlots() {
   // Enable legends for both plots and set their fonts to the smaller version
   ui->electricalPlot->legend->setVisible(true);
   ui->electricalPlot->legend->setFont(legendFont);
+  ui->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
   ui->mechanicalPlot->legend->setVisible(true);
   ui->mechanicalPlot->legend->setFont(legendFont);
+  ui->mechanicalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
 }
 
 void MainWindow::setupEngineControlUI() {

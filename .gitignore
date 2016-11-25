@@ -3,3 +3,5 @@ compile_commands.json
 .stignore
 .dir_locals.el
 notes.org
+*.pro.user
+*.pro.user.*

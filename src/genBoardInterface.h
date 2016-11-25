@@ -43,6 +43,9 @@ public:
 signals:
   void newDataAvailable();
 
+public slots:
+  void stopThread();
+
 private:
   // Temporary dummy function to create some fake data
   double makeRandomData();
@@ -55,4 +58,6 @@ private:
   double speed;
   double throttleOutput;
   double engineTemperature;
+
+  bool endThread;
 };

@@ -12,12 +12,17 @@ MainWindow::MainWindow(QWidget *parent)
   setupPlots();
   setupEngineControlUI();
 
+  connect(this, &MainWindow::quitApplication, genData,
+          &genBoardInterface::stopThread);
   connect(genData, &genBoardInterface::newDataAvailable, this,
           &MainWindow::onNewDataAvailable);
   QtConcurrent::run(genData, &genBoardInterface::makeNewFakeData);
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+  emit quitApplication();
+  delete ui;
+}
 
 void MainWindow::onNewDataAvailable() {
   updateDataTable();

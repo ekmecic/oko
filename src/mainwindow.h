@@ -28,6 +28,9 @@ public:
   void updatePlots();
   void setupLogging();
 
+signals:
+  void quitApplication();
+
 public slots:
   void onNewDataAvailable();
 

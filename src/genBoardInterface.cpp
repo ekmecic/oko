@@ -8,10 +8,17 @@ genBoardInterface::genBoardInterface(QObject *parent) : QObject(parent) {
   this->speed = 0;
   this->throttleOutput = 0;
   this->engineTemperature = 0;
+
+  this->endThread = false;
 }
 
 void genBoardInterface::makeNewFakeData() {
   for (;;) {
+    // Kill the data thread if the user closes the window
+    if (endThread) {
+      return;
+    }
+
     this->batteryCurrent = makeRandomData() * 0.1;
     this->busVoltage = makeRandomData() * 0.2 + 30;
     this->measuredPhaseCurrent = makeRandomData() * 0.3 + 75;
@@ -26,6 +33,10 @@ void genBoardInterface::makeNewFakeData() {
     emit newDataAvailable();
     QThread::currentThread()->msleep(50);
   }
+}
+
+void genBoardInterface::stopThread() {
+  this->endThread = true;
 }
 
 // clang-format off

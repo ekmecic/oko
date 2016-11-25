@@ -1,9 +1,11 @@
+// -*-c++-*-
 #pragma once
 #define MAINWINDOW_H
 
-#include "./build/ui_mainwindow.h"
 #include "../lib/qcustomplot/qcustomplot.h"
+#include "./build/ui_mainwindow.h"
 #include "genBoardInterface.h"
+#include "lib/easylogging++/easylogging++.h"
 
 #include <QMainWindow>
 #include <QTableWidget>
@@ -24,6 +26,7 @@ public:
   void setupEngineControlUI();
   void updateDataTable();
   void updatePlots();
+  void setupLogging();
 
 public slots:
   void onNewDataAvailable();

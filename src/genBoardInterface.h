@@ -9,6 +9,9 @@
   *************************************************************************/
 
 #pragma once
+
+#include "lib/easylogging++/easylogging++.h"
+
 #include <QObject>
 #include <QThread>
 #include <cstdlib>
@@ -43,6 +46,7 @@ signals:
 private:
   // Temporary dummy function to create some fake data
   double makeRandomData();
+  void logData();
 
   double batteryCurrent;
   double busVoltage;

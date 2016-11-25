@@ -30,6 +30,8 @@ file(GLOB SOURCES
   lib/*/*.cpp
 )
 
+include_directories(lib)
+
 set(UI_SOURCES
     src/mainwindow.ui
 )

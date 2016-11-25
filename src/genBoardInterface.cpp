@@ -12,6 +12,9 @@ void genBoardInterface::makeNewFakeData() {
     this->throttleOutput = makeRandomData() * 0.25 + 40;
     this->engineTemperature = makeRandomData() * 0.5 + 100;
 
+    // Send all of the current values to the log file
+    logData();
+
     emit newDataAvailable();
     QThread::currentThread()->msleep(50);
   }
@@ -50,3 +53,15 @@ void genBoardInterface::setEngineTemperature(double engineTemperature) {
 // clang-format on
 
 double genBoardInterface::makeRandomData() { return double(rand()) / 1e7; }
+
+void genBoardInterface::logData() {
+  // clang-format off
+  LOG(INFO) << this->batteryCurrent << ","
+            << this->busVoltage << ","
+            << this->measuredPhaseCurrent << ","
+            << this->commandedPhaseCurrent << ","
+            << this->speed << ","
+            << this->throttleOutput << ","
+            << this->engineTemperature;
+  // clang-format on
+}

@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 
+INITIALIZE_EASYLOGGINGPP
+
 genBoardInterface *genData = new genBoardInterface();
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
 
   ui->setupUi(this);
+  setupLogging();
   setupPlots();
   setupEngineControlUI();
 
@@ -19,6 +22,15 @@ MainWindow::~MainWindow() { delete ui; }
 void MainWindow::onNewDataAvailable() {
   updateDataTable();
   updatePlots();
+}
+
+void MainWindow::setupLogging() {
+  el::Configurations conf("../lib/easylogging++/logging.conf");
+  el::Loggers::reconfigureAllLoggers(conf);
+  LOG(INFO) << "FORMAT:";
+  LOG(INFO) << "BatteryCurrent,BusVoltage,MeasuredPhaseCurrent,"
+               "CommandedPhaseCurrent,Speed,ThrottleOutput,EngineTemperature";
+  LOG(INFO) << "Time is in the local time of the computer running oko.";
 }
 
 void MainWindow::setupPlots() {

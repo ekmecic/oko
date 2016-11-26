@@ -30,8 +30,21 @@ void MainWindow::onNewDataAvailable() {
 }
 
 void MainWindow::setupLogging() {
-  el::Configurations conf("../lib/easylogging++/logging.conf");
-  el::Loggers::reconfigureAllLoggers(conf);
+  el::Configurations loggingConf;
+
+  loggingConf.setToDefault();
+  loggingConf.set(el::Level::Global, el::ConfigurationType::Filename,
+                  "./logs/PegasusGE30-%datetime{%Y-%M-%d-T%H:%m:%s}.log");
+  loggingConf.set(el::Level::Global, el::ConfigurationType::Format,
+                  "%datetime{%Y-%M-%d-T%H:%m:%s:%g},%msg");
+  loggingConf.set(el::Level::Global, el::ConfigurationType::Enabled,
+                  "true");
+  loggingConf.set(el::Level::Global, el::ConfigurationType::ToFile,
+                  "true");
+  loggingConf.set(el::Level::Global, el::ConfigurationType::ToStandardOutput,
+                  "false");
+
+  el::Loggers::reconfigureAllLoggers(loggingConf);
   LOG(INFO) << "FORMAT:";
   LOG(INFO) << "BatteryCurrent,BusVoltage,MeasuredPhaseCurrent,"
                "CommandedPhaseCurrent,Speed,ThrottleOutput,EngineTemperature";
@@ -78,10 +91,12 @@ void MainWindow::setupPlots() {
   // Enable legends for both plots and set their fonts to the smaller version
   ui->electricalPlot->legend->setVisible(true);
   ui->electricalPlot->legend->setFont(legendFont);
-  ui->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
+  ui->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(
+      0, Qt::AlignLeft | Qt::AlignTop);
   ui->mechanicalPlot->legend->setVisible(true);
   ui->mechanicalPlot->legend->setFont(legendFont);
-  ui->mechanicalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
+  ui->mechanicalPlot->axisRect()->insetLayout()->setInsetAlignment(
+      0, Qt::AlignLeft | Qt::AlignTop);
 }
 
 void MainWindow::setupEngineControlUI() {

@@ -36,24 +36,14 @@ void MainWindow::onNewDataAvailable() {
 void MainWindow::configure() {
   try {
     auto config = cpptoml::parse_file("../config.toml");
+
+    plotXAxisWidth = *config->get_qualified_as<int64_t>("plotting.plotXAxisWidth");
+    logFilePath = *config->get_qualified_as<std::string>("logging.logFilePath");
+    emit updateIntervalFound(*config->get_qualified_as<int64_t>("datacapture.updateInterval"));
   } catch (cpptoml::parse_exception &tomlParseError) {
     LOG(INFO) << "ERROR: Parsing the config file returned an error!";
     LOG(INFO) << tomlParseError.what();
   }
-  auto config = cpptoml::parse_file("/home/emil/pegasus/oko/config.toml");
-
-  if (auto t_updateInterval = config->get_qualified_as<int64_t>("datacapture.updateInterval")) {
-    emit updateIntervalFound(*t_updateInterval);
-  }
-
-  if (auto t_plotXAxisWidth = config->get_qualified_as<int64_t>("plotting.plotXAxisWidth")) {
-    this->plotXAxisWidth = *t_plotXAxisWidth;
-  }
-
-  if (auto t_logFilePath = config->get_qualified_as<std::string>("logging.logFilePath")) {
-    this->logFilePath = *t_logFilePath;
-  }
-
 }
 
 void MainWindow::setupLogging() {

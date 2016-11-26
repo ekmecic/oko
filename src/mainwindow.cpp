@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   ui->setupUi(this);
   setupLogging();
+  configure();
   setupPlots();
   setupEngineControlUI();
 
@@ -27,6 +28,16 @@ MainWindow::~MainWindow() {
 void MainWindow::onNewDataAvailable() {
   updateDataTable();
   updatePlots();
+}
+
+void MainWindow::configure() {
+  try {
+    auto config = cpptoml::parse_file("../config.toml");
+  } catch (cpptoml::parse_exception &tomlParseError) {
+    LOG(INFO) << "ERROR: Parsing the config file returned an error!";
+    LOG(INFO) << tomlParseError.what();
+  }
+  auto config = cpptoml::parse_file("/home/emil/pegasus/oko/config.toml");
 }
 
 void MainWindow::setupLogging() {

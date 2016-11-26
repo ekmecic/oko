@@ -5,6 +5,7 @@
 #include "lib/qcustomplot/qcustomplot.h"
 #include "build/ui_mainwindow.h"
 #include "src/genBoardInterface.h"
+#include "lib/cpptoml/cpptoml.h"
 #include "lib/easylogging++/easylogging++.h"
 
 #include <QMainWindow>
@@ -22,11 +23,14 @@ class MainWindow : public QMainWindow {
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
+
+  void setupLogging();
   void setupPlots();
   void setupEngineControlUI();
+  void configure();
+
   void updateDataTable();
   void updatePlots();
-  void setupLogging();
 
 signals:
   void quitApplication();

@@ -1,0 +1,6 @@
+[datacapture]
+updateInterval = 50
+
+[logging]
+logFilePath = "./logs/"
+enabled     = true

@@ -36,6 +36,9 @@ set(UI_SOURCES
     src/mainwindow.ui
 )
 
+# Stop annoying default log file generation behavior
+add_definitions(-DELPP_NO_DEFAULT_LOG_FILE)
+
 #
 # Generate necessary headers from .ui files. (qmake lets `uic` do this job.)
 # hint from [Cross-platform Qt5 project using cmake](http://stackoverflow.com/questions/21174586/cross-platform-qt5-project-using-cmake)

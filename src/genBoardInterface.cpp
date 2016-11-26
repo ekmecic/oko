@@ -10,6 +10,7 @@ genBoardInterface::genBoardInterface(QObject *parent) : QObject(parent) {
   this->engineTemperature = 0;
 
   this->endThread = false;
+  this->updateInterval = 50;
 }
 
 void genBoardInterface::makeNewFakeData() {
@@ -31,12 +32,16 @@ void genBoardInterface::makeNewFakeData() {
     logData();
 
     emit newDataAvailable();
-    QThread::currentThread()->msleep(50);
+    QThread::currentThread()->msleep(this->updateInterval);
   }
 }
 
 void genBoardInterface::stopThread() {
   this->endThread = true;
+}
+
+void genBoardInterface::onUpdateIntervalFound(int64_t newUpdateInterval) {
+  this->updateInterval = newUpdateInterval;
 }
 
 // clang-format off

@@ -1,5 +1,8 @@
 [datacapture]
 updateInterval = 50
 
+[plotting]
+plotXAxisWidth = 40
+
 [logging]
-logFilePath = "./logs/"
+logFilePath = "logs/"

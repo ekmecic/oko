@@ -34,10 +34,13 @@ public:
 
 signals:
   void quitApplication();
+  void updateIntervalFound(int64_t newUpdateInterval);
 
 public slots:
   void onNewDataAvailable();
 
 private:
   Ui::MainWindow *ui;
+  int64_t plotXAxisWidth = 40;
+  std::string logFilePath = "./logs/";
 };

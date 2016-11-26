@@ -6,17 +6,20 @@ genBoardInterface *genData = new genBoardInterface();
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
-
   ui->setupUi(this);
-  setupLogging();
-  configure();
-  setupPlots();
-  setupEngineControlUI();
 
+  connect(this, &MainWindow::updateIntervalFound,
+          genData, &genBoardInterface::onUpdateIntervalFound);
   connect(this, &MainWindow::quitApplication, genData,
           &genBoardInterface::stopThread);
   connect(genData, &genBoardInterface::newDataAvailable, this,
           &MainWindow::onNewDataAvailable);
+
+  configure();
+  setupLogging();
+  setupPlots();
+  setupEngineControlUI();
+
   QtConcurrent::run(genData, &genBoardInterface::makeNewFakeData);
 }
 
@@ -38,6 +41,19 @@ void MainWindow::configure() {
     LOG(INFO) << tomlParseError.what();
   }
   auto config = cpptoml::parse_file("/home/emil/pegasus/oko/config.toml");
+
+  if (auto t_updateInterval = config->get_qualified_as<int64_t>("datacapture.updateInterval")) {
+    emit updateIntervalFound(*t_updateInterval);
+  }
+
+  if (auto t_plotXAxisWidth = config->get_qualified_as<int64_t>("plotting.plotXAxisWidth")) {
+    this->plotXAxisWidth = *t_plotXAxisWidth;
+  }
+
+  if (auto t_logFilePath = config->get_qualified_as<std::string>("logging.logFilePath")) {
+    this->logFilePath = *t_logFilePath;
+  }
+
 }
 
 void MainWindow::setupLogging() {
@@ -45,7 +61,7 @@ void MainWindow::setupLogging() {
 
   loggingConf.setToDefault();
   loggingConf.set(el::Level::Global, el::ConfigurationType::Filename,
-                  "./logs/PegasusGE30-%datetime{%Y-%M-%d-T%H:%m:%s}.log");
+                  logFilePath.append("oko-%datetime{%Y-%M-%d-T%H:%m:%s}.log"));
   loggingConf.set(el::Level::Global, el::ConfigurationType::Format,
                   "%datetime{%Y-%M-%d-T%H:%m:%s:%g},%msg");
   loggingConf.set(el::Level::Global, el::ConfigurationType::Enabled,
@@ -151,8 +167,8 @@ void MainWindow::updatePlots() {
   lastPointKey = key;
 
   // Shift the axis left for the new data and refresh the graph
-  ui->electricalPlot->xAxis->setRange(key, 40, Qt::AlignRight);
+  ui->electricalPlot->xAxis->setRange(key, plotXAxisWidth, Qt::AlignRight);
   ui->electricalPlot->replot();
-  ui->mechanicalPlot->xAxis->setRange(key, 40, Qt::AlignRight);
+  ui->mechanicalPlot->xAxis->setRange(key, plotXAxisWidth, Qt::AlignRight);
   ui->mechanicalPlot->replot();
 }

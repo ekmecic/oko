@@ -45,6 +45,7 @@ signals:
 
 public slots:
   void stopThread();
+  void onUpdateIntervalFound(int64_t newUpdateInterval);
 
 private:
   // Temporary dummy function to create some fake data
@@ -60,4 +61,5 @@ private:
   double engineTemperature;
 
   bool endThread;
+  int64_t updateInterval;
 };

@@ -43,4 +43,5 @@ private:
   Ui::MainWindow *ui;
   int64_t plotXAxisWidth = 40;
   std::string logFilePath = "./logs/";
+  double dataWarningThresholds[7] = {0};
 };

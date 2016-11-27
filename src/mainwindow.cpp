@@ -41,6 +41,10 @@ void MainWindow::configure() {
     plotXAxisWidth = *config->get_qualified_as<int64_t>("plotting.plotXAxisWidth");
     logFilePath = *config->get_qualified_as<std::string>("logging.logFilePath");
     emit updateIntervalFound(*config->get_qualified_as<int64_t>("datacapture.updateInterval"));
+
+    auto warningThresholdsVector = *config->get_qualified_array_of<double>("thresholds.warningLimits");
+    std::copy(warningThresholdsVector.begin(), warningThresholdsVector.end(), this->dataWarningThresholds);
+
   } catch (cpptoml::parse_exception &tomlParseError) {
     LOG(INFO) << "ERROR: Parsing the config file returned an error!";
     LOG(INFO) << tomlParseError.what();
@@ -137,6 +141,11 @@ void MainWindow::updateDataTable() {
   for (int i = 0; i < 7; i++) {
     ui->dataTable->setItem(i, 1, new QTableWidgetItem(QString::number(genData->genBoardValues[0][i])));
     ui->dataTable->setItem(i, 2, new QTableWidgetItem(QString::number(genData->genBoardValues[1][i])));
+  }
+  for (int i = 0; i < 7; i++) {
+    if (genData->genBoardValues[0][i] > this->dataWarningThresholds[i]) {
+      ui->dataTable->item(i, 1)->setBackground(Qt::yellow);
+    }
   }
 }
 

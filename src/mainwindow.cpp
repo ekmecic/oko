@@ -143,7 +143,6 @@ void MainWindow::updateDataTable() {
 void MainWindow::updatePlots() {
   static QTime time(QTime::currentTime());
   double key = time.elapsed() / 1000.0;
-  static double lastPointKey = 0;
 
   // clang-format off
   ui->electricalPlot->graph(0)->addData(key, genData->getBatteryCurrent());
@@ -154,8 +153,6 @@ void MainWindow::updatePlots() {
   ui->mechanicalPlot->graph(1)->addData(key, genData->getThrottleOutput());
   ui->mechanicalPlot->graph(2)->addData(key, genData->getEngineTemperature());
   // clang-format on
-
-  lastPointKey = key;
 
   // Shift the axis left for the new data and refresh the graph
   ui->electricalPlot->xAxis->setRange(key, plotXAxisWidth, Qt::AlignRight);

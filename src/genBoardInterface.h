@@ -24,6 +24,7 @@ public:
 
   void makeNewFakeData();
 
+  double genBoardValues[2][7] = {0};
   double getBatteryCurrent() const;
   double getBusVoltage() const;
   double getMeasuredPhaseCurrent() const;

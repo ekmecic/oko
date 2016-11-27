@@ -20,13 +20,13 @@ void genBoardInterface::makeNewFakeData() {
       return;
     }
 
-    this->batteryCurrent = makeRandomData() * 0.1;
-    this->busVoltage = makeRandomData() * 0.2 + 30;
-    this->measuredPhaseCurrent = makeRandomData() * 0.3 + 75;
-    this->commandedPhaseCurrent = makeRandomData() * 0.4 + 130;
-    this->speed = makeRandomData() * 0.1;
-    this->throttleOutput = makeRandomData() * 0.25 + 40;
-    this->engineTemperature = makeRandomData() * 0.5 + 100;
+    genBoardValues[0][0] = makeRandomData() * 0.1;
+    genBoardValues[0][1] = makeRandomData() * 0.2 + 30;
+    genBoardValues[0][2] = makeRandomData() * 0.3 + 75;
+    genBoardValues[0][3] = makeRandomData() * 0.4 + 130;
+    genBoardValues[0][4] = makeRandomData() * 0.1;
+    genBoardValues[0][5] = makeRandomData() * 0.25 + 40;
+    genBoardValues[0][6] = makeRandomData() * 0.5 + 100;
 
     // Send all of the current values to the log file
     logData();

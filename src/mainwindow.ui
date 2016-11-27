@@ -23,7 +23,7 @@
      <height>16777215</height>
     </size>
    </property>
-   <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,1">
+   <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,1">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_3" columnstretch="0">
       <item row="0" column="0">
@@ -275,7 +275,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>300</width>
+          <width>252</width>
           <height>16777215</height>
          </size>
         </property>
@@ -283,7 +283,7 @@
          <number>7</number>
         </property>
         <property name="columnCount">
-         <number>2</number>
+         <number>3</number>
         </property>
         <attribute name="horizontalHeaderVisible">
          <bool>true</bool>
@@ -318,6 +318,17 @@
         <column>
          <property name="text">
           <string>Data Value</string>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Max</string>
          </property>
          <property name="font">
           <font>

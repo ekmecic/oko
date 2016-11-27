@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
   setupLogging();
   setupPlots();
   setupEngineControlUI();
-
+  ui->dataTable->setColumnWidth(1, 70);
+  ui->dataTable->setColumnWidth(2, 70);
   QtConcurrent::run(genData, &genBoardInterface::makeNewFakeData);
 }
 
@@ -128,15 +129,15 @@ void MainWindow::setupEngineControlUI() {
 }
 
 void MainWindow::updateDataTable() {
-  // clang-format off
-  ui->dataTable->setItem(0, 1, new QTableWidgetItem(QString::number(genData->getBatteryCurrent())));
-  ui->dataTable->setItem(1, 1, new QTableWidgetItem(QString::number(genData->getBusVoltage())));
-  ui->dataTable->setItem(2, 1, new QTableWidgetItem(QString::number(genData->getMeasuredPhaseCurrent())));
-  ui->dataTable->setItem(3, 1, new QTableWidgetItem(QString::number(genData->getCommandedPhaseCurrent())));
-  ui->dataTable->setItem(4, 1, new QTableWidgetItem(QString::number(genData->getSpeed())));
-  ui->dataTable->setItem(5, 1, new QTableWidgetItem(QString::number(genData->getThrottleOutput())));
-  ui->dataTable->setItem(6, 1, new QTableWidgetItem(QString::number(genData->getEngineTemperature())));
-  // clang-format on
+  for (int i = 0; i < 7; i++) {
+    if (genData->genBoardValues[0][i] > genData->genBoardValues[1][i]) {
+        genData->genBoardValues[1][i] = genData->genBoardValues[0][i];
+    }
+  }
+  for (int i = 0; i < 7; i++) {
+    ui->dataTable->setItem(i, 1, new QTableWidgetItem(QString::number(genData->genBoardValues[0][i])));
+    ui->dataTable->setItem(i, 2, new QTableWidgetItem(QString::number(genData->genBoardValues[1][i])));
+  }
 }
 
 void MainWindow::updatePlots() {

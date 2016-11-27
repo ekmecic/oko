@@ -144,15 +144,13 @@ void MainWindow::updatePlots() {
   static QTime time(QTime::currentTime());
   double key = time.elapsed() / 1000.0;
 
-  // clang-format off
-  ui->electricalPlot->graph(0)->addData(key, genData->getBatteryCurrent());
-  ui->electricalPlot->graph(1)->addData(key, genData->getBusVoltage());
-  ui->electricalPlot->graph(2)->addData(key, genData->getMeasuredPhaseCurrent());
-  ui->electricalPlot->graph(3)->addData(key, genData->getCommandedPhaseCurrent());
-  ui->mechanicalPlot->graph(0)->addData(key, genData->getSpeed());
-  ui->mechanicalPlot->graph(1)->addData(key, genData->getThrottleOutput());
-  ui->mechanicalPlot->graph(2)->addData(key, genData->getEngineTemperature());
-  // clang-format on
+  for (int i = 0; i < 4; i++) {
+    ui->electricalPlot->graph(i)->addData(key, genData->genBoardValues[0][i]);
+  }
+
+  for (int i = 0; i < 3; i++) {
+    ui->mechanicalPlot->graph(i)->addData(key, genData->genBoardValues[0][i + 3]);
+  }
 
   // Shift the axis left for the new data and refresh the graph
   ui->electricalPlot->xAxis->setRange(key, plotXAxisWidth, Qt::AlignRight);

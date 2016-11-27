@@ -1,14 +1,6 @@
 #include "src/genBoardInterface.h"
 
 genBoardInterface::genBoardInterface(QObject *parent) : QObject(parent) {
-  this->batteryCurrent = 0;
-  this->busVoltage = 0;
-  this->measuredPhaseCurrent = 0;
-  this->commandedPhaseCurrent = 0;
-  this->speed = 0;
-  this->throttleOutput = 0;
-  this->engineTemperature = 0;
-
   this->endThread = false;
   this->updateInterval = 50;
 }
@@ -44,48 +36,14 @@ void genBoardInterface::onUpdateIntervalFound(int64_t newUpdateInterval) {
   this->updateInterval = newUpdateInterval;
 }
 
-// clang-format off
-double genBoardInterface::getBatteryCurrent() const { return batteryCurrent; }
-double genBoardInterface::getBusVoltage() const { return busVoltage; }
-double genBoardInterface::getMeasuredPhaseCurrent() const { return measuredPhaseCurrent; }
-double genBoardInterface::getCommandedPhaseCurrent() const { return commandedPhaseCurrent; }
-double genBoardInterface::getSpeed() const { return speed; }
-double genBoardInterface::getThrottleOutput() const { return throttleOutput; }
-double genBoardInterface::getEngineTemperature() const { return engineTemperature; }
-
-void genBoardInterface::setBatteryCurrent(double batteryCurrent) {
-  this->batteryCurrent = batteryCurrent;
-}
-void genBoardInterface::setBusVoltage(double busVoltage) {
-  this->busVoltage = busVoltage;
-}
-void genBoardInterface::setMeasuredPhaseCurrent(double measuredPhaseCurrent) {
-  this->measuredPhaseCurrent = measuredPhaseCurrent;
-}
-void genBoardInterface::setCommandedPhaseCurrent(double commandedPhaseCurrent) {
-  this->commandedPhaseCurrent = commandedPhaseCurrent;
-}
-void genBoardInterface::setSpeed(double speed) {
-  this->speed = speed;
-}
-void genBoardInterface::setThrottleOutput(double throttleOutput) {
-  this->throttleOutput = throttleOutput;
-}
-void genBoardInterface::setEngineTemperature(double engineTemperature) {
-  this->engineTemperature = engineTemperature;
-}
-// clang-format on
-
 double genBoardInterface::makeRandomData() { return double(rand()) / 1e7; }
 
 void genBoardInterface::logData() {
-  // clang-format off
-  LOG(INFO) << this->batteryCurrent << ","
-            << this->busVoltage << ","
-            << this->measuredPhaseCurrent << ","
-            << this->commandedPhaseCurrent << ","
-            << this->speed << ","
-            << this->throttleOutput << ","
-            << this->engineTemperature;
-  // clang-format on
+  LOG(INFO) << this->genBoardValues[0][0] << ","
+            << this->genBoardValues[0][1] << ","
+            << this->genBoardValues[0][2] << ","
+            << this->genBoardValues[0][3] << ","
+            << this->genBoardValues[0][4] << ","
+            << this->genBoardValues[0][5] << ","
+            << this->genBoardValues[0][6] << ",";
 }

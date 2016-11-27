@@ -25,21 +25,6 @@ public:
   void makeNewFakeData();
 
   double genBoardValues[2][7] = {0};
-  double getBatteryCurrent() const;
-  double getBusVoltage() const;
-  double getMeasuredPhaseCurrent() const;
-  double getCommandedPhaseCurrent() const;
-  double getSpeed() const;
-  double getThrottleOutput() const;
-  double getEngineTemperature() const;
-
-  void setBatteryCurrent(double batteryCurrent);
-  void setBusVoltage(double busVoltage);
-  void setMeasuredPhaseCurrent(double measuredPhaseCurrent);
-  void setCommandedPhaseCurrent(double commandedPhaseCurrent);
-  void setSpeed(double speed);
-  void setThrottleOutput(double throttleOutput);
-  void setEngineTemperature(double engineTemperature);
 
 signals:
   void newDataAvailable();
@@ -52,14 +37,6 @@ private:
   // Temporary dummy function to create some fake data
   double makeRandomData();
   void logData();
-
-  double batteryCurrent;
-  double busVoltage;
-  double measuredPhaseCurrent;
-  double commandedPhaseCurrent;
-  double speed;
-  double throttleOutput;
-  double engineTemperature;
 
   bool endThread;
   int64_t updateInterval;

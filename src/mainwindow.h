@@ -4,14 +4,11 @@
 
 #include "lib/qcustomplot/qcustomplot.h"
 #include "build/ui_mainwindow.h"
-#include "src/genBoardInterface.h"
 #include "lib/cpptoml/cpptoml.h"
 #include "lib/easylogging++/easylogging++.h"
 
 #include <QMainWindow>
 #include <QTableWidget>
-#include <QTimer>
-#include <QtConcurrent>
 
 namespace Ui {
 class MainWindow;
@@ -32,14 +29,11 @@ public:
   void updateDataTable();
   void updatePlots();
 
-signals:
-  void quitApplication();
-  void updateIntervalFound(int64_t newUpdateInterval);
-
 public slots:
   void onNewDataAvailable();
 
 private:
+  double data[2][7] = {0};
   Ui::MainWindow *ui;
   int64_t plotXAxisWidth = 40;
   std::string logFilePath = "./logs/";

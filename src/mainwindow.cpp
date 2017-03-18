@@ -2,18 +2,10 @@
 
 INITIALIZE_EASYLOGGINGPP
 
-genBoardInterface *genData = new genBoardInterface();
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
-
-  connect(this, &MainWindow::updateIntervalFound,
-          genData, &genBoardInterface::onUpdateIntervalFound);
-  connect(this, &MainWindow::quitApplication, genData,
-          &genBoardInterface::stopThread);
-  connect(genData, &genBoardInterface::newDataAvailable, this,
-          &MainWindow::onNewDataAvailable);
 
   configure();
   setupLogging();
@@ -21,11 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
   setupEngineControlUI();
   ui->dataTable->setColumnWidth(1, 70);
   ui->dataTable->setColumnWidth(2, 70);
-  QtConcurrent::run(genData, &genBoardInterface::makeNewFakeData);
 }
 
 MainWindow::~MainWindow() {
-  emit quitApplication();
   delete ui;
 }
 
@@ -40,7 +30,6 @@ void MainWindow::configure() {
 
     plotXAxisWidth = *config->get_qualified_as<int64_t>("plotting.plotXAxisWidth");
     logFilePath = *config->get_qualified_as<std::string>("logging.logFilePath");
-    emit updateIntervalFound(*config->get_qualified_as<int64_t>("datacapture.updateInterval"));
 
     auto warningThresholdsVector = *config->get_qualified_array_of<double>("thresholds.warningLimits");
     std::copy(warningThresholdsVector.begin(), warningThresholdsVector.end(), this->dataWarningThresholds);
@@ -134,16 +123,16 @@ void MainWindow::setupEngineControlUI() {
 
 void MainWindow::updateDataTable() {
   for (int i = 0; i < 7; i++) {
-    if (genData->genBoardValues[0][i] > genData->genBoardValues[1][i]) {
-        genData->genBoardValues[1][i] = genData->genBoardValues[0][i];
+    if (this->data[0][i] > this->data[1][i]) {
+        this->data[1][i] = this->data[0][i];
     }
   }
   for (int i = 0; i < 7; i++) {
-    ui->dataTable->setItem(i, 1, new QTableWidgetItem(QString::number(genData->genBoardValues[0][i])));
-    ui->dataTable->setItem(i, 2, new QTableWidgetItem(QString::number(genData->genBoardValues[1][i])));
+    ui->dataTable->setItem(i, 1, new QTableWidgetItem(QString::number(this->data[0][i])));
+    ui->dataTable->setItem(i, 2, new QTableWidgetItem(QString::number(this->data[1][i])));
   }
   for (int i = 0; i < 7; i++) {
-    if (genData->genBoardValues[0][i] > this->dataWarningThresholds[i]) {
+    if (this->data[0][i] > this->dataWarningThresholds[i]) {
       ui->dataTable->item(i, 1)->setBackground(Qt::yellow);
     }
   }
@@ -154,11 +143,11 @@ void MainWindow::updatePlots() {
   double key = time.elapsed() / 1000.0;
 
   for (int i = 0; i < 4; i++) {
-    ui->electricalPlot->graph(i)->addData(key, genData->genBoardValues[0][i]);
+    ui->electricalPlot->graph(i)->addData(key, this->data[0][i]);
   }
 
   for (int i = 0; i < 3; i++) {
-    ui->mechanicalPlot->graph(i)->addData(key, genData->genBoardValues[0][i + 3]);
+    ui->mechanicalPlot->graph(i)->addData(key, this->data[0][i + 3]);
   }
 
   // Shift the axis left for the new data and refresh the graph

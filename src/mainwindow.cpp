@@ -22,9 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->dataTable->setColumnWidth(2, 70);
 }
 
-MainWindow::~MainWindow() {
-  delete ui;
-}
+MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::onNewDataAvailable() {
   updateDataTable();

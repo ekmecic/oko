@@ -2,15 +2,15 @@
 #pragma once
 #define MAINWINDOW_H
 
-#include "lib/qcustomplot/qcustomplot.h"
 #include "build/ui_mainwindow.h"
 #include "lib/cpptoml/cpptoml.h"
 #include "lib/easylogging++/easylogging++.h"
+#include "lib/qcustomplot/qcustomplot.h"
 
+#include <QBluetoothServiceInfo>
+#include <QBluetoothSocket>
 #include <QMainWindow>
 #include <QTableWidget>
-#include <QBluetoothSocket>
-#include <QBluetoothServiceInfo>
 
 namespace Ui {
 class MainWindow;

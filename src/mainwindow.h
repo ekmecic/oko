@@ -9,6 +9,8 @@
 
 #include <QMainWindow>
 #include <QTableWidget>
+#include <QBluetoothSocket>
+#include <QBluetoothServiceInfo>
 
 namespace Ui {
 class MainWindow;
@@ -29,13 +31,18 @@ public:
   void updateDataTable();
   void updatePlots();
 
+signals:
+  void newDataAvailable();
+
 public slots:
   void onNewDataAvailable();
+  void msg();
 
 private:
-  double data[2][7] = {0};
+  QBluetoothSocket *socket;
+  double data[2][9] = {0};
   Ui::MainWindow *ui;
   int64_t plotXAxisWidth = 40;
   std::string logFilePath = "./logs/";
-  double dataWarningThresholds[7] = {0};
+  double dataWarningThresholds[9] = {0};
 };

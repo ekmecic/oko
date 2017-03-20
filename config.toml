@@ -15,5 +15,7 @@ warningLimits = [
               215,  # Commanded phase current
               21,   # Speed
               90,   # Throttle output
-              205   # Engine temperature
+              205,   # Engine temperature
+              100,
+              100
 ]

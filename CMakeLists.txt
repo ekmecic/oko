@@ -14,8 +14,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
+find_package(Qt5Bluetooth REQUIRED)
 
-set(QT5_LIBRARIES Qt5::Widgets Qt5::PrintSupport)
+set(QT5_LIBRARIES Qt5::Widgets Qt5::PrintSupport Qt5::Bluetooth)
 
 #
 # project main

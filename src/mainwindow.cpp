@@ -2,10 +2,17 @@
 
 INITIALIZE_EASYLOGGINGPP
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+
+  socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
+  socket->connectToService(QBluetoothAddress("00:06:66:82:79:5C"),
+                           QBluetoothUuid::Sdp);
+  QObject::connect(socket, &QBluetoothSocket::readyRead, this,
+                   &MainWindow::msg);
+  connect(this, &MainWindow::newDataAvailable, this,
+          &MainWindow::onNewDataAvailable);
 
   configure();
   setupLogging();
@@ -24,15 +31,44 @@ void MainWindow::onNewDataAvailable() {
   updatePlots();
 }
 
+void MainWindow::msg() {
+  QByteArray line;
+  while (socket->canReadLine()) {
+    line = socket->readLine();
+  }
+  QString res = QString::fromUtf8(line.constData(), line.length());
+
+  QRegularExpression getDoubles("[-+]?[0-9]*\\.?[0-9]+");
+
+  if (!res.isEmpty()) {
+    res = res.trimmed();
+    QRegularExpressionMatchIterator i = getDoubles.globalMatch(res);
+    uint8_t j = 0;
+    while (i.hasNext()) {
+      QRegularExpressionMatch match = i.next();
+      if (match.hasMatch()) {
+        this->data[0][j] = match.captured().toDouble();
+        qDebug() << match.captured().toDouble();
+        j = j + 1;
+      }
+    }
+    std::cout << res.toStdString() << std::endl;
+  }
+  emit newDataAvailable();
+}
+
 void MainWindow::configure() {
   try {
     auto config = cpptoml::parse_file("../config.toml");
 
-    plotXAxisWidth = *config->get_qualified_as<int64_t>("plotting.plotXAxisWidth");
+    plotXAxisWidth =
+        *config->get_qualified_as<int64_t>("plotting.plotXAxisWidth");
     logFilePath = *config->get_qualified_as<std::string>("logging.logFilePath");
 
-    auto warningThresholdsVector = *config->get_qualified_array_of<double>("thresholds.warningLimits");
-    std::copy(warningThresholdsVector.begin(), warningThresholdsVector.end(), this->dataWarningThresholds);
+    auto warningThresholdsVector =
+        *config->get_qualified_array_of<double>("thresholds.warningLimits");
+    std::copy(warningThresholdsVector.begin(), warningThresholdsVector.end(),
+              this->dataWarningThresholds);
 
   } catch (cpptoml::parse_exception &tomlParseError) {
     LOG(INFO) << "ERROR: Parsing the config file returned an error!";
@@ -44,14 +80,13 @@ void MainWindow::setupLogging() {
   el::Configurations loggingConf;
 
   loggingConf.setToDefault();
-  loggingConf.set(el::Level::Global, el::ConfigurationType::Filename,
-                  logFilePath.append("oko-%datetime{%Y-%M-%d-T%H:%m:%s}.log"));
+  loggingConf.set(
+      el::Level::Global, el::ConfigurationType::Filename,
+      logFilePath.append("oko-%datetime{%Y-%M-%d-T%H:%m:%s}.log"));
   loggingConf.set(el::Level::Global, el::ConfigurationType::Format,
                   "%datetime{%Y-%M-%d-T%H:%m:%s:%g},%msg");
-  loggingConf.set(el::Level::Global, el::ConfigurationType::Enabled,
-                  "true");
-  loggingConf.set(el::Level::Global, el::ConfigurationType::ToFile,
-                  "true");
+  loggingConf.set(el::Level::Global, el::ConfigurationType::Enabled, "true");
+  loggingConf.set(el::Level::Global, el::ConfigurationType::ToFile, "true");
   loggingConf.set(el::Level::Global, el::ConfigurationType::ToStandardOutput,
                   "false");
 
@@ -84,6 +119,8 @@ void MainWindow::setupPlots() {
   ui->electricalPlot->yAxis->setRange(0, 350);
 
   // Exact same stuff as above, just for the mechanical data plot instead
+  ui->mechanicalPlot->addGraph();
+  ui->mechanicalPlot->addGraph();
   ui->mechanicalPlot->addGraph();
   ui->mechanicalPlot->addGraph();
   ui->mechanicalPlot->addGraph();
@@ -122,16 +159,18 @@ void MainWindow::setupEngineControlUI() {
 }
 
 void MainWindow::updateDataTable() {
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < 9; i++) {
     if (this->data[0][i] > this->data[1][i]) {
-        this->data[1][i] = this->data[0][i];
+      this->data[1][i] = this->data[0][i];
     }
   }
-  for (int i = 0; i < 7; i++) {
-    ui->dataTable->setItem(i, 1, new QTableWidgetItem(QString::number(this->data[0][i])));
-    ui->dataTable->setItem(i, 2, new QTableWidgetItem(QString::number(this->data[1][i])));
+  for (int i = 0; i < 9; i++) {
+    ui->dataTable->setItem(
+        i, 1, new QTableWidgetItem(QString::number(this->data[0][i])));
+    ui->dataTable->setItem(
+        i, 2, new QTableWidgetItem(QString::number(this->data[1][i])));
   }
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < 9; i++) {
     if (this->data[0][i] > this->dataWarningThresholds[i]) {
       ui->dataTable->item(i, 1)->setBackground(Qt::yellow);
     }
@@ -146,7 +185,7 @@ void MainWindow::updatePlots() {
     ui->electricalPlot->graph(i)->addData(key, this->data[0][i]);
   }
 
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 5; i++) {
     ui->mechanicalPlot->graph(i)->addData(key, this->data[0][i + 3]);
   }
 

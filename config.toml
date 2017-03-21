@@ -1,21 +1,77 @@
-[datacapture]
-updateInterval = 50
-
 [plotting]
-plotXAxisWidth = 40
+plotWidth = 40
 
 [logging]
-logFilePath = "logs/"
+logFilePath = "logs/" # There must be a slash after the logFilePath
 
-[thresholds]
-warningLimits = [
-              20,   # Battery current
-              70,   # Bus voltage
-              135,  # Measured phase current
-              215,  # Commanded phase current
-              21,   # Speed
-              90,   # Throttle output
-              205,   # Engine temperature
-              100,
-              100
-]
+[[data]]
+name = "Time since engine start"
+type = "Time"
+position = 0
+multiplier = 1
+minWarning = 0
+maxWarning = 0
+
+[[data]]
+name = "Commanded engine speed"
+type = "Mechanical"
+position = 1
+multiplier = 1000
+minWarning = 0
+maxWarning = 7250
+
+[[data]]
+name = "Measured engine speed"
+type = "Mechanical"
+position = 2
+multiplier = 1000
+minWarning = 0
+maxWarning = 7250
+
+[[data]]
+name = "Throttle position"
+type = "Mechanical"
+position = 3
+multiplier = 100
+minWarning = 0
+maxWarning = 100
+
+[[data]]
+name = "Bus voltage"
+type = "Electrical"
+position = 4
+multiplier = 1000
+minWarning = 22
+maxWarning = 26
+
+[[data]]
+name = "Battery current"
+type = "Electrical"
+position = 5
+multiplier = 1
+minWarning = -10
+maxWarning = 60
+
+[[data]]
+name = "Commanded phase current"
+type = "Electrical"
+position = 6
+multiplier = 1
+minWarning = 0
+maxWarning = 60
+
+[[data]]
+name = "Measured phase current"
+type = "Electrical"
+position = 7
+multiplier = 1
+minWarning = 0
+maxWarning = 60
+
+[[data]]
+name = "Engine state"
+type = "CurrentEngineState"
+position = 8
+multiplier = 1
+minWarning = 0
+maxWarning = 0

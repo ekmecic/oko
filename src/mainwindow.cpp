@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
   connect(this, &MainWindow::newDataAvailable, this,
           &MainWindow::onNewDataAvailable);
 
-  configure();
+  std::vector<dataStream> vec = readConfig();
   setupLogging();
   setupPlots();
   setupEngineControlUI();
@@ -59,8 +59,7 @@ void MainWindow::configure() {
   try {
     auto config = cpptoml::parse_file("../config.toml");
 
-    plotXAxisWidth =
-        *config->get_qualified_as<int64_t>("plotting.plotXAxisWidth");
+    plotXAxisWidth = *config->get_qualified_as<int64_t>("plotting.plotWidth");
     logFilePath = *config->get_qualified_as<std::string>("logging.logFilePath");
 
     auto warningThresholdsVector =

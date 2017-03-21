@@ -3,6 +3,7 @@
 #define MAINWINDOW_H
 
 #include "build/ui_mainwindow.h"
+#include "src/config.h"
 #include "lib/cpptoml/cpptoml.h"
 #include "lib/easylogging++/easylogging++.h"
 #include "lib/qcustomplot/qcustomplot.h"

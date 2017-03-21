@@ -30,4 +30,5 @@ public:
   uint8_t position;
   DataType dataType;
   Qt::GlobalColor colour;
+  uint8_t graphNum;
 };

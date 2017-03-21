@@ -59,37 +59,31 @@ void MainWindow::setupLogging() {
 
 void MainWindow::setupPlots() {
   QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+  uint8_t i = 0;
+  for (auto &vec : vec) {
+    if (vec.dataType == DataType::Electrical) {
+      ui->electricalPlot->addGraph();
+      vec.graphNum = i;
+      ui->electricalPlot->graph(vec.graphNum)
+          ->setName(QString::fromStdString(vec.name));
+      ui->electricalPlot->graph(vec.graphNum)->setPen(QPen(vec.colour));
+      i++;
+    }
+  }
 
-  // Add 4 graphs to the plot, one for each of the electrical data streams
-  ui->electricalPlot->addGraph();
-  ui->electricalPlot->addGraph();
-  ui->electricalPlot->addGraph();
-  ui->electricalPlot->addGraph();
-  // Give a name for each graph (for the legend) and give it it's own color
-  ui->electricalPlot->graph(0)->setName("Battery current (A)");
-  ui->electricalPlot->graph(0)->setPen(QPen(Qt::red));
-  ui->electricalPlot->graph(1)->setName("Bus Voltage (V)");
-  ui->electricalPlot->graph(1)->setPen(QPen(Qt::green));
-  ui->electricalPlot->graph(2)->setName("Measured Phase Current (A)");
-  ui->electricalPlot->graph(2)->setPen(QPen(Qt::blue));
-  ui->electricalPlot->graph(3)->setName("Commanded Phase Current (A)");
-  ui->electricalPlot->graph(3)->setPen(QPen(Qt::black));
-  // Make the x-axis dependent on time, and the y-axis an arbitrary number
+  i = 0;
+  for (auto &vec : vec) {
+    if (vec.dataType == DataType::Mechanical) {
+      ui->mechanicalPlot->addGraph();
+      vec.graphNum = i;
+      ui->mechanicalPlot->graph(vec.graphNum)
+          ->setName(QString::fromStdString(vec.name));
+      ui->mechanicalPlot->graph(vec.graphNum)->setPen(QPen(vec.colour));
+      i++;
+    }
+  }
   ui->electricalPlot->xAxis->setTicker(timeTicker);
   ui->electricalPlot->yAxis->setRange(0, 350);
-
-  // Exact same stuff as above, just for the mechanical data plot instead
-  ui->mechanicalPlot->addGraph();
-  ui->mechanicalPlot->addGraph();
-  ui->mechanicalPlot->addGraph();
-  ui->mechanicalPlot->addGraph();
-  ui->mechanicalPlot->addGraph();
-  ui->mechanicalPlot->graph(0)->setName("Speed (RPM)");
-  ui->mechanicalPlot->graph(0)->setPen(QPen(Qt::red));
-  ui->mechanicalPlot->graph(1)->setName("Throttle Output (%)");
-  ui->mechanicalPlot->graph(1)->setPen(QPen(Qt::green));
-  ui->mechanicalPlot->graph(2)->setName("Engine Temp. (°C)");
-  ui->mechanicalPlot->graph(2)->setPen(QPen(Qt::blue));
   ui->mechanicalPlot->xAxis->setTicker(timeTicker);
   ui->mechanicalPlot->yAxis->setRange(0, 350);
 
@@ -141,13 +135,13 @@ void MainWindow::updatePlots() {
   static QTime time(QTime::currentTime());
   double key = time.elapsed() / 1000.0;
 
-  for (int i = 0; i < 4; i++) {
-    ui->electricalPlot->graph(i)->addData(key, this->data[0][i]);
-  }
+  // for (int i = 0; i < 4; i++) {
+  //   ui->electricalPlot->graph(i)->addData(key, this->data[0][i]);
+  // }
 
-  for (int i = 0; i < 5; i++) {
-    ui->mechanicalPlot->graph(i)->addData(key, this->data[0][i + 3]);
-  }
+  // for (int i = 0; i < 5; i++) {
+  //   ui->mechanicalPlot->graph(i)->addData(key, this->data[0][i + 3]);
+  // }
 
   // Shift the axis left for the new data and refresh the graph
   ui->electricalPlot->xAxis->setRange(key, plotXAxisWidth, Qt::AlignRight);

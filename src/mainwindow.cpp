@@ -122,21 +122,17 @@ void MainWindow::setupDataTable() {
     }
   }
 }
+
 void MainWindow::updateDataTable() {
-  for (int i = 0; i < 9; i++) {
-    if (this->data[0][i] > this->data[1][i]) {
-      this->data[1][i] = this->data[0][i];
-    }
-  }
-  for (int i = 0; i < 9; i++) {
-    ui->dataTable->setItem(
-        i, 1, new QTableWidgetItem(QString::number(this->data[0][i])));
-    ui->dataTable->setItem(
-        i, 2, new QTableWidgetItem(QString::number(this->data[1][i])));
-  }
-  for (int i = 0; i < 9; i++) {
-    if (this->data[0][i] > this->dataWarningThresholds[i]) {
-      ui->dataTable->item(i, 1)->setBackground(Qt::yellow);
+  for (auto &vec : vec) {
+    if (vec.dataType != DataType::CurrentEngineState) {
+      auto val = vec.value * vec.multiplier;
+      ui->dataTable->setItem(vec.position, 1,
+                             new QTableWidgetItem(QString::number(val)));
+      if ((val > vec.maxWarning || val < vec.minWarning) &&
+          vec.dataType != DataType::Time) {
+        ui->dataTable->item(vec.position, 1)->setBackground(Qt::yellow);
+      }
     }
   }
 }

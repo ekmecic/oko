@@ -27,7 +27,6 @@ public:
   void setupLogging();
   void setupPlots();
   void setupEngineControlUI();
-  void configure();
 
   void updateDataTable();
   void updatePlots();

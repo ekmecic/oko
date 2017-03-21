@@ -9,8 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
   socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
   socket->connectToService(QBluetoothAddress("00:06:66:82:79:5C"),
                            QBluetoothUuid::Sdp);
-  QObject::connect(socket, &QBluetoothSocket::readyRead, this,
-                   &MainWindow::msg);
+  connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::msg);
   connect(this, &MainWindow::newDataAvailable, this,
           &MainWindow::onNewDataAvailable);
 
@@ -53,24 +52,6 @@ void MainWindow::msg() {
     std::cout << res.toStdString() << std::endl;
   }
   emit newDataAvailable();
-}
-
-void MainWindow::configure() {
-  try {
-    auto config = cpptoml::parse_file("../config.toml");
-
-    plotXAxisWidth = *config->get_qualified_as<int64_t>("plotting.plotWidth");
-    logFilePath = *config->get_qualified_as<std::string>("logging.logFilePath");
-
-    auto warningThresholdsVector =
-        *config->get_qualified_array_of<double>("thresholds.warningLimits");
-    std::copy(warningThresholdsVector.begin(), warningThresholdsVector.end(),
-              this->dataWarningThresholds);
-
-  } catch (cpptoml::parse_exception &tomlParseError) {
-    LOG(INFO) << "ERROR: Parsing the config file returned an error!";
-    LOG(INFO) << tomlParseError.what();
-  }
 }
 
 void MainWindow::setupLogging() {

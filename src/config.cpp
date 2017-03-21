@@ -18,31 +18,31 @@ std::vector<dataStream> readConfig() {
     Qt::GlobalColor actualColour;
 
     // Boy, sure wish I had a match statement right about now...
-    if (type.compare("Time")) {
+    if (type == "Time") {
       actualType = DataType::Time;
-    } else if (type.compare("Mechanical")) {
+    } else if (type == "Mechanical") {
       actualType = DataType::Mechanical;
-    } else if (type.compare("Electrical")) {
+    } else if (type == "Electrical") {
       actualType = DataType::Electrical;
-    } else if (type.compare("CurrentEngineState")) {
+    } else if (type == "CurrentEngineState") {
       actualType = DataType::CurrentEngineState;
     } else {
       throw std::logic_error("Invalid data.type specified in config.toml.");
     }
 
-    if (colour.compare("red")) {
+    if (colour=="red") {
       actualColour = Qt::red;
-    } else if (colour.compare("green")) {
+    } else if (colour=="green") {
       actualColour = Qt::green;
-    } else if (colour.compare("blue")) {
+    } else if (colour=="blue") {
       actualColour = Qt::blue;
-    } else if (colour.compare("black")) {
+    } else if (colour=="black") {
       actualColour = Qt::black;
-    } else if (colour.compare("cyan")) {
+    } else if (colour=="cyan") {
       actualColour = Qt::cyan;
-    } else if (colour.compare("magenta")) {
+    } else if (colour=="magenta") {
       actualColour = Qt::magenta;
-    } else if (colour.compare("none")) {
+    } else if (colour=="none") {
       // Not going to be displayed anyway, so make it the worst color there is
       actualColour = Qt::yellow;
     } else {

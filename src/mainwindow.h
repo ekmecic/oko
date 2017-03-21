@@ -1,12 +1,13 @@
 // -*-c++-*-
 #pragma once
-#define MAINWINDOW_H
 
 #include "build/ui_mainwindow.h"
-#include "src/config.h"
 #include "lib/cpptoml/cpptoml.h"
 #include "lib/easylogging++/easylogging++.h"
 #include "lib/qcustomplot/qcustomplot.h"
+#include "src/config.h"
+#include "src/dataStream.h"
+#include "src/serialParser.h"
 
 #include <QBluetoothServiceInfo>
 #include <QBluetoothSocket>
@@ -24,6 +25,9 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
+  std::vector<dataStream> vec;
+  QBluetoothSocket *socket;
+
   void setupLogging();
   void setupPlots();
   void setupEngineControlUI();
@@ -36,10 +40,8 @@ signals:
 
 public slots:
   void onNewDataAvailable();
-  void msg();
 
 private:
-  QBluetoothSocket *socket;
   double data[2][9] = {0};
   Ui::MainWindow *ui;
   int64_t plotXAxisWidth = 40;

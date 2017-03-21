@@ -6,14 +6,15 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
-  socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
+  this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
   socket->connectToService(QBluetoothAddress("00:06:66:82:79:5C"),
                            QBluetoothUuid::Sdp);
-  connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::msg);
-  connect(this, &MainWindow::newDataAvailable, this,
+  connect(socket, &QBluetoothSocket::readyRead, this,
           &MainWindow::onNewDataAvailable);
+  connect(socket, &QBluetoothSocket::connected, this,
+          [] { qDebug() << "connected"; });
 
-  std::vector<dataStream> vec = readConfig();
+  this->vec = readConfig();
   setupLogging();
   setupPlots();
   setupEngineControlUI();
@@ -24,34 +25,15 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::onNewDataAvailable() {
+  auto valueVec = parseSerial(this->socket);
+  qDebug() << valueVec;
+  if (valueVec.size() > 0) {
+    for (uint8_t i = 0; i < vec.size(); i++) {
+      vec[i].value = valueVec.at(i);
+    }
+  }
   updateDataTable();
   updatePlots();
-}
-
-void MainWindow::msg() {
-  QByteArray line;
-  while (socket->canReadLine()) {
-    line = socket->readLine();
-  }
-  QString res = QString::fromUtf8(line.constData(), line.length());
-
-  QRegularExpression getDoubles("[-+]?[0-9]*\\.?[0-9]+");
-
-  if (!res.isEmpty()) {
-    res = res.trimmed();
-    QRegularExpressionMatchIterator i = getDoubles.globalMatch(res);
-    uint8_t j = 0;
-    while (i.hasNext()) {
-      QRegularExpressionMatch match = i.next();
-      if (match.hasMatch()) {
-        this->data[0][j] = match.captured().toDouble();
-        qDebug() << match.captured().toDouble();
-        j = j + 1;
-      }
-    }
-    std::cout << res.toStdString() << std::endl;
-  }
-  emit newDataAvailable();
 }
 
 void MainWindow::setupLogging() {

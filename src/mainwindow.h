@@ -30,6 +30,7 @@ public:
 
   void setupLogging();
   void setupPlots();
+  void setupDataTable();
   void setupEngineControlUI();
 
   void updateDataTable();

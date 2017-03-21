@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   this->vec = readConfig();
   setupLogging();
+  setupDataTable();
   setupPlots();
   setupEngineControlUI();
   ui->dataTable->setColumnWidth(1, 70);
@@ -112,6 +113,15 @@ void MainWindow::setupEngineControlUI() {
   ui->ccmKPField->setText("1");
 }
 
+void MainWindow::setupDataTable() {
+  for (auto &vec : vec) {
+    if (vec.dataType != DataType::CurrentEngineState) {
+      ui->dataTable->setItem(
+          vec.position, 0,
+          new QTableWidgetItem(QString::fromStdString(vec.name)));
+    }
+  }
+}
 void MainWindow::updateDataTable() {
   for (int i = 0; i < 9; i++) {
     if (this->data[0][i] > this->data[1][i]) {

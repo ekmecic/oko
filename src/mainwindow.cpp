@@ -135,13 +135,14 @@ void MainWindow::updatePlots() {
   static QTime time(QTime::currentTime());
   double key = time.elapsed() / 1000.0;
 
-  // for (int i = 0; i < 4; i++) {
-  //   ui->electricalPlot->graph(i)->addData(key, this->data[0][i]);
-  // }
-
-  // for (int i = 0; i < 5; i++) {
-  //   ui->mechanicalPlot->graph(i)->addData(key, this->data[0][i + 3]);
-  // }
+  for (auto &vec : vec) {
+    if (vec.dataType == DataType::Electrical) {
+      ui->electricalPlot->graph(vec.graphNum)->addData(key, vec.value);
+    }
+    if (vec.dataType == DataType::Mechanical) {
+      ui->mechanicalPlot->graph(vec.graphNum)->addData(key, vec.value);
+    }
+  }
 
   // Shift the axis left for the new data and refresh the graph
   ui->electricalPlot->xAxis->setRange(key, plotXAxisWidth, Qt::AlignRight);

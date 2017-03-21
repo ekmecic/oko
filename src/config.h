@@ -4,6 +4,7 @@
 #include "lib/cpptoml/cpptoml.h"
 #include "src/dataStream.h"
 
+#include <QColor>
 #include <exception>
 #include <string>
 

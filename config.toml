@@ -7,6 +7,7 @@ logFilePath = "logs/" # There must be a slash after the logFilePath
 [[data]]
 name = "Time since engine start"
 type = "Time"
+colour = "none"
 position = 0
 multiplier = 1
 minWarning = 0
@@ -15,6 +16,7 @@ maxWarning = 0
 [[data]]
 name = "Commanded engine speed"
 type = "Mechanical"
+colour = "red"
 position = 1
 multiplier = 1000
 minWarning = 0
@@ -23,6 +25,7 @@ maxWarning = 7250
 [[data]]
 name = "Measured engine speed"
 type = "Mechanical"
+colour = "green"
 position = 2
 multiplier = 1000
 minWarning = 0
@@ -31,6 +34,7 @@ maxWarning = 7250
 [[data]]
 name = "Throttle position"
 type = "Mechanical"
+colour = "blue"
 position = 3
 multiplier = 100
 minWarning = 0
@@ -39,6 +43,7 @@ maxWarning = 100
 [[data]]
 name = "Bus voltage"
 type = "Electrical"
+colour = "red"
 position = 4
 multiplier = 1000
 minWarning = 22
@@ -47,6 +52,7 @@ maxWarning = 26
 [[data]]
 name = "Battery current"
 type = "Electrical"
+colour = "green"
 position = 5
 multiplier = 1
 minWarning = -10
@@ -55,6 +61,7 @@ maxWarning = 60
 [[data]]
 name = "Commanded phase current"
 type = "Electrical"
+colour = "blue"
 position = 6
 multiplier = 1
 minWarning = 0
@@ -63,6 +70,7 @@ maxWarning = 60
 [[data]]
 name = "Measured phase current"
 type = "Electrical"
+colour = "black"
 position = 7
 multiplier = 1
 minWarning = 0
@@ -71,6 +79,7 @@ maxWarning = 60
 [[data]]
 name = "Engine state"
 type = "CurrentEngineState"
+colour = "none"
 position = 8
 multiplier = 1
 minWarning = 0

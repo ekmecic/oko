@@ -7,6 +7,7 @@
 #include "lib/qcustomplot/qcustomplot.h"
 #include "src/config.h"
 #include "src/dataStream.h"
+#include "src/engineState.h"
 #include "src/serialParser.h"
 
 #include <QBluetoothServiceInfo>

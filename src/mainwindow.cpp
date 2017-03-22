@@ -128,6 +128,10 @@ void MainWindow::setupDataTable() {
                              new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 3,
                              new QTableWidgetItem(QString::number(0)));
+    } else {
+      ui->dataTable->setItem(
+          vec.position, 0,
+          new QTableWidgetItem(QString::fromStdString(vec.name)));
     }
   }
 }
@@ -150,6 +154,9 @@ void MainWindow::updateDataTable() {
         ui->dataTable->setItem(vec.position, 3,
                                new QTableWidgetItem(QString::number(val)));
       }
+    } else {
+      ui->dataTable->setItem(vec.position, 1,
+                             new QTableWidgetItem(parseEngineState(vec.value)));
     }
   }
 }

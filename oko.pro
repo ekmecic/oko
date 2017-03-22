@@ -16,12 +16,14 @@ SOURCES += src/main.cpp\
     lib/qcustomplot/qcustomplot.cpp \
     src/config.cpp \
     src/dataStream.cpp \
-    src/serialParser.cpp
+    src/serialParser.cpp \
+    src/engineState.cpp
 
 HEADERS  += src/mainwindow.h \
     lib/qcustomplot/qcustomplot.h \
     src/config.h \
     src/dataStream.h \
-    src/serialParser.h
+    src/serialParser.h \
+    src/engineState.h
 
 FORMS    += src/mainwindow.ui

@@ -460,12 +460,12 @@
            </font>
           </property>
           <property name="text">
-           <string>Electrical Data</string>
+           <string>Mechanical Data</string>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QCustomPlot" name="mechanicalPlot" native="true">
+         <widget class="QCustomPlot" name="electricalPlot" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -496,12 +496,12 @@
            </font>
           </property>
           <property name="text">
-           <string>Engine Data</string>
+           <string>Electrical Data</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QCustomPlot" name="electricalPlot" native="true">
+         <widget class="QCustomPlot" name="mechanicalPlot" native="true">
           <property name="enabled">
            <bool>true</bool>
           </property>

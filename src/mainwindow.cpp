@@ -46,6 +46,17 @@ void MainWindow::setupPlots() {
   QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
   uint8_t i = 0;
   for (auto &vec : vec) {
+    if (vec.dataType == DataType::Mechanical) {
+      ui->mechanicalPlot->addGraph();
+      vec.graphNum = i;
+      ui->mechanicalPlot->graph(vec.graphNum)
+          ->setName(QString::fromStdString(vec.name));
+      ui->mechanicalPlot->graph(vec.graphNum)->setPen(QPen(vec.colour));
+      i++;
+    }
+  }
+  i = 0;
+  for (auto &vec : vec) {
     if (vec.dataType == DataType::Electrical) {
       ui->electricalPlot->addGraph();
       vec.graphNum = i;
@@ -56,33 +67,24 @@ void MainWindow::setupPlots() {
     }
   }
 
-  i = 0;
-  for (auto &vec : vec) {
-    if (vec.dataType == DataType::Mechanical) {
-      ui->mechanicalPlot->addGraph();
-      vec.graphNum = i;
-      ui->mechanicalPlot->graph(vec.graphNum)
-          ->setName(QString::fromStdString(vec.name));
-      ui->mechanicalPlot->graph(vec.graphNum)->setPen(QPen(vec.colour));
-      i++;
-    }
-  }
-  ui->electricalPlot->xAxis->setTicker(timeTicker);
-  ui->electricalPlot->yAxis->setRange(configData.elecPlotMin, configData.elecPlotMax);
   ui->mechanicalPlot->xAxis->setTicker(timeTicker);
-  ui->mechanicalPlot->yAxis->setRange(configData.mechPlotMin, configData.mechPlotMax);
+  ui->mechanicalPlot->yAxis->setRange(configData.mechPlotMin,
+                                      configData.mechPlotMax);
+  ui->electricalPlot->xAxis->setTicker(timeTicker);
+  ui->electricalPlot->yAxis->setRange(configData.elecPlotMin,
+                                      configData.elecPlotMax);
 
   // Inherit the font of the main window, but make it a little bit smaller
   QFont legendFont = font();
   legendFont.setPointSize(8);
   // Enable legends for both plots and set their fonts to the smaller version
-  ui->electricalPlot->legend->setVisible(true);
-  ui->electricalPlot->legend->setFont(legendFont);
-  ui->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(
-      0, Qt::AlignLeft | Qt::AlignTop);
   ui->mechanicalPlot->legend->setVisible(true);
   ui->mechanicalPlot->legend->setFont(legendFont);
   ui->mechanicalPlot->axisRect()->insetLayout()->setInsetAlignment(
+      0, Qt::AlignLeft | Qt::AlignTop);
+  ui->electricalPlot->legend->setVisible(true);
+  ui->electricalPlot->legend->setFont(legendFont);
+  ui->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(
       0, Qt::AlignLeft | Qt::AlignTop);
 }
 
@@ -147,17 +149,21 @@ void MainWindow::updatePlots() {
   double key = time.elapsed() / 1000.0;
 
   for (auto &vec : vec) {
-    if (vec.dataType == DataType::Electrical) {
-      ui->electricalPlot->graph(vec.graphNum)->addData(key, vec.value * vec.multiplier);
-    }
     if (vec.dataType == DataType::Mechanical) {
-      ui->mechanicalPlot->graph(vec.graphNum)->addData(key, vec.value * vec.multiplier);
+      ui->mechanicalPlot->graph(vec.graphNum)
+          ->addData(key, vec.value * vec.multiplier);
+    }
+    if (vec.dataType == DataType::Electrical) {
+      ui->electricalPlot->graph(vec.graphNum)
+          ->addData(key, vec.value * vec.multiplier);
     }
   }
 
   // Shift the axis left for the new data and refresh the graph
-  ui->electricalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
-  ui->electricalPlot->replot();
-  ui->mechanicalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
+  ui->mechanicalPlot->xAxis->setRange(key, configData.plotWidth,
+                                      Qt::AlignRight);
   ui->mechanicalPlot->replot();
+  ui->electricalPlot->xAxis->setRange(key, configData.plotWidth,
+                                      Qt::AlignRight);
+  ui->electricalPlot->replot();
 }

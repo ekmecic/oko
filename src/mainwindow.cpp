@@ -148,10 +148,10 @@ void MainWindow::updatePlots() {
 
   for (auto &vec : vec) {
     if (vec.dataType == DataType::Electrical) {
-      ui->electricalPlot->graph(vec.graphNum)->addData(key, vec.value);
+      ui->electricalPlot->graph(vec.graphNum)->addData(key, vec.value * vec.multiplier);
     }
     if (vec.dataType == DataType::Mechanical) {
-      ui->mechanicalPlot->graph(vec.graphNum)->addData(key, vec.value);
+      ui->mechanicalPlot->graph(vec.graphNum)->addData(key, vec.value * vec.multiplier);
     }
   }
 

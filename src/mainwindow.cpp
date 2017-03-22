@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->dataTable->setColumnWidth(0, 180);
   ui->dataTable->setColumnWidth(1, 70);
   ui->dataTable->setColumnWidth(2, 70);
-  ui->splitter->setSizes(QList<int>({420, 1000}));
+  ui->splitter->setSizes(QList<int>({575, 1000}));
 
   this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
   socket->connectToService(QBluetoothAddress("00:06:66:82:79:5C"),
@@ -126,6 +126,8 @@ void MainWindow::setupDataTable() {
                              new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 2,
                              new QTableWidgetItem(QString::number(0)));
+      ui->dataTable->setItem(vec.position, 3,
+                             new QTableWidgetItem(QString::number(0)));
     }
   }
 }
@@ -140,8 +142,12 @@ void MainWindow::updateDataTable() {
           vec.dataType != DataType::Time) {
         ui->dataTable->item(vec.position, 1)->setBackground(Qt::yellow);
       }
-      if (val > ui->dataTable->item(vec.position, 2)->text().toDouble()) {
+      if (val < ui->dataTable->item(vec.position, 2)->text().toDouble()) {
         ui->dataTable->setItem(vec.position, 2,
+                               new QTableWidgetItem(QString::number(val)));
+      }
+      if (val > ui->dataTable->item(vec.position, 3)->text().toDouble()) {
+        ui->dataTable->setItem(vec.position, 3,
                                new QTableWidgetItem(QString::number(val)));
       }
     }

@@ -137,6 +137,10 @@ void MainWindow::updateDataTable() {
           vec.dataType != DataType::Time) {
         ui->dataTable->item(vec.position, 1)->setBackground(Qt::yellow);
       }
+      if (val > ui->dataTable->item(vec.position, 2)->text().toDouble()) {
+        ui->dataTable->setItem(vec.position, 2,
+                               new QTableWidgetItem(QString::number(val)));
+      }
     }
   }
 }

@@ -41,7 +41,7 @@
       <property name="childrenCollapsible">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget1">
        <layout class="QGridLayout" name="gridLayout">
         <property name="sizeConstraint">
          <enum>QLayout::SetDefaultConstraint</enum>

@@ -1,8 +1,10 @@
-[plotting]
+[application]
 plotWidth = 40
-
-[logging]
-logFilePath = "logs/" # There must be a slash after the logFilePath
+logFilePath = "./logs/" # There must be a slash after the logFilePath
+mechPlotMin = -5
+mechPlotMax = 5
+elecPlotMin = -5
+elecPlotMax = 5
 
 [[data]]
 name = "Time since engine start"

@@ -19,8 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
   connect(socket, &QBluetoothSocket::connected, this,
           [] { qDebug() << "connected"; });
 
-  this->vec = readConfig();
-  setupLogging();
+  ConfigData cnf;
+  this->vec = readConfig(cnf);
+  configData = cnf;
+  setupLogging(configData.logFilePath);
   setupDataTable();
   setupPlots();
   setupEngineControlUI();
@@ -38,27 +40,6 @@ void MainWindow::onNewDataAvailable() {
   }
   updateDataTable();
   updatePlots();
-}
-
-void MainWindow::setupLogging() {
-  el::Configurations loggingConf;
-
-  loggingConf.setToDefault();
-  loggingConf.set(
-      el::Level::Global, el::ConfigurationType::Filename,
-      logFilePath.append("oko-%datetime{%Y-%M-%d-T%H:%m:%s}.log"));
-  loggingConf.set(el::Level::Global, el::ConfigurationType::Format,
-                  "%datetime{%Y-%M-%d-T%H:%m:%s:%g},%msg");
-  loggingConf.set(el::Level::Global, el::ConfigurationType::Enabled, "true");
-  loggingConf.set(el::Level::Global, el::ConfigurationType::ToFile, "true");
-  loggingConf.set(el::Level::Global, el::ConfigurationType::ToStandardOutput,
-                  "false");
-
-  el::Loggers::reconfigureAllLoggers(loggingConf);
-  LOG(INFO) << "FORMAT:";
-  LOG(INFO) << "BatteryCurrent,BusVoltage,MeasuredPhaseCurrent,"
-               "CommandedPhaseCurrent,Speed,ThrottleOutput,EngineTemperature";
-  LOG(INFO) << "Time is in the local time of the computer running oko.";
 }
 
 void MainWindow::setupPlots() {
@@ -87,9 +68,9 @@ void MainWindow::setupPlots() {
     }
   }
   ui->electricalPlot->xAxis->setTicker(timeTicker);
-  ui->electricalPlot->yAxis->setRange(0, 350);
+  ui->electricalPlot->yAxis->setRange(configData.elecPlotMin, configData.elecPlotMax);
   ui->mechanicalPlot->xAxis->setTicker(timeTicker);
-  ui->mechanicalPlot->yAxis->setRange(0, 350);
+  ui->mechanicalPlot->yAxis->setRange(configData.mechPlotMin, configData.mechPlotMax);
 
   // Inherit the font of the main window, but make it a little bit smaller
   QFont legendFont = font();
@@ -175,8 +156,8 @@ void MainWindow::updatePlots() {
   }
 
   // Shift the axis left for the new data and refresh the graph
-  ui->electricalPlot->xAxis->setRange(key, plotXAxisWidth, Qt::AlignRight);
+  ui->electricalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
   ui->electricalPlot->replot();
-  ui->mechanicalPlot->xAxis->setRange(key, plotXAxisWidth, Qt::AlignRight);
+  ui->mechanicalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
   ui->mechanicalPlot->replot();
 }

@@ -1,11 +1,23 @@
 #include "src/config.h"
 
-std::vector<dataStream> readConfig() {
+std::vector<dataStream> readConfig(ConfigData &ConfigData) {
   auto config = cpptoml::parse_file("../config.toml");
+
+  ConfigData.logFilePath =
+      *config->get_qualified_as<std::string>("application.logFilePath");
+  ConfigData.plotWidth =
+      *config->get_qualified_as<int32_t>("application.plotWidth");
+  ConfigData.mechPlotMin =
+      *config->get_qualified_as<int32_t>("application.mechPlotMin");
+  ConfigData.mechPlotMax =
+      *config->get_qualified_as<int32_t>("application.mechPlotMax");
+  ConfigData.elecPlotMin =
+      *config->get_qualified_as<int32_t>("application.elecPlotMin");
+  ConfigData.elecPlotMax =
+      *config->get_qualified_as<int32_t>("application.elecPlotMax");
 
   auto tarr = config->get_table_array("data");
   std::vector<dataStream> vec;
-
   for (const auto &table : *tarr) {
     auto name = *table->get_as<std::string>("name");
     auto type = *table->get_as<std::string>("type");
@@ -30,19 +42,19 @@ std::vector<dataStream> readConfig() {
       throw std::logic_error("Invalid data.type specified in config.toml.");
     }
 
-    if (colour=="red") {
+    if (colour == "red") {
       actualColour = Qt::red;
-    } else if (colour=="green") {
+    } else if (colour == "green") {
       actualColour = Qt::green;
-    } else if (colour=="blue") {
+    } else if (colour == "blue") {
       actualColour = Qt::blue;
-    } else if (colour=="black") {
+    } else if (colour == "black") {
       actualColour = Qt::black;
-    } else if (colour=="cyan") {
+    } else if (colour == "cyan") {
       actualColour = Qt::cyan;
-    } else if (colour=="magenta") {
+    } else if (colour == "magenta") {
       actualColour = Qt::magenta;
-    } else if (colour=="none") {
+    } else if (colour == "none") {
       // Not going to be displayed anyway, so make it the worst color there is
       actualColour = Qt::yellow;
     } else {

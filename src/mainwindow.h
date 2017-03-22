@@ -2,12 +2,11 @@
 #pragma once
 
 #include "build/ui_mainwindow.h"
-#include "lib/cpptoml/cpptoml.h"
-#include "lib/easylogging++/easylogging++.h"
 #include "lib/qcustomplot/qcustomplot.h"
 #include "src/config.h"
 #include "src/dataStream.h"
 #include "src/engineState.h"
+#include "src/logging.h"
 #include "src/serialParser.h"
 
 #include <QBluetoothServiceInfo>
@@ -28,8 +27,8 @@ public:
 
   std::vector<dataStream> vec;
   QBluetoothSocket *socket;
+  ConfigData configData;
 
-  void setupLogging();
   void setupPlots();
   void setupDataTable();
   void setupEngineControlUI();
@@ -44,9 +43,5 @@ public slots:
   void onNewDataAvailable();
 
 private:
-  double data[2][9] = {0};
   Ui::MainWindow *ui;
-  int64_t plotXAxisWidth = 40;
-  std::string logFilePath = "./logs/";
-  double dataWarningThresholds[9] = {0};
 };

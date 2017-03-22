@@ -31,7 +31,7 @@ MainWindow::~MainWindow() { delete ui; }
 void MainWindow::onNewDataAvailable() {
   auto valueVec = parseSerial(this->socket);
   qDebug() << valueVec;
-  if (valueVec.size() > 0) {
+  if (valueVec.size() == vec.size()) {
     for (uint8_t i = 0; i < vec.size(); i++) {
       vec[i].value = valueVec.at(i);
     }

@@ -119,6 +119,10 @@ void MainWindow::setupDataTable() {
       ui->dataTable->setItem(
           vec.position, 0,
           new QTableWidgetItem(QString::fromStdString(vec.name)));
+      ui->dataTable->setItem(vec.position, 1,
+                             new QTableWidgetItem(QString::number(0)));
+      ui->dataTable->setItem(vec.position, 2,
+                             new QTableWidgetItem(QString::number(0)));
     }
   }
 }

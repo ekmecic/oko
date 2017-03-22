@@ -280,7 +280,7 @@
          </size>
         </property>
         <property name="rowCount">
-         <number>7</number>
+         <number>9</number>
         </property>
         <property name="columnCount">
          <number>3</number>
@@ -304,9 +304,11 @@
         <row/>
         <row/>
         <row/>
+        <row/>
+        <row/>
         <column>
          <property name="text">
-          <string>Data Field</string>
+          <string>Field</string>
          </property>
          <property name="font">
           <font>
@@ -317,7 +319,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Data Value</string>
+          <string>Value</string>
          </property>
          <property name="font">
           <font>
@@ -339,7 +341,7 @@
         </column>
         <item row="0" column="0">
          <property name="text">
-          <string>Battery Current</string>
+          <string/>
          </property>
          <property name="font">
           <font>
@@ -350,7 +352,7 @@
         </item>
         <item row="1" column="0">
          <property name="text">
-          <string>Bus Voltage</string>
+          <string/>
          </property>
          <property name="font">
           <font>
@@ -361,7 +363,7 @@
         </item>
         <item row="2" column="0">
          <property name="text">
-          <string>Measured Phase Current</string>
+          <string/>
          </property>
          <property name="font">
           <font>
@@ -372,7 +374,7 @@
         </item>
         <item row="3" column="0">
          <property name="text">
-          <string>Commanded Phase Current</string>
+          <string/>
          </property>
          <property name="font">
           <font>
@@ -383,7 +385,7 @@
         </item>
         <item row="4" column="0">
          <property name="text">
-          <string>Speed</string>
+          <string/>
          </property>
          <property name="font">
           <font>
@@ -394,7 +396,7 @@
         </item>
         <item row="5" column="0">
          <property name="text">
-          <string>Throttle Output</string>
+          <string/>
          </property>
          <property name="font">
           <font>
@@ -405,7 +407,7 @@
         </item>
         <item row="6" column="0">
          <property name="text">
-          <string>Engine Temperature</string>
+          <string/>
          </property>
         </item>
        </widget>

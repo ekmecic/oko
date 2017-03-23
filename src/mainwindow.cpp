@@ -7,8 +7,6 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setupUi(this);
 
   ui->dataTable->setColumnWidth(0, 180);
-  ui->dataTable->setColumnWidth(1, 70);
-  ui->dataTable->setColumnWidth(2, 70);
   ui->splitter->setSizes(QList<int>({575, 1000}));
 
   this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
@@ -100,6 +98,10 @@ void MainWindow::setupEngineControlUI() {
 }
 
 void MainWindow::setupDataTable() {
+  ui->dataTable->setColumnWidth(1, 70);
+  ui->dataTable->setColumnWidth(2, 70);
+  ui->dataTable->setColumnWidth(3, 70);
+
   for (auto &vec : vec) {
     if (vec.dataType != DataType::CurrentEngineState) {
       ui->dataTable->setItem(

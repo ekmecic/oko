@@ -31,7 +31,6 @@ public:
 
   void setupPlots();
   void setupDataTable();
-  void setupEngineControlUI();
 
   void updateDataTable();
   void updatePlots();

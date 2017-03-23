@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
   setupLogging(configData.logFilePath);
   setupDataTable();
   setupPlots();
-  setupEngineControlUI();
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -84,17 +83,6 @@ void MainWindow::setupPlots() {
   ui->electricalPlot->legend->setFont(legendFont);
   ui->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(
       0, Qt::AlignLeft | Qt::AlignTop);
-}
-
-void MainWindow::setupEngineControlUI() {
-  // Put some dummy text in all the gains/setpoints fields
-  ui->manualThrottleField->setText("1001%");
-  ui->scmSPField->setText("500");
-  ui->scmKIField->setText("2");
-  ui->scmKPField->setText("1");
-  ui->ccmSPField->setText("500");
-  ui->ccmKIField->setText("2");
-  ui->ccmKPField->setText("1");
 }
 
 void MainWindow::setupDataTable() {

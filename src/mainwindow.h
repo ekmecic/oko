@@ -26,8 +26,8 @@ public:
   ~MainWindow();
 
   std::vector<dataStream> vec;
-  QBluetoothSocket *socket;
-  ConfigData configData;
+  QBluetoothSocket *      socket;
+  ConfigData              configData;
 
   void setupPlots();
   void setupDataTable();

@@ -3,30 +3,24 @@
 std::vector<dataStream> readConfig(ConfigData &ConfigData) {
   auto config = cpptoml::parse_file("../config.toml");
 
-  ConfigData.logFilePath =
-      *config->get_qualified_as<std::string>("application.logFilePath");
-  ConfigData.plotWidth =
-      *config->get_qualified_as<int32_t>("application.plotWidth");
-  ConfigData.mechPlotMin =
-      *config->get_qualified_as<int32_t>("application.mechPlotMin");
-  ConfigData.mechPlotMax =
-      *config->get_qualified_as<int32_t>("application.mechPlotMax");
-  ConfigData.elecPlotMin =
-      *config->get_qualified_as<int32_t>("application.elecPlotMin");
-  ConfigData.elecPlotMax =
-      *config->get_qualified_as<int32_t>("application.elecPlotMax");
+  ConfigData.logFilePath = *config->get_qualified_as<std::string>("application.logFilePath");
+  ConfigData.plotWidth   = *config->get_qualified_as<int32_t>("application.plotWidth");
+  ConfigData.mechPlotMin = *config->get_qualified_as<int32_t>("application.mechPlotMin");
+  ConfigData.mechPlotMax = *config->get_qualified_as<int32_t>("application.mechPlotMax");
+  ConfigData.elecPlotMin = *config->get_qualified_as<int32_t>("application.elecPlotMin");
+  ConfigData.elecPlotMax = *config->get_qualified_as<int32_t>("application.elecPlotMax");
 
-  auto tarr = config->get_table_array("data");
+  auto                    tarr = config->get_table_array("data");
   std::vector<dataStream> vec;
   for (const auto &table : *tarr) {
-    auto name = *table->get_as<std::string>("name");
-    auto type = *table->get_as<std::string>("type");
-    auto colour = *table->get_as<std::string>("colour");
-    auto position = *table->get_as<uint8_t>("position");
-    auto multiplier = *table->get_as<double>("multiplier");
-    auto minWarning = *table->get_as<double>("minWarning");
-    auto maxWarning = *table->get_as<double>("maxWarning");
-    DataType actualType;
+    auto            name       = *table->get_as<std::string>("name");
+    auto            type       = *table->get_as<std::string>("type");
+    auto            colour     = *table->get_as<std::string>("colour");
+    auto            position   = *table->get_as<uint8_t>("position");
+    auto            multiplier = *table->get_as<double>("multiplier");
+    auto            minWarning = *table->get_as<double>("minWarning");
+    auto            maxWarning = *table->get_as<double>("maxWarning");
+    DataType        actualType;
     Qt::GlobalColor actualColour;
 
     // Boy, sure wish I had a match statement right about now...
@@ -61,8 +55,7 @@ std::vector<dataStream> readConfig(ConfigData &ConfigData) {
       throw std::logic_error("Invalid data.type specified in config.toml.");
     }
 
-    vec.push_back(dataStream(name, 0, multiplier, minWarning, maxWarning,
-                             position, actualType, actualColour));
+    vec.push_back(dataStream(name, 0, multiplier, minWarning, maxWarning, position, actualType, actualColour));
   }
   return vec;
 }

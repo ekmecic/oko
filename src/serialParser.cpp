@@ -4,12 +4,12 @@ std::vector<double> parseSerial(QBluetoothSocket *socket) {
   while (socket->canReadLine()) {
     line = socket->readLine().trimmed();
   }
-  QString res = QString::fromUtf8(line.constData(), line.length());
+  QString             res = QString::fromUtf8(line.constData(), line.length());
   std::vector<double> valueVector;
 
-  QRegularExpression getDoubles("[-+]?[0-9]*\\.?[0-9]+");
+  QRegularExpression              getDoubles("[-+]?[0-9]*\\.?[0-9]+");
   QRegularExpressionMatchIterator i = getDoubles.globalMatch(res);
-  uint8_t j = 0;
+  uint8_t                         j = 0;
   while (i.hasNext()) {
     QRegularExpressionMatch match = i.next();
     if (match.hasMatch()) {

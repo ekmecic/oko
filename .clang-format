@@ -15,9 +15,22 @@ AlwaysBreakBeforeMultilineStrings: 'true'
 BinPackArguments: 'false'
 BinPackParameters: 'false'
 BreakBeforeBraces: Attach
-ColumnLimit: '1000'
-IndentWidth: '4'
-TabWidth: '4'
-UseTab: ForIndentation
+BreakStringLiterals: 'false'
+ColumnLimit: '120'
+IndentWidth: '2'
+KeepEmptyLinesAtTheStartOfBlocks: 'false'
+PointerAlignment: Right
+ReflowComments: 'true'
+SortIncludes: 'true'
+SpaceBeforeAssignmentOperators: 'true'
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: 'false'
+SpacesInAngles: 'false'
+SpacesInCStyleCastParentheses: 'false'
+SpacesInContainerLiterals: 'false'
+SpacesInParentheses: 'false'
+SpacesInSquareBrackets: 'false'
+TabWidth: '2'
+UseTab: Never
 
 ...

@@ -35,6 +35,7 @@ void MainWindow::onNewDataAvailable() {
   }
   updateDataTable();
   updatePlots();
+  logData(this->vec);
 }
 
 void MainWindow::setupPlots() {

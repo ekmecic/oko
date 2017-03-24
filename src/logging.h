@@ -5,3 +5,4 @@
 #include "src/dataStream.h"
 
 void setupLogging(const std::vector<dataStream> &vec, std::string logFilePath);
+void logData(const std::vector<dataStream> &vec);

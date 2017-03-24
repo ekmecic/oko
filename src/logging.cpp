@@ -21,3 +21,14 @@ void setupLogging(const std::vector<dataStream> &vec, std::string logFilePath) {
   fmt.pop_back();
   LOG(INFO) << fmt;
 }
+
+void logData(const std::vector<dataStream> &vec) {
+  std::string data;
+  for (auto &vec : vec) {
+    auto str = std::to_string(vec.value * vec.multiplier);
+    data.append(str);
+    data.append(",");
+  }
+  data.pop_back();
+  LOG(INFO) << data;
+}

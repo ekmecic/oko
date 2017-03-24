@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
   socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
   connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
-  connect(socket, &QBluetoothSocket::connected, this, [] { qDebug() << "connected"; });
 
   setupLogging(this->vec, configData.logFilePath);
   setupDataTable();
@@ -28,15 +27,14 @@ MainWindow::~MainWindow() {
 
 void MainWindow::onNewDataAvailable() {
   auto valueVec = parseSerial(this->socket);
-  qDebug() << valueVec;
   if (valueVec.size() == vec.size()) {
     for (uint8_t i = 0; i < vec.size(); i++) {
       vec[i].value = valueVec.at(i);
     }
+    updateDataTable();
+    updatePlots();
+    logData(this->vec);
   }
-  updateDataTable();
-  updatePlots();
-  logData(this->vec);
 }
 
 void MainWindow::setupPlots() {

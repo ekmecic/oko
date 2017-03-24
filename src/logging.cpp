@@ -1,6 +1,6 @@
 #include "src/logging.h"
 
-void setupLogging(std::string logFilePath) {
+void setupLogging(const std::vector<dataStream> &vec, std::string logFilePath) {
   el::Configurations loggingConf;
   loggingConf.setToDefault();
   loggingConf.set(el::Level::Global,
@@ -13,7 +13,11 @@ void setupLogging(std::string logFilePath) {
 
   el::Loggers::reconfigureAllLoggers(loggingConf);
   LOG(INFO) << "FORMAT:";
-  LOG(INFO) << "BatteryCurrent,BusVoltage,MeasuredPhaseCurrent,"
-               "CommandedPhaseCurrent,Speed,ThrottleOutput,EngineTemperature";
-  LOG(INFO) << "Time is in the local time of the computer running oko.";
+  std::string fmt;
+  for (auto &vec : vec) {
+    fmt.append(vec.name);
+    fmt.append(",");
+  }
+  fmt.pop_back();
+  LOG(INFO) << fmt;
 }

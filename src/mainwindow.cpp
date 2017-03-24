@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   ConfigData cnf;
   this->vec  = readConfig(cnf);
   configData = cnf;
-  setupLogging(configData.logFilePath);
+  setupLogging(this->vec, configData.logFilePath);
   setupDataTable();
   setupPlots();
 }

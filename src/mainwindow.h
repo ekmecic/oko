@@ -3,6 +3,7 @@
 
 #include "build/ui_mainwindow.h"
 #include "lib/qcustomplot/qcustomplot.h"
+#include "lib/qtwaitingspinner/waitingspinnerwidget.h"
 #include "src/config.h"
 #include "src/dataStream.h"
 #include "src/engineState.h"

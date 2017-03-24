@@ -4,6 +4,7 @@ std::vector<dataStream> readConfig(ConfigData &ConfigData) {
   auto config = cpptoml::parse_file("../config.toml");
 
   ConfigData.logFilePath = *config->get_qualified_as<std::string>("application.logFilePath");
+  ConfigData.MACAddress = *config->get_qualified_as<std::string>("application.MACAddress");
   ConfigData.plotWidth   = *config->get_qualified_as<int32_t>("application.plotWidth");
   ConfigData.mechPlotMin = *config->get_qualified_as<int32_t>("application.mechPlotMin");
   ConfigData.mechPlotMax = *config->get_qualified_as<int32_t>("application.mechPlotMax");

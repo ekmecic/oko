@@ -10,6 +10,7 @@
 
 typedef struct {
   std::string logFilePath;
+  std::string MACAddress;
   int32_t     plotWidth;
   int32_t     mechPlotMin;
   int32_t     mechPlotMax;

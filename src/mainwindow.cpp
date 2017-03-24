@@ -8,14 +8,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   ui->dataTable->setColumnWidth(0, 180);
   ui->splitter->setSizes(QList<int>({575, 1000}));
 
-  this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
-  socket->connectToService(QBluetoothAddress("00:06:66:82:79:5C"), QBluetoothUuid::Sdp);
-  connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
-  connect(socket, &QBluetoothSocket::connected, this, [] { qDebug() << "connected"; });
-
   ConfigData cnf;
   this->vec  = readConfig(cnf);
   configData = cnf;
+
+  this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
+  socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
+  connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
+  connect(socket, &QBluetoothSocket::connected, this, [] { qDebug() << "connected"; });
+
   setupLogging(this->vec, configData.logFilePath);
   setupDataTable();
   setupPlots();

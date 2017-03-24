@@ -1,4 +1,5 @@
 [application]
+MACAddress = "00:06:66:82:79:5C"
 plotWidth = 40
 logFilePath = "./logs/" # There must be a slash after the logFilePath
 mechPlotMin = -5

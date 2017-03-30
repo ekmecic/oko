@@ -19,18 +19,32 @@ public:
              double          _multiplier,
              double          _minWarning,
              double          _maxWarning,
+             double          _typMin,
+             double          _typMax,
              double          _position,
              DataType        _dataType,
              Qt::GlobalColor _colour)
-      : name(_name), value(_value), multiplier(_multiplier), minWarning(_minWarning), maxWarning(_maxWarning),
-        position(_position), dataType(_dataType), colour(_colour) {
-  }
+      // clang-format off
+      : name(_name),
+        value(_value),
+        multiplier(_multiplier),
+        minWarning(_minWarning),
+        maxWarning(_maxWarning),
+        typMin(_typMin),
+        typMax(_typMax),
+        position(_position),
+        dataType(_dataType),
+        colour(_colour) {}
+  // clang-format on
 
   std::string     name;
   double          value;
   double          multiplier;
   double          minWarning;
   double          maxWarning;
+  double          typMin;
+  double          typMax;
+  double          scaleFactor;
   uint8_t         position;
   DataType        dataType;
   Qt::GlobalColor colour;

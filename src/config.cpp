@@ -4,7 +4,7 @@ std::vector<dataStream> readConfig(ConfigData &ConfigData) {
   auto config = cpptoml::parse_file("../config.toml");
 
   ConfigData.logFilePath = *config->get_qualified_as<std::string>("application.logFilePath");
-  ConfigData.MACAddress = *config->get_qualified_as<std::string>("application.MACAddress");
+  ConfigData.MACAddress  = *config->get_qualified_as<std::string>("application.MACAddress");
   ConfigData.plotWidth   = *config->get_qualified_as<int32_t>("application.plotWidth");
   ConfigData.mechPlotMin = *config->get_qualified_as<int32_t>("application.mechPlotMin");
   ConfigData.mechPlotMax = *config->get_qualified_as<int32_t>("application.mechPlotMax");
@@ -21,6 +21,8 @@ std::vector<dataStream> readConfig(ConfigData &ConfigData) {
     auto            multiplier = *table->get_as<double>("multiplier");
     auto            minWarning = *table->get_as<double>("minWarning");
     auto            maxWarning = *table->get_as<double>("maxWarning");
+    auto            typMin     = *table->get_as<double>("typMin");
+    auto            typMax     = *table->get_as<double>("typMax");
     DataType        actualType;
     Qt::GlobalColor actualColour;
 
@@ -56,7 +58,18 @@ std::vector<dataStream> readConfig(ConfigData &ConfigData) {
       throw std::logic_error("Invalid data.type specified in config.toml.");
     }
 
-    vec.push_back(dataStream(name, 0, multiplier, minWarning, maxWarning, position, actualType, actualColour));
+    // clang-format off
+    vec.push_back(dataStream(name,
+                             0,
+                             multiplier,
+                             minWarning,
+                             maxWarning,
+                             typMin,
+                             typMax,
+                             position,
+                             actualType,
+                             actualColour));
   }
+  // clang-format on
   return vec;
 }

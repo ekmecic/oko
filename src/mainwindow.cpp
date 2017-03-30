@@ -35,15 +35,10 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::onNewDataAvailable() {
-  auto valueVec = parseSerial(this->socket);
-  if (valueVec.size() == vec.size()) {
-    for (uint8_t i = 0; i < vec.size(); i++) {
-      vec[i].value = valueVec.at(i);
-    }
-    updateDataTable();
-    updatePlots();
-    logData(this->vec);
-  }
+  parseSerial(this->socket, this->vec);
+  updateDataTable();
+  updatePlots();
+  logData(this->vec);
 }
 
 void MainWindow::setupPlots() {

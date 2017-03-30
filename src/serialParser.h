@@ -5,4 +5,4 @@
 #include <QRegularExpression>
 #include <iostream>
 
-std::vector<double> parseSerial(QBluetoothSocket *socket);
+void parseSerial(QBluetoothSocket *socket, std::vector<dataStream> &vec);

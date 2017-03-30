@@ -60,7 +60,6 @@ std::vector<dataStream> readConfig(ConfigData &ConfigData) {
 
     // clang-format off
     vec.push_back(dataStream(name,
-                             0,
                              multiplier,
                              minWarning,
                              maxWarning,

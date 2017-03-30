@@ -15,7 +15,6 @@ typedef enum {
 class dataStream {
 public:
   dataStream(std::string     _name,
-             double          _value,
              double          _multiplier,
              double          _minWarning,
              double          _maxWarning,
@@ -26,7 +25,6 @@ public:
              Qt::GlobalColor _colour)
       // clang-format off
       : name(_name),
-        value(_value),
         multiplier(_multiplier),
         minWarning(_minWarning),
         maxWarning(_maxWarning),

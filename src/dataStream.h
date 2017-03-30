@@ -37,6 +37,7 @@ public:
 
   std::string     name;
   double          value;
+  double          scaledValue;
   double          multiplier;
   double          minWarning;
   double          maxWarning;

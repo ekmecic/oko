@@ -36,6 +36,9 @@ MainWindow::~MainWindow() {
 
 void MainWindow::onNewDataAvailable() {
   parseSerial(this->socket, this->vec);
+  for (auto &vec : vec) {
+    vec.scaledValue = (vec.value - vec.typMin) * 100 / (vec.typMax - vec.typMin);
+  }
   updateDataTable();
   updatePlots();
   logData(this->vec);
@@ -124,10 +127,10 @@ void MainWindow::updatePlots() {
 
   for (auto &vec : vec) {
     if (vec.dataType == DataType::Mechanical) {
-      ui->mechanicalPlot->graph(vec.graphNum)->addData(key, vec.value * vec.multiplier);
+      ui->mechanicalPlot->graph(vec.graphNum)->addData(key, vec.scaledValue);
     }
     if (vec.dataType == DataType::Electrical) {
-      ui->electricalPlot->graph(vec.graphNum)->addData(key, vec.value * vec.multiplier);
+      ui->electricalPlot->graph(vec.graphNum)->addData(key, vec.scaledValue);
     }
   }
 

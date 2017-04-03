@@ -277,7 +277,7 @@
            <number>12</number>
           </property>
           <property name="columnCount">
-           <number>5</number>
+           <number>6</number>
           </property>
           <attribute name="horizontalHeaderVisible">
            <bool>true</bool>
@@ -350,6 +350,11 @@
           <column>
            <property name="text">
             <string>Plot</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Axis</string>
            </property>
           </column>
           <item row="0" column="0">

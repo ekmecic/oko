@@ -2,10 +2,10 @@
 MACAddress = "00:06:66:82:79:5C"
 plotWidth = 40
 logFilePath = "./logs/" # There must be a slash after the logFilePath
-mechPlotMin = -5
-mechPlotMax = 5
-elecPlotMin = -5
-elecPlotMax = 5
+mechPlotMin = 0
+mechPlotMax = 100
+elecPlotMin = 0
+elecPlotMax = 100
 
 [[data]]
 name = "Time since engine start"

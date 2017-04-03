@@ -96,10 +96,10 @@ void MainWindow::setupDataTable() {
       ui->dataTable->setItem(vec.position, 2, new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 3, new QTableWidgetItem(QString::number(0)));
 
-      QCheckBox *checkBox = new QCheckBox();
-      checkBox->setCheckable(true);
-      ui->dataTable->setCellWidget(vec.position, 4, checkBox);
-      connect(checkBox, &QCheckBox::stateChanged, this, [&] {
+      QCheckBox *plotCheckBox = new QCheckBox();
+      plotCheckBox->setCheckable(true);
+      ui->dataTable->setCellWidget(vec.position, 4, plotCheckBox);
+      connect(plotCheckBox, &QCheckBox::stateChanged, this, [&] {
         if (vec.dataType == DataType::Electrical && ui->electricalPlot->graph(vec.graphNum)->visible())
           ui->electricalPlot->graph(vec.graphNum)->setVisible(false);
         else if (vec.dataType == DataType::Electrical && !ui->electricalPlot->graph(vec.graphNum)->visible())
@@ -108,6 +108,18 @@ void MainWindow::setupDataTable() {
           ui->mechanicalPlot->graph(vec.graphNum)->setVisible(false);
         else if (vec.dataType == DataType::Mechanical && !ui->mechanicalPlot->graph(vec.graphNum)->visible())
           ui->mechanicalPlot->graph(vec.graphNum)->setVisible(true);
+      });
+      QCheckBox *axisCheckBox = new QCheckBox();
+      axisCheckBox->setCheckable(true);
+      ui->dataTable->setCellWidget(vec.position, 5, axisCheckBox);
+      connect(axisCheckBox, &QCheckBox::stateChanged, this, [&] {
+        if (vec.dataType == DataType::Electrical) {
+          ui->electricalPlot->yAxis2->setRange(vec.typMin, vec.typMax);
+          ui->electricalPlot->yAxis2->setVisible(true);
+        } else if (vec.dataType == DataType::Mechanical) {
+          ui->mechanicalPlot->yAxis2->setRange(vec.typMin, vec.typMax);
+          ui->mechanicalPlot->yAxis2->setVisible(true);
+        }
       });
     } else {
       ui->dataTable->setItem(vec.position, 0, new QTableWidgetItem(QString::fromStdString(vec.name)));

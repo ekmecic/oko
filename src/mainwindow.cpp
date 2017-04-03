@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
 
   setupLogging(this->vec, configData.logFilePath);
-  setupDataTable();
   setupPlots();
+  setupDataTable();
 }
 
 MainWindow::~MainWindow() {
@@ -95,6 +95,20 @@ void MainWindow::setupDataTable() {
       ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 2, new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 3, new QTableWidgetItem(QString::number(0)));
+
+      QCheckBox *checkBox = new QCheckBox();
+      checkBox->setCheckable(true);
+      ui->dataTable->setCellWidget(vec.position, 4, checkBox);
+      connect(checkBox, &QCheckBox::stateChanged, this, [&] {
+        if (vec.dataType == DataType::Electrical && ui->electricalPlot->graph(vec.graphNum)->visible())
+          ui->electricalPlot->graph(vec.graphNum)->setVisible(false);
+        else if (vec.dataType == DataType::Electrical && !ui->electricalPlot->graph(vec.graphNum)->visible())
+          ui->electricalPlot->graph(vec.graphNum)->setVisible(true);
+        else if (vec.dataType == DataType::Mechanical && ui->mechanicalPlot->graph(vec.graphNum)->visible())
+          ui->mechanicalPlot->graph(vec.graphNum)->setVisible(false);
+        else if (vec.dataType == DataType::Mechanical && !ui->mechanicalPlot->graph(vec.graphNum)->visible())
+          ui->mechanicalPlot->graph(vec.graphNum)->setVisible(true);
+      });
     } else {
       ui->dataTable->setItem(vec.position, 0, new QTableWidgetItem(QString::fromStdString(vec.name)));
     }

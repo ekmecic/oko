@@ -25,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   spinner->start();
   socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
 
+  connect(socket, &QBluetoothSocket::disconnected, this, [&] {
+    socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
+  });
+
   setupLogging(this->vec, configData.logFilePath);
   setupPlots();
   setupDataTable();

@@ -8,9 +8,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   ui->dataTable->setColumnWidth(0, 180);
   ui->splitter->setSizes(QList<int>({575, 1000}));
 
-  ConfigData cnf;
-  this->vec                     = readConfig(cnf);
-  configData                    = cnf;
   WaitingSpinnerWidget *spinner = new WaitingSpinnerWidget(this, Qt::ApplicationModal, true);
   spinner->setRoundness(70.0);
   spinner->setNumberOfLines(16);
@@ -19,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   spinner->setInnerRadius(20);
   spinner->setLineLength(40);
   spinner->setRevolutionsPerSecond(1);
+  this->vec = readConfig(configData);
   this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
   connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
   connect(socket, &QBluetoothSocket::connected, spinner, &WaitingSpinnerWidget::stop);

@@ -97,7 +97,7 @@ void MainWindow::setupDataTable() {
       ui->dataTable->setItem(vec.position, 3, new QTableWidgetItem(QString::number(0)));
 
       QCheckBox *plotCheckBox = new QCheckBox();
-      plotCheckBox->setCheckable(true);
+      plotCheckBox->setChecked(true);
       ui->dataTable->setCellWidget(vec.position, 4, plotCheckBox);
       connect(plotCheckBox, &QCheckBox::stateChanged, this, [&] {
         if (vec.dataType == DataType::Electrical && ui->electricalPlot->graph(vec.graphNum)->visible())
@@ -110,7 +110,6 @@ void MainWindow::setupDataTable() {
           ui->mechanicalPlot->graph(vec.graphNum)->setVisible(true);
       });
       QCheckBox *axisCheckBox = new QCheckBox();
-      axisCheckBox->setCheckable(true);
       ui->dataTable->setCellWidget(vec.position, 5, axisCheckBox);
       connect(axisCheckBox, &QCheckBox::stateChanged, this, [&] {
         if (vec.dataType == DataType::Electrical) {

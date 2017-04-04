@@ -12,9 +12,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
 
   connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
-  socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
+  socket->connectToService(QBluetoothAddress(configData.MACAddress), QBluetoothUuid::Sdp);
   connect(socket, &QBluetoothSocket::disconnected, this, [&] {
-    socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
+    socket->connectToService(QBluetoothAddress(configData.MACAddress), QBluetoothUuid::Sdp);
   });
 
   setupLogging(this->vec, configData.logFilePath);
@@ -43,7 +43,7 @@ void MainWindow::setupPlots() {
     if (vec.dataType == DataType::Mechanical) {
       ui->mechanicalPlot->addGraph();
       vec.graphNum = i;
-      ui->mechanicalPlot->graph(vec.graphNum)->setName(QString::fromStdString(vec.name));
+      ui->mechanicalPlot->graph(vec.graphNum)->setName(vec.name);
       ui->mechanicalPlot->graph(vec.graphNum)->setPen(QPen(vec.colour));
       i++;
     }
@@ -53,7 +53,7 @@ void MainWindow::setupPlots() {
     if (vec.dataType == DataType::Electrical) {
       ui->electricalPlot->addGraph();
       vec.graphNum = i;
-      ui->electricalPlot->graph(vec.graphNum)->setName(QString::fromStdString(vec.name));
+      ui->electricalPlot->graph(vec.graphNum)->setName(vec.name);
       ui->electricalPlot->graph(vec.graphNum)->setPen(QPen(vec.colour));
       i++;
     }
@@ -83,7 +83,7 @@ void MainWindow::setupDataTable() {
 
   for (auto &vec : vec) {
     if (vec.dataType != DataType::CurrentEngineState) {
-      ui->dataTable->setItem(vec.position, 0, new QTableWidgetItem(QString::fromStdString(vec.name)));
+      ui->dataTable->setItem(vec.position, 0, new QTableWidgetItem(vec.name));
       ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 2, new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 3, new QTableWidgetItem(QString::number(0)));
@@ -113,7 +113,7 @@ void MainWindow::setupDataTable() {
         }
       });
     } else {
-      ui->dataTable->setItem(vec.position, 0, new QTableWidgetItem(QString::fromStdString(vec.name)));
+      ui->dataTable->setItem(vec.position, 0, new QTableWidgetItem(vec.name));
     }
   }
 }

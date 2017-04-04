@@ -1,11 +1,11 @@
 #include "src/logging.h"
 
-void setupLogging(const std::vector<dataStream> &vec, std::string logFilePath) {
+void setupLogging(const std::vector<dataStream> &vec, QString logFilePath) {
   el::Configurations loggingConf;
   loggingConf.setToDefault();
   loggingConf.set(el::Level::Global,
                   el::ConfigurationType::Filename,
-                  logFilePath.append("oko-%datetime{%Y-%M-%d-T%H:%m:%s}.log"));
+                  logFilePath.toStdString().append("oko-%datetime{%Y-%M-%d-T%H:%m:%s}.log"));
   loggingConf.set(el::Level::Global, el::ConfigurationType::Format, "%datetime{%Y-%M-%d-T%H:%m:%s:%g},%msg");
   loggingConf.set(el::Level::Global, el::ConfigurationType::Enabled, "true");
   loggingConf.set(el::Level::Global, el::ConfigurationType::ToFile, "true");
@@ -13,22 +13,22 @@ void setupLogging(const std::vector<dataStream> &vec, std::string logFilePath) {
 
   el::Loggers::reconfigureAllLoggers(loggingConf);
   LOG(INFO) << "FORMAT:";
-  std::string fmt;
+  QString fmt;
   for (auto &vec : vec) {
     fmt.append(vec.name);
     fmt.append(",");
   }
-  fmt.pop_back();
-  LOG(INFO) << fmt;
+  fmt.chop(1); // Remove the trailing comma
+  LOG(INFO) << fmt.toStdString();
 }
 
 void logData(const std::vector<dataStream> &vec) {
-  std::string data;
+  QString data;
   for (auto &vec : vec) {
-    auto str = std::to_string(vec.value * vec.multiplier);
+    auto str = QString::number(vec.value * vec.multiplier);
     data.append(str);
     data.append(",");
   }
-  data.pop_back();
-  LOG(INFO) << data;
+  data.chop(1);
+  LOG(INFO) << data.toStdString();
 }

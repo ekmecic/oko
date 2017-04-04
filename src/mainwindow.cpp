@@ -8,21 +8,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   ui->dataTable->setColumnWidth(0, 180);
   ui->splitter->setSizes(QList<int>({575, 1000}));
 
-  WaitingSpinnerWidget *spinner = new WaitingSpinnerWidget(this, Qt::ApplicationModal, true);
-  spinner->setRoundness(70.0);
-  spinner->setNumberOfLines(16);
-  spinner->setLineLength(10);
-  spinner->setLineWidth(10);
-  spinner->setInnerRadius(20);
-  spinner->setLineLength(40);
-  spinner->setRevolutionsPerSecond(1);
-  this->vec = readConfig(configData);
+  this->vec    = readConfig(configData);
   this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
-  connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
-  connect(socket, &QBluetoothSocket::connected, spinner, &WaitingSpinnerWidget::stop);
-  spinner->start();
-  socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
 
+  connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
+  socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
   connect(socket, &QBluetoothSocket::disconnected, this, [&] {
     socket->connectToService(QBluetoothAddress(QString::fromStdString(configData.MACAddress)), QBluetoothUuid::Sdp);
   });

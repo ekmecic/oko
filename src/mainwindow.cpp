@@ -37,7 +37,7 @@ MainWindow::~MainWindow() {
 void MainWindow::onNewDataAvailable() {
   parseSerial(this->socket, this->vec);
   for (auto &vec : vec) {
-    vec.scaledValue = (vec.value - vec.typMin) * 100 / (vec.typMax - vec.typMin);
+    vec.scaledValue = ((vec.value * vec.multiplier) - vec.typMin) * 100 / (vec.typMax - vec.typMin);
   }
   updateDataTable();
   updatePlots();

@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     socket->connectToService(QBluetoothAddress(configData.MACAddress), QBluetoothUuid::Sdp);
   });
 
-  this->plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot);
+  this->plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot, configData);
   this->plots->setup(vec);
   setupLogging(this->vec, configData.logFilePath);
   setupDataTable();

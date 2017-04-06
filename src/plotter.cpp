@@ -1,8 +1,9 @@
 #include "src/plotter.h"
 
-Plotter::Plotter(QCustomPlot *_mechanicalPlot, QCustomPlot *_electricalPlot) {
+Plotter::Plotter(QCustomPlot *_mechanicalPlot, QCustomPlot *_electricalPlot, ConfigData _configData) {
   this->mechanicalPlot = _mechanicalPlot;
   this->electricalPlot = _electricalPlot;
+  this->configData     = _configData;
 }
 
 void Plotter::setup(std::vector<dataStream> &dataStreams) {

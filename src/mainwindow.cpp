@@ -43,7 +43,7 @@ void MainWindow::setupDataTable() {
   ui->dataTable->setColumnWidth(3, 70);
 
   for (auto& vec : vec) {
-    if (vec.dataType != DataType::CurrentEngineState) {
+    if (vec.dataType != DataType::CurrentEngineState && vec.dataType != DataType::Time) {
       ui->dataTable->setItem(vec.position, 0, new QTableWidgetItem(vec.name));
       ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 2, new QTableWidgetItem(QString::number(0)));
@@ -81,8 +81,8 @@ void MainWindow::setupDataTable() {
 
 void MainWindow::updateDataTable() {
   for (auto& vec : vec) {
-    if (vec.dataType != DataType::CurrentEngineState) {
-      auto val = vec.value * vec.multiplier;
+    auto val = vec.value * vec.multiplier;
+    if (vec.dataType != DataType::CurrentEngineState && vec.dataType != DataType::Time) {
       ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(val)));
       if ((val > vec.maxWarning || val < vec.minWarning) && vec.dataType != DataType::Time) {
         ui->dataTable->item(vec.position, 1)->setBackground(Qt::yellow);
@@ -93,8 +93,10 @@ void MainWindow::updateDataTable() {
       if (val > ui->dataTable->item(vec.position, 3)->text().toDouble()) {
         ui->dataTable->setItem(vec.position, 3, new QTableWidgetItem(QString::number(val)));
       }
-    } else {
+    } else if (vec.dataType == DataType::CurrentEngineState) {
       ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(parseEngineState(vec.value)));
+    } else if (vec.dataType == DataType::Time) {
+      ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(vec.value)));
     }
   }
 }

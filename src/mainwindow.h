@@ -7,6 +7,7 @@
 #include "src/dataStream.h"
 #include "src/engineState.h"
 #include "src/logging.h"
+#include "src/plotter.h"
 #include "src/serialParser.h"
 
 #include <QBluetoothServiceInfo>
@@ -42,5 +43,6 @@ public slots:
   void onNewDataAvailable();
 
 private:
+  Plotter *       plots;
   Ui::MainWindow *ui;
 };

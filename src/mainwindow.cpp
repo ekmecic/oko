@@ -17,8 +17,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     socket->connectToService(QBluetoothAddress(configData.MACAddress), QBluetoothUuid::Sdp);
   });
 
+  this->plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot);
+  this->plots->setup(vec);
   setupLogging(this->vec, configData.logFilePath);
-  setupPlots();
   setupDataTable();
 }
 
@@ -32,7 +33,6 @@ void MainWindow::onNewDataAvailable() {
     vec.scaledValue = ((vec.value * vec.multiplier) - vec.typMin) * 100 / (vec.typMax - vec.typMin);
   }
   updateDataTable();
-  updatePlots();
   logData(this->vec);
 }
 

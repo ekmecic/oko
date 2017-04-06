@@ -9,7 +9,7 @@ public:
   ~Plotter();
 
   void plot();
-  void setup(std::vector<dataStream> dataStreams);
+  void setup(std::vector<dataStream> &dataStreams);
 
 public slots:
   void togglePlot();

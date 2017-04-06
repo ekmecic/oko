@@ -5,7 +5,7 @@ Plotter::Plotter(QCustomPlot *_mechanicalPlot, QCustomPlot *_electricalPlot) {
   this->electricalPlot = _electricalPlot;
 }
 
-void Plotter::setup(std::vector<dataStream> dataStreams) {
+void Plotter::setup(std::vector<dataStream> &dataStreams) {
   QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
   uint8_t                           i = 0;
   for (auto &stream : dataStreams) {

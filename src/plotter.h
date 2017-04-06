@@ -6,17 +6,17 @@
 
 class Plotter {
 public:
-  Plotter(QCustomPlot *_mechanicalPlot, QCustomPlot *_electricalPlot, ConfigData configData);
+  Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, ConfigData configData);
   ~Plotter();
 
-  void setup(std::vector<dataStream> &dataStreams);
-  void plot(std::vector<dataStream> &dataStreams);
+  void setup(std::vector<dataStream>& dataStreams);
+  void plot(std::vector<dataStream>& dataStreams);
 
 public slots:
   void togglePlot();
 
 private:
-  QCustomPlot *mechanicalPlot;
-  QCustomPlot *electricalPlot;
+  QCustomPlot* mechanicalPlot;
+  QCustomPlot* electricalPlot;
   ConfigData   configData;
 };

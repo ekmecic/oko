@@ -1,15 +1,15 @@
 #include "src/plotter.h"
 
-Plotter::Plotter(QCustomPlot *_mechanicalPlot, QCustomPlot *_electricalPlot, ConfigData _configData) {
+Plotter::Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, ConfigData _configData) {
   this->mechanicalPlot = _mechanicalPlot;
   this->electricalPlot = _electricalPlot;
   this->configData     = _configData;
 }
 
-void Plotter::setup(std::vector<dataStream> &dataStreams) {
+void Plotter::setup(std::vector<dataStream>& dataStreams) {
   QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
   uint8_t                           i = 0;
-  for (auto &stream : dataStreams) {
+  for (auto& stream : dataStreams) {
     if (stream.dataType == DataType::Mechanical) {
       this->mechanicalPlot->addGraph();
       stream.graphNum = i;
@@ -19,7 +19,7 @@ void Plotter::setup(std::vector<dataStream> &dataStreams) {
     }
   }
   i = 0;
-  for (auto &stream : dataStreams) {
+  for (auto& stream : dataStreams) {
     if (stream.dataType == DataType::Electrical) {
       this->electricalPlot->addGraph();
       stream.graphNum = i;
@@ -39,11 +39,11 @@ void Plotter::setup(std::vector<dataStream> &dataStreams) {
   this->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
 }
 
-void Plotter::plot(std::vector<dataStream> &dataStreams) {
+void Plotter::plot(std::vector<dataStream>& dataStreams) {
   static QTime time(QTime::currentTime());
   double       key = time.elapsed() / 1000.0;
 
-  for (auto &stream : dataStreams) {
+  for (auto& stream : dataStreams) {
     if (stream.dataType == DataType::Mechanical) {
       this->mechanicalPlot->graph(stream.graphNum)->addData(key, stream.scaledValue);
     }

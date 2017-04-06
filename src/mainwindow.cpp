@@ -2,7 +2,7 @@
 
 INITIALIZE_EASYLOGGINGPP
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
   ui->dataTable->setColumnWidth(0, 180);
@@ -29,7 +29,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::onNewDataAvailable() {
   parseSerial(this->socket, this->vec);
-  for (auto &vec : vec) {
+  for (auto& vec : vec) {
     vec.scaledValue = ((vec.value * vec.multiplier) - vec.typMin) * 100 / (vec.typMax - vec.typMin);
   }
   updateDataTable();
@@ -42,14 +42,14 @@ void MainWindow::setupDataTable() {
   ui->dataTable->setColumnWidth(2, 70);
   ui->dataTable->setColumnWidth(3, 70);
 
-  for (auto &vec : vec) {
+  for (auto& vec : vec) {
     if (vec.dataType != DataType::CurrentEngineState) {
       ui->dataTable->setItem(vec.position, 0, new QTableWidgetItem(vec.name));
       ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 2, new QTableWidgetItem(QString::number(0)));
       ui->dataTable->setItem(vec.position, 3, new QTableWidgetItem(QString::number(0)));
 
-      QCheckBox *plotCheckBox = new QCheckBox();
+      QCheckBox* plotCheckBox = new QCheckBox();
       plotCheckBox->setChecked(true);
       ui->dataTable->setCellWidget(vec.position, 4, plotCheckBox);
       connect(plotCheckBox, &QCheckBox::stateChanged, this, [&] {
@@ -62,7 +62,7 @@ void MainWindow::setupDataTable() {
         else if (vec.dataType == DataType::Mechanical && !ui->mechanicalPlot->graph(vec.graphNum)->visible())
           ui->mechanicalPlot->graph(vec.graphNum)->setVisible(true);
       });
-      QCheckBox *axisCheckBox = new QCheckBox();
+      QCheckBox* axisCheckBox = new QCheckBox();
       ui->dataTable->setCellWidget(vec.position, 5, axisCheckBox);
       connect(axisCheckBox, &QCheckBox::stateChanged, this, [&] {
         if (vec.dataType == DataType::Electrical) {
@@ -80,7 +80,7 @@ void MainWindow::setupDataTable() {
 }
 
 void MainWindow::updateDataTable() {
-  for (auto &vec : vec) {
+  for (auto& vec : vec) {
     if (vec.dataType != DataType::CurrentEngineState) {
       auto val = vec.value * vec.multiplier;
       ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(val)));

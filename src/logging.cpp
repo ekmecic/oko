@@ -1,6 +1,6 @@
 #include "src/logging.h"
 
-void setupLogging(const std::vector<dataStream> &vec, QString logFilePath) {
+void setupLogging(const std::vector<dataStream>& vec, QString logFilePath) {
   el::Configurations loggingConf;
   loggingConf.setToDefault();
   loggingConf.set(el::Level::Global,
@@ -14,7 +14,7 @@ void setupLogging(const std::vector<dataStream> &vec, QString logFilePath) {
   el::Loggers::reconfigureAllLoggers(loggingConf);
   LOG(INFO) << "FORMAT:";
   QString fmt;
-  for (auto &vec : vec) {
+  for (auto& vec : vec) {
     fmt.append(vec.name);
     fmt.append(",");
   }
@@ -22,9 +22,9 @@ void setupLogging(const std::vector<dataStream> &vec, QString logFilePath) {
   LOG(INFO) << fmt.toStdString();
 }
 
-void logData(const std::vector<dataStream> &vec) {
+void logData(const std::vector<dataStream>& vec) {
   QString data;
-  for (auto &vec : vec) {
+  for (auto& vec : vec) {
     auto str = QString::number(vec.value * vec.multiplier);
     data.append(str);
     data.append(",");

@@ -14,4 +14,4 @@ typedef struct {
   int32_t plotWidth;
 } ConfigData;
 
-std::vector<dataStream> readConfig(ConfigData &ConfigData);
+std::vector<dataStream> readConfig(ConfigData& ConfigData);

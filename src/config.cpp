@@ -1,6 +1,6 @@
 #include "src/config.h"
 
-std::vector<dataStream> readConfig(ConfigData &ConfigData) {
+std::vector<dataStream> readConfig(ConfigData& ConfigData) {
   auto config = cpptoml::parse_file("../config.toml");
 
   ConfigData.logFilePath = QString::fromStdString(*config->get_qualified_as<std::string>("application.logFilePath"));
@@ -9,7 +9,7 @@ std::vector<dataStream> readConfig(ConfigData &ConfigData) {
 
   auto                    tarr = config->get_table_array("data");
   std::vector<dataStream> vec;
-  for (const auto &table : *tarr) {
+  for (const auto& table : *tarr) {
     auto            name       = *table->get_as<std::string>("name");
     auto            type       = *table->get_as<std::string>("type");
     auto            colour     = *table->get_as<std::string>("colour");

@@ -22,11 +22,11 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
 public:
-  explicit MainWindow(QWidget *parent = 0);
+  explicit MainWindow(QWidget* parent = 0);
   ~MainWindow();
 
   std::vector<dataStream> vec;
-  QBluetoothSocket *      socket;
+  QBluetoothSocket*       socket;
   ConfigData              configData;
 
   void setupDataTable();
@@ -39,6 +39,6 @@ public slots:
   void onNewDataAvailable();
 
 private:
-  Plotter *       plots;
-  Ui::MainWindow *ui;
+  Plotter*        plots;
+  Ui::MainWindow* ui;
 };

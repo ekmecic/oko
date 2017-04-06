@@ -13,7 +13,7 @@ void Plotter::setup(std::vector<dataStream> dataStreams) {
       this->mechanicalPlot->addGraph();
       stream.graphNum = i;
       this->mechanicalPlot->graph(stream.graphNum)->setName(stream.name);
-      this->mechanicalPlot->graph(stream.graphNum)->setPen(QPen(stream.colour));
+      this->mechanicalPlot->graph(stream.graphNum)->setPen(QPen(stream.colour, 3));
       i++;
     }
   }
@@ -23,7 +23,7 @@ void Plotter::setup(std::vector<dataStream> dataStreams) {
       this->electricalPlot->addGraph();
       stream.graphNum = i;
       this->electricalPlot->graph(stream.graphNum)->setName(stream.name);
-      this->electricalPlot->graph(stream.graphNum)->setPen(QPen(stream.colour));
+      this->electricalPlot->graph(stream.graphNum)->setPen(QPen(stream.colour, 3));
       i++;
     }
   }

@@ -39,7 +39,7 @@ void Plotter::setup(std::vector<dataStream>& dataStreams) {
   this->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
 }
 
-void Plotter::plot(std::vector<dataStream>& dataStreams) {
+void Plotter::update(std::vector<dataStream>& dataStreams) {
   static QTime time(QTime::currentTime());
   double       key = time.elapsed() / 1000.0;
 

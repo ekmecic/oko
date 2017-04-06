@@ -33,7 +33,7 @@ void MainWindow::onNewDataAvailable() {
     vec.scaledValue = ((vec.value * vec.multiplier) - vec.typMin) * 100 / (vec.typMax - vec.typMin);
   }
   updateDataTable();
-  this->plots->plot(vec);
+  this->plots->update(vec);
   logData(this->vec);
 }
 

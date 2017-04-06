@@ -11,10 +11,7 @@ public:
   ~Plotter();
 
   void setup(std::vector<dataStream>& dataStreams);
-  void plot(std::vector<dataStream>& dataStreams);
-
-public slots:
-  void togglePlot();
+  void update(std::vector<dataStream>& dataStreams);
 
 private:
   QCustomPlot* mechanicalPlot;

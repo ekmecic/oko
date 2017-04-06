@@ -22,8 +22,8 @@ position = 1
 multiplier = 1000
 minWarning = 0
 maxWarning = 7250
-typMin = 0
-typMax = 8000
+typMin = 27000
+typMax = 33000
 
 [[data]]
 name = "Measured engine speed"
@@ -33,8 +33,8 @@ position = 2
 multiplier = 1000
 minWarning = 0
 maxWarning = 7250
-typMin = 0
-typMax = 12000
+typMin = 19800
+typMax = 20200
 
 [[data]]
 name = "Throttle position"
@@ -44,8 +44,8 @@ position = 3
 multiplier = 100
 minWarning = 0
 maxWarning = 100
-typMin = -130
-typMax = 0
+typMin = 0
+typMax = 200
 
 [[data]]
 name = "Bus voltage"
@@ -55,8 +55,8 @@ position = 4
 multiplier = 1000
 minWarning = 22
 maxWarning = 26
-typMin = -5.0
-typMax = 0
+typMin = 45000
+typMax = 72000
 
 [[data]]
 name = "Battery current"
@@ -66,8 +66,8 @@ position = 5
 multiplier = 1
 minWarning = -10
 maxWarning = 60
-typMin = 0
-typMax = 0.12
+typMin = -1
+typMax = 25
 
 [[data]]
 name = "Commanded phase current"
@@ -78,7 +78,7 @@ multiplier = 1
 minWarning = 0
 maxWarning = 60
 typMin = 0
-typMax = 9
+typMax = 36
 
 [[data]]
 name = "Measured phase current"
@@ -88,8 +88,8 @@ position = 7
 multiplier = 1
 minWarning = 0
 maxWarning = 60
-typMin = -0.002
-typMax = 0
+typMin = 0
+typMax = 40
 
 [[data]]
 name = "Engine state"

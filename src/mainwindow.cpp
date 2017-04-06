@@ -36,46 +36,6 @@ void MainWindow::onNewDataAvailable() {
   logData(this->vec);
 }
 
-void MainWindow::setupPlots() {
-  QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
-  uint8_t                           i = 0;
-  for (auto &vec : vec) {
-    if (vec.dataType == DataType::Mechanical) {
-      ui->mechanicalPlot->addGraph();
-      vec.graphNum = i;
-      ui->mechanicalPlot->graph(vec.graphNum)->setName(vec.name);
-      ui->mechanicalPlot->graph(vec.graphNum)->setPen(QPen(vec.colour));
-      i++;
-    }
-  }
-  i = 0;
-  for (auto &vec : vec) {
-    if (vec.dataType == DataType::Electrical) {
-      ui->electricalPlot->addGraph();
-      vec.graphNum = i;
-      ui->electricalPlot->graph(vec.graphNum)->setName(vec.name);
-      ui->electricalPlot->graph(vec.graphNum)->setPen(QPen(vec.colour));
-      i++;
-    }
-  }
-
-  ui->mechanicalPlot->xAxis->setTicker(timeTicker);
-  ui->mechanicalPlot->yAxis->setRange(configData.mechPlotMin, configData.mechPlotMax);
-  ui->electricalPlot->xAxis->setTicker(timeTicker);
-  ui->electricalPlot->yAxis->setRange(configData.elecPlotMin, configData.elecPlotMax);
-
-  // Inherit the font of the main window, but make it a little bit smaller
-  QFont legendFont = font();
-  legendFont.setPointSize(8);
-  // Enable legends for both plots and set their fonts to the smaller version
-  ui->mechanicalPlot->legend->setVisible(true);
-  ui->mechanicalPlot->legend->setFont(legendFont);
-  ui->mechanicalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
-  ui->electricalPlot->legend->setVisible(true);
-  ui->electricalPlot->legend->setFont(legendFont);
-  ui->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
-}
-
 void MainWindow::setupDataTable() {
   ui->dataTable->setColumnWidth(1, 70);
   ui->dataTable->setColumnWidth(2, 70);

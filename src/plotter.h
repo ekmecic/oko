@@ -9,8 +9,8 @@ public:
   Plotter(QCustomPlot *_mechanicalPlot, QCustomPlot *_electricalPlot, ConfigData configData);
   ~Plotter();
 
-  void plot();
   void setup(std::vector<dataStream> &dataStreams);
+  void plot(std::vector<dataStream> &dataStreams);
 
 public slots:
   void togglePlot();

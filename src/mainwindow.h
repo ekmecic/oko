@@ -2,7 +2,6 @@
 #pragma once
 
 #include "build/ui_mainwindow.h"
-#include "lib/qcustomplot/qcustomplot.h"
 #include "src/config.h"
 #include "src/dataStream.h"
 #include "src/engineState.h"
@@ -30,11 +29,8 @@ public:
   QBluetoothSocket *      socket;
   ConfigData              configData;
 
-  void setupPlots();
   void setupDataTable();
-
   void updateDataTable();
-  void updatePlots();
 
 signals:
   void newDataAvailable();

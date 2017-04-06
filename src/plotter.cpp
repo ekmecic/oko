@@ -38,3 +38,23 @@ void Plotter::setup(std::vector<dataStream> &dataStreams) {
   this->electricalPlot->legend->setVisible(true);
   this->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
 }
+
+void Plotter::plot(std::vector<dataStream> &dataStreams) {
+  static QTime time(QTime::currentTime());
+  double       key = time.elapsed() / 1000.0;
+
+  for (auto &stream : dataStreams) {
+    if (stream.dataType == DataType::Mechanical) {
+      this->mechanicalPlot->graph(stream.graphNum)->addData(key, stream.scaledValue);
+    }
+    if (stream.dataType == DataType::Electrical) {
+      this->electricalPlot->graph(stream.graphNum)->addData(key, stream.scaledValue);
+    }
+  }
+
+  // Shift the axis left for the new data and refresh the graph
+  this->mechanicalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
+  this->mechanicalPlot->replot();
+  this->electricalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
+  this->electricalPlot->replot();
+}

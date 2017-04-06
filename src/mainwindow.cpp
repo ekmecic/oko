@@ -33,6 +33,7 @@ void MainWindow::onNewDataAvailable() {
     vec.scaledValue = ((vec.value * vec.multiplier) - vec.typMin) * 100 / (vec.typMax - vec.typMin);
   }
   updateDataTable();
+  this->plots->plot(vec);
   logData(this->vec);
 }
 
@@ -96,24 +97,4 @@ void MainWindow::updateDataTable() {
       ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(parseEngineState(vec.value)));
     }
   }
-}
-
-void MainWindow::updatePlots() {
-  static QTime time(QTime::currentTime());
-  double       key = time.elapsed() / 1000.0;
-
-  for (auto &vec : vec) {
-    if (vec.dataType == DataType::Mechanical) {
-      ui->mechanicalPlot->graph(vec.graphNum)->addData(key, vec.scaledValue);
-    }
-    if (vec.dataType == DataType::Electrical) {
-      ui->electricalPlot->graph(vec.graphNum)->addData(key, vec.scaledValue);
-    }
-  }
-
-  // Shift the axis left for the new data and refresh the graph
-  ui->mechanicalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
-  ui->mechanicalPlot->replot();
-  ui->electricalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
-  ui->electricalPlot->replot();
 }

@@ -8,8 +8,8 @@ public:
   Plotter(QCustomPlot *_mechanicalPlot, QCustomPlot *_electricalPlot);
   ~Plotter();
 
-  void setup(std::vector<dataStream> vec);
   void plot();
+  void setup(std::vector<dataStream> dataStreams);
 
 public slots:
   void togglePlot();

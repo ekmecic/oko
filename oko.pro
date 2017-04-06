@@ -18,7 +18,8 @@ SOURCES += src/main.cpp\
     src/dataStream.cpp \
     src/serialParser.cpp \
     src/engineState.cpp \
-    lib/qtwaitingspinner/waitingspinnerwidget.cpp
+    src/logging.cpp \
+    src/plotter.cpp
 
 HEADERS  += src/mainwindow.h \
     lib/qcustomplot/qcustomplot.h \
@@ -26,6 +27,7 @@ HEADERS  += src/mainwindow.h \
     src/dataStream.h \
     src/serialParser.h \
     src/engineState.h \
-    lib/qtwaitingspinner/waitingspinnerwidget.h
+    src/logging.h \
+    src/plotter.h
 
 FORMS    += src/mainwindow.ui

@@ -6,10 +6,6 @@ std::vector<dataStream> readConfig(ConfigData &ConfigData) {
   ConfigData.logFilePath = QString::fromStdString(*config->get_qualified_as<std::string>("application.logFilePath"));
   ConfigData.MACAddress  = QString::fromStdString(*config->get_qualified_as<std::string>("application.MACAddress"));
   ConfigData.plotWidth   = *config->get_qualified_as<int32_t>("application.plotWidth");
-  ConfigData.mechPlotMin = *config->get_qualified_as<int32_t>("application.mechPlotMin");
-  ConfigData.mechPlotMax = *config->get_qualified_as<int32_t>("application.mechPlotMax");
-  ConfigData.elecPlotMin = *config->get_qualified_as<int32_t>("application.elecPlotMin");
-  ConfigData.elecPlotMax = *config->get_qualified_as<int32_t>("application.elecPlotMax");
 
   auto                    tarr = config->get_table_array("data");
   std::vector<dataStream> vec;

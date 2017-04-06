@@ -12,10 +12,6 @@ typedef struct {
   QString logFilePath;
   QString MACAddress;
   int32_t plotWidth;
-  int32_t mechPlotMin;
-  int32_t mechPlotMax;
-  int32_t elecPlotMin;
-  int32_t elecPlotMax;
 } ConfigData;
 
 std::vector<dataStream> readConfig(ConfigData &ConfigData);

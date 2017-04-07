@@ -6,9 +6,6 @@ Table::Table(QTableWidget* _table, ConfigData _configData) {
 }
 
 void Table::setup(std::vector<dataStream>& dataStreams) {
-  this->table->setColumnWidth(1, 70);
-  this->table->setColumnWidth(2, 70);
-  this->table->setColumnWidth(3, 70);
   mechanicalButtons = new QButtonGroup(this);
   electricalButtons = new QButtonGroup(this);
 

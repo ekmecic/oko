@@ -8,6 +8,7 @@
 #include "src/logging.h"
 #include "src/plotter.h"
 #include "src/serialParser.h"
+#include "src/table.h"
 
 #include <QBluetoothServiceInfo>
 #include <QBluetoothSocket>
@@ -29,7 +30,6 @@ public:
   QBluetoothSocket*       socket;
   ConfigData              configData;
 
-  void setupDataTable();
   void updateDataTable();
 
 signals:
@@ -40,5 +40,6 @@ public slots:
 
 private:
   Plotter*        plots;
+  Table*          table;
   Ui::MainWindow* ui;
 };

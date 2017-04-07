@@ -1,9 +1,11 @@
 // -*-c++-*-
 #pragma once
 
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QObject>
+#include <QRadioButton>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 
@@ -25,4 +27,6 @@ signals:
 private:
   QTableWidget* table;
   ConfigData    configData;
+  QButtonGroup* mechanicalButtons;
+  QButtonGroup* electricalButtons;
 };

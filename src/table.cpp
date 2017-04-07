@@ -9,6 +9,8 @@ void Table::setup(std::vector<dataStream>& dataStreams) {
   this->table->setColumnWidth(1, 70);
   this->table->setColumnWidth(2, 70);
   this->table->setColumnWidth(3, 70);
+  mechanicalButtons = new QButtonGroup(this);
+  electricalButtons = new QButtonGroup(this);
 
   for (auto& stream : dataStreams) {
     if (stream.dataType != DataType::CurrentEngineState && stream.dataType != DataType::Time) {
@@ -26,16 +28,22 @@ void Table::setup(std::vector<dataStream>& dataStreams) {
       this->table->setCellWidget(stream.position, 4, plotLayoutWidget);
       plotCheckBox->setChecked(true);
 
-      QCheckBox*   axisCheckBox         = new QCheckBox();
-      QWidget*     axisLayoutWidget     = new QWidget();
-      QHBoxLayout* axisHorizontalLayout = new QHBoxLayout();
+      QRadioButton* axisRadioButton      = new QRadioButton();
+      QWidget*      axisLayoutWidget     = new QWidget();
+      QHBoxLayout*  axisHorizontalLayout = new QHBoxLayout();
       axisHorizontalLayout->setAlignment(Qt::AlignCenter);
-      axisHorizontalLayout->addWidget(axisCheckBox);
+      axisHorizontalLayout->addWidget(axisRadioButton);
       axisLayoutWidget->setLayout(axisHorizontalLayout);
       this->table->setCellWidget(stream.position, 5, axisLayoutWidget);
 
+      if (stream.dataType == DataType::Mechanical) {
+        mechanicalButtons->addButton(axisRadioButton);
+      }
+      if (stream.dataType == DataType::Electrical) {
+        electricalButtons->addButton(axisRadioButton);
+      }
       connect(plotCheckBox, &QCheckBox::stateChanged, this, [&] { emit plotToggled(stream); });
-      connect(axisCheckBox, &QCheckBox::stateChanged, this, [&] { emit axisToggled(stream); });
+      connect(axisRadioButton, &QCheckBox::pressed, this, [&] { emit axisToggled(stream); });
     } else {
       this->table->setItem(stream.position, 0, new QTableWidgetItem(stream.name));
     }

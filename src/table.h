@@ -9,6 +9,7 @@
 
 #include "src/config.h"
 #include "src/dataStream.h"
+#include "src/engineState.h"
 
 class Table : public QObject {
   Q_OBJECT

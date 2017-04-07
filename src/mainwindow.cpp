@@ -33,29 +33,7 @@ void MainWindow::onNewDataAvailable() {
   for (auto& vec : vec) {
     vec.scaledValue = ((vec.value * vec.multiplier) - vec.typMin) * 100 / (vec.typMax - vec.typMin);
   }
-  updateDataTable();
   this->plots->update(vec);
+  this->table->update(vec);
   logData(this->vec);
-}
-
-void MainWindow::updateDataTable() {
-  for (auto& vec : vec) {
-    auto val = vec.value * vec.multiplier;
-    if (vec.dataType != DataType::CurrentEngineState && vec.dataType != DataType::Time) {
-      ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(val)));
-      if ((val > vec.maxWarning || val < vec.minWarning) && vec.dataType != DataType::Time) {
-        ui->dataTable->item(vec.position, 1)->setBackground(Qt::yellow);
-      }
-      if (val < ui->dataTable->item(vec.position, 2)->text().toDouble()) {
-        ui->dataTable->setItem(vec.position, 2, new QTableWidgetItem(QString::number(val)));
-      }
-      if (val > ui->dataTable->item(vec.position, 3)->text().toDouble()) {
-        ui->dataTable->setItem(vec.position, 3, new QTableWidgetItem(QString::number(val)));
-      }
-    } else if (vec.dataType == DataType::CurrentEngineState) {
-      ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(parseEngineState(vec.value)));
-    } else if (vec.dataType == DataType::Time) {
-      ui->dataTable->setItem(vec.position, 1, new QTableWidgetItem(QString::number(vec.value)));
-    }
-  }
 }

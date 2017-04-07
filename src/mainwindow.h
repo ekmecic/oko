@@ -30,8 +30,6 @@ public:
   QBluetoothSocket*       socket;
   ConfigData              configData;
 
-  void updateDataTable();
-
 signals:
   void newDataAvailable();
 

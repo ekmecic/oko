@@ -14,6 +14,7 @@ public:
 
 public slots:
   void onPlotToggled(dataStream stream);
+  void onAxisToggled(dataStream stream);
 
 private:
   QCustomPlot* mechanicalPlot;

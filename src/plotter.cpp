@@ -69,3 +69,13 @@ void Plotter::onPlotToggled(dataStream stream) {
   else if (stream.dataType == DataType::Mechanical && !this->mechanicalPlot->graph(stream.graphNum)->visible())
     this->mechanicalPlot->graph(stream.graphNum)->setVisible(true);
 }
+
+void Plotter::onAxisToggled(dataStream stream) {
+  if (stream.dataType == DataType::Electrical) {
+    this->electricalPlot->yAxis2->setRange(stream.typMin, stream.typMax);
+    this->electricalPlot->yAxis2->setVisible(true);
+  } else if (stream.dataType == DataType::Mechanical) {
+    this->mechanicalPlot->yAxis2->setRange(stream.typMin, stream.typMax);
+    this->mechanicalPlot->yAxis2->setVisible(true);
+  }
+}

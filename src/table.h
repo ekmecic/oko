@@ -15,7 +15,6 @@ class Table : public QObject {
   Q_OBJECT
 public:
   Table(QTableWidget* _table, ConfigData _configData);
-
   void setup(std::vector<dataStream>& dataStreams);
   void update(std::vector<dataStream>& dataStreams);
 

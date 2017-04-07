@@ -31,7 +31,7 @@ MainWindow::~MainWindow() {
 void MainWindow::onNewDataAvailable() {
   parseSerial(this->socket, this->dataStreams);
   for (auto& stream : dataStreams) {
-    stream.scaledValue = ((stream.value * stream.multiplier) - stream.typMin) * 100 / (stream.typMax - stream.typMin);
+    stream.scaledValue = (stream.value - stream.typMin) * 100 / (stream.typMax - stream.typMin);
   }
   this->plots->update(dataStreams);
   this->table->update(dataStreams);

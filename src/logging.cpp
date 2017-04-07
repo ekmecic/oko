@@ -25,7 +25,7 @@ void setupLogging(const std::vector<dataStream>& vec, QString logFilePath) {
 void logData(const std::vector<dataStream>& vec) {
   QString data;
   for (auto& vec : vec) {
-    auto str = QString::number(vec.value * vec.multiplier);
+    auto str = QString::number(vec.value);
     data.append(str);
     data.append(",");
   }

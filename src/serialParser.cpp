@@ -12,7 +12,7 @@ void parseSerial(QBluetoothSocket* socket, std::vector<dataStream>& vec) {
   while (i.hasNext()) {
     QRegularExpressionMatch match = i.next();
     if (match.hasMatch()) {
-      vec[j].value = match.captured().toDouble();
+      vec[j].value = match.captured().toDouble() * vec[j].multiplier;
       j++;
     }
   }

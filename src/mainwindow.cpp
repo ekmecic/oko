@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   this->table = new Table(ui->dataTable, configData);
   this->table->setup(dataStreams);
   setupLogging(this->dataStreams, configData.logFilePath);
+  connect(this->table, &Table::plotToggled, this->plots, &Plotter::onPlotToggled);
 }
 
 MainWindow::~MainWindow() {

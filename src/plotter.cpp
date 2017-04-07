@@ -58,3 +58,14 @@ void Plotter::update(std::vector<dataStream>& dataStreams) {
   this->electricalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
   this->electricalPlot->replot();
 }
+
+void Plotter::onPlotToggled(dataStream stream) {
+  if (stream.dataType == DataType::Electrical && this->electricalPlot->graph(stream.graphNum)->visible())
+    this->electricalPlot->graph(stream.graphNum)->setVisible(false);
+  else if (stream.dataType == DataType::Electrical && !this->electricalPlot->graph(stream.graphNum)->visible())
+    this->electricalPlot->graph(stream.graphNum)->setVisible(true);
+  else if (stream.dataType == DataType::Mechanical && this->mechanicalPlot->graph(stream.graphNum)->visible())
+    this->mechanicalPlot->graph(stream.graphNum)->setVisible(false);
+  else if (stream.dataType == DataType::Mechanical && !this->mechanicalPlot->graph(stream.graphNum)->visible())
+    this->mechanicalPlot->graph(stream.graphNum)->setVisible(true);
+}

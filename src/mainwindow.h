@@ -26,7 +26,7 @@ public:
   explicit MainWindow(QWidget* parent = 0);
   ~MainWindow();
 
-  std::vector<dataStream> vec;
+  std::vector<dataStream> dataStreams;
   QBluetoothSocket*       socket;
   ConfigData              configData;
 

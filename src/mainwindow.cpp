@@ -8,8 +8,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   ui->dataTable->setColumnWidth(0, 180);
   ui->splitter->setSizes(QList<int>({575, 1000}));
 
-  this->vec    = readConfig(configData);
-  this->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
+  this->dataStreams = readConfig(configData);
+  this->socket      = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
 
   connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
   socket->connectToService(QBluetoothAddress(configData.MACAddress), QBluetoothUuid::Sdp);
@@ -18,10 +18,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   });
 
   this->plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot, configData);
-  this->plots->setup(vec);
+  this->plots->setup(dataStreams);
   this->table = new Table(ui->dataTable, configData);
-  this->table->setup(vec);
-  setupLogging(this->vec, configData.logFilePath);
+  this->table->setup(dataStreams);
+  setupLogging(this->dataStreams, configData.logFilePath);
 }
 
 MainWindow::~MainWindow() {
@@ -29,11 +29,11 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::onNewDataAvailable() {
-  parseSerial(this->socket, this->vec);
-  for (auto& vec : vec) {
-    vec.scaledValue = ((vec.value * vec.multiplier) - vec.typMin) * 100 / (vec.typMax - vec.typMin);
+  parseSerial(this->socket, this->dataStreams);
+  for (auto& stream : dataStreams) {
+    stream.scaledValue = ((stream.value * stream.multiplier) - stream.typMin) * 100 / (stream.typMax - stream.typMin);
   }
-  this->plots->update(vec);
-  this->table->update(vec);
-  logData(this->vec);
+  this->plots->update(dataStreams);
+  this->table->update(dataStreams);
+  logData(this->dataStreams);
 }

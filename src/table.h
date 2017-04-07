@@ -13,6 +13,15 @@
 #include "src/dataStream.h"
 #include "src/engineState.h"
 
+typedef enum {
+  Field,
+  Value,
+  Min,
+  Max,
+  Plot,
+  Axis,
+} TableColumn;
+
 class Table : public QObject {
   Q_OBJECT
 public:

@@ -5,10 +5,10 @@
 #include "src/dataStream.h"
 #include <QFont>
 
-class Plotter {
+class Plotter : public QObject {
+  Q_OBJECT
 public:
   Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, ConfigData configData);
-  ~Plotter();
 
   void setup(std::vector<dataStream>& dataStreams);
   void update(std::vector<dataStream>& dataStreams);

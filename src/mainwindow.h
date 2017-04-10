@@ -3,6 +3,7 @@
 
 #include "build/ui_mainwindow.h"
 #include "src/config.h"
+#include "src/connectionHandler.h"
 #include "src/dataStream.h"
 #include "src/engineState.h"
 #include "src/logging.h"
@@ -37,7 +38,8 @@ public slots:
   void onNewDataAvailable();
 
 private:
-  Plotter*        plots;
-  Table*          table;
-  Ui::MainWindow* ui;
+  Plotter*           plots;
+  Table*             table;
+  ConnectionHandler* connectionHandler;
+  Ui::MainWindow*    ui;
 };

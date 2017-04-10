@@ -12,15 +12,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   this->socket      = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
 
   connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
-  socket->connectToService(QBluetoothAddress(configData.MACAddress), QBluetoothUuid::Sdp);
-  connect(socket, &QBluetoothSocket::disconnected, this, [&] {
-    socket->connectToService(QBluetoothAddress(configData.MACAddress), QBluetoothUuid::Sdp);
-  });
+  this->connectionHandler = new ConnectionHandler(configData);
+  this->connectionHandler->setup(*socket);
 
   this->plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot, configData);
   this->plots->setup(dataStreams);
+
   this->table = new Table(ui->dataTable, configData);
   this->table->setup(dataStreams);
+
   setupLogging(this->dataStreams, configData.logFilePath);
   connect(this->table, &Table::plotToggled, this->plots, &Plotter::onPlotToggled);
   connect(this->table, &Table::axisToggled, this->plots, &Plotter::onAxisToggled);

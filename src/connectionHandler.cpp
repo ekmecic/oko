@@ -1,7 +1,7 @@
 #include "src/connectionHandler.h"
 
 ConnectionHandler::ConnectionHandler(ConfigData _configData) {
-  this->configData = _configData;
+  configData = _configData;
 }
 
 void ConnectionHandler::setup(QBluetoothSocket& socket) {

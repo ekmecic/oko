@@ -8,22 +8,22 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   ui->dataTable->setColumnWidth(0, 180);
   ui->splitter->setSizes(QList<int>({575, 1000}));
 
-  this->dataStreams = readConfig(configData);
-  this->socket      = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
+  dataStreams = readConfig(configData);
+  socket      = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
 
   connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
-  this->connectionHandler = new ConnectionHandler(configData);
-  this->connectionHandler->setup(*socket);
+  connectionHandler = new ConnectionHandler(configData);
+  connectionHandler->setup(*socket);
 
-  this->plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot, configData);
-  this->plots->setup(dataStreams);
+  plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot, configData);
+  plots->setup(dataStreams);
 
-  this->table = new Table(ui->dataTable, configData);
-  this->table->setup(dataStreams);
+  table = new Table(ui->dataTable, configData);
+  table->setup(dataStreams);
 
-  setupLogging(this->dataStreams, configData.logFilePath);
-  connect(this->table, &Table::plotToggled, this->plots, &Plotter::onPlotToggled);
-  connect(this->table, &Table::axisToggled, this->plots, &Plotter::onAxisToggled);
+  setupLogging(dataStreams, configData.logFilePath);
+  connect(table, &Table::plotToggled, plots, &Plotter::onPlotToggled);
+  connect(table, &Table::axisToggled, plots, &Plotter::onAxisToggled);
 }
 
 MainWindow::~MainWindow() {
@@ -31,12 +31,12 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::onNewDataAvailable() {
-  parseSerial(this->socket, this->dataStreams);
+  parseSerial(socket, dataStreams);
   for (auto& stream : dataStreams) {
     stream.scaledValue =
         (stream.value - stream.typicalValues[0]) * 100 / (stream.typicalValues[1] - stream.typicalValues[0]);
   }
-  this->plots->update(dataStreams);
-  this->table->update(dataStreams);
-  logData(this->dataStreams);
+  plots->update(dataStreams);
+  table->update(dataStreams);
+  logData(dataStreams);
 }

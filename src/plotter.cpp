@@ -1,9 +1,9 @@
 #include "src/plotter.h"
 
 Plotter::Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, ConfigData _configData) {
-  this->mechanicalPlot = _mechanicalPlot;
-  this->electricalPlot = _electricalPlot;
-  this->configData     = _configData;
+  mechanicalPlot = _mechanicalPlot;
+  electricalPlot = _electricalPlot;
+  configData     = _configData;
 }
 
 void Plotter::setup(std::vector<dataStream>& dataStreams) {
@@ -11,32 +11,32 @@ void Plotter::setup(std::vector<dataStream>& dataStreams) {
   uint8_t                           i = 0;
   for (auto& stream : dataStreams) {
     if (stream.dataType == DataType::Mechanical) {
-      this->mechanicalPlot->addGraph();
+      mechanicalPlot->addGraph();
       stream.graphNum = i;
-      this->mechanicalPlot->graph(stream.graphNum)->setName(stream.name);
-      this->mechanicalPlot->graph(stream.graphNum)->setPen(QPen(stream.colour));
+      mechanicalPlot->graph(stream.graphNum)->setName(stream.name);
+      mechanicalPlot->graph(stream.graphNum)->setPen(QPen(stream.colour));
       i++;
     }
   }
   i = 0;
   for (auto& stream : dataStreams) {
     if (stream.dataType == DataType::Electrical) {
-      this->electricalPlot->addGraph();
+      electricalPlot->addGraph();
       stream.graphNum = i;
-      this->electricalPlot->graph(stream.graphNum)->setName(stream.name);
-      this->electricalPlot->graph(stream.graphNum)->setPen(QPen(stream.colour));
+      electricalPlot->graph(stream.graphNum)->setName(stream.name);
+      electricalPlot->graph(stream.graphNum)->setPen(QPen(stream.colour));
       i++;
     }
   }
-  this->mechanicalPlot->xAxis->setTicker(timeTicker);
-  this->mechanicalPlot->yAxis->setRange(0, 100);
-  this->electricalPlot->xAxis->setTicker(timeTicker);
-  this->electricalPlot->yAxis->setRange(0, 100);
+  mechanicalPlot->xAxis->setTicker(timeTicker);
+  mechanicalPlot->yAxis->setRange(0, 100);
+  electricalPlot->xAxis->setTicker(timeTicker);
+  electricalPlot->yAxis->setRange(0, 100);
 
-  this->mechanicalPlot->legend->setVisible(true);
-  this->mechanicalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
-  this->electricalPlot->legend->setVisible(true);
-  this->electricalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
+  mechanicalPlot->legend->setVisible(true);
+  mechanicalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
+  electricalPlot->legend->setVisible(true);
+  electricalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
 }
 
 void Plotter::update(std::vector<dataStream>& dataStreams) {
@@ -45,37 +45,37 @@ void Plotter::update(std::vector<dataStream>& dataStreams) {
 
   for (auto& stream : dataStreams) {
     if (stream.dataType == DataType::Mechanical) {
-      this->mechanicalPlot->graph(stream.graphNum)->addData(key, stream.scaledValue);
+      mechanicalPlot->graph(stream.graphNum)->addData(key, stream.scaledValue);
     }
     if (stream.dataType == DataType::Electrical) {
-      this->electricalPlot->graph(stream.graphNum)->addData(key, stream.scaledValue);
+      electricalPlot->graph(stream.graphNum)->addData(key, stream.scaledValue);
     }
   }
 
   // Shift the axis left for the new data and refresh the graph
-  this->mechanicalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
-  this->mechanicalPlot->replot();
-  this->electricalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
-  this->electricalPlot->replot();
+  mechanicalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
+  mechanicalPlot->replot();
+  electricalPlot->xAxis->setRange(key, configData.plotWidth, Qt::AlignRight);
+  electricalPlot->replot();
 }
 
 void Plotter::onPlotToggled(dataStream stream) {
-  if (stream.dataType == DataType::Electrical && this->electricalPlot->graph(stream.graphNum)->visible())
-    this->electricalPlot->graph(stream.graphNum)->setVisible(false);
-  else if (stream.dataType == DataType::Electrical && !this->electricalPlot->graph(stream.graphNum)->visible())
-    this->electricalPlot->graph(stream.graphNum)->setVisible(true);
-  else if (stream.dataType == DataType::Mechanical && this->mechanicalPlot->graph(stream.graphNum)->visible())
-    this->mechanicalPlot->graph(stream.graphNum)->setVisible(false);
-  else if (stream.dataType == DataType::Mechanical && !this->mechanicalPlot->graph(stream.graphNum)->visible())
-    this->mechanicalPlot->graph(stream.graphNum)->setVisible(true);
+  if (stream.dataType == DataType::Electrical && electricalPlot->graph(stream.graphNum)->visible())
+    electricalPlot->graph(stream.graphNum)->setVisible(false);
+  else if (stream.dataType == DataType::Electrical && !electricalPlot->graph(stream.graphNum)->visible())
+    electricalPlot->graph(stream.graphNum)->setVisible(true);
+  else if (stream.dataType == DataType::Mechanical && mechanicalPlot->graph(stream.graphNum)->visible())
+    mechanicalPlot->graph(stream.graphNum)->setVisible(false);
+  else if (stream.dataType == DataType::Mechanical && !mechanicalPlot->graph(stream.graphNum)->visible())
+    mechanicalPlot->graph(stream.graphNum)->setVisible(true);
 }
 
 void Plotter::onAxisToggled(dataStream stream) {
   if (stream.dataType == DataType::Electrical) {
-    this->electricalPlot->yAxis2->setRange(stream.typicalValues[0], stream.typicalValues[1]);
-    this->electricalPlot->yAxis2->setVisible(true);
+    electricalPlot->yAxis2->setRange(stream.typicalValues[0], stream.typicalValues[1]);
+    electricalPlot->yAxis2->setVisible(true);
   } else if (stream.dataType == DataType::Mechanical) {
-    this->mechanicalPlot->yAxis2->setRange(stream.typicalValues[0], stream.typicalValues[1]);
-    this->mechanicalPlot->yAxis2->setVisible(true);
+    mechanicalPlot->yAxis2->setRange(stream.typicalValues[0], stream.typicalValues[1]);
+    mechanicalPlot->yAxis2->setVisible(true);
   }
 }

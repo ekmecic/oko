@@ -10,7 +10,7 @@
 #include <vector>
 
 typedef struct {
-  QString logFilePath;
+  QString logFolderPath;
   QString MACAddress;
   int32_t plotWidth;
 } ConfigData;

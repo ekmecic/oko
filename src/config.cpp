@@ -3,7 +3,7 @@
 std::vector<dataStream> readConfig(ConfigData& ConfigData) {
   auto config = cpptoml::parse_file("../config.toml");
 
-  ConfigData.logFilePath = QString::fromStdString(*config->get_qualified_as<std::string>("application.logFilePath"));
+  ConfigData.logFolderPath = QString::fromStdString(*config->get_qualified_as<std::string>("application.logFolderPath"));
   ConfigData.MACAddress  = QString::fromStdString(*config->get_qualified_as<std::string>("application.MACAddress"));
   ConfigData.plotWidth   = *config->get_qualified_as<int32_t>("application.plotWidth");
 

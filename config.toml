@@ -3,7 +3,7 @@ MACAddress = "00:06:66:82:79:5C"
 plotWidth = 40
 logFolderPath = "./logs/" # There must be a slash after the logFilePath
 
-[[data]]
+[[dataStream]]
 name = "Time since engine start"
 type = "Time"
 colour = "none"
@@ -12,7 +12,7 @@ multiplier = 1
 warningThresholds = [0, 0]
 typicalValues = [0, 0]
 
-[[data]]
+[[dataStream]]
 name = "Commanded engine speed"
 type = "Mechanical"
 colour = "red"
@@ -21,7 +21,7 @@ multiplier = 1000
 warningThresholds = [0, 7250]
 typicalValues = [27000, 33000]
 
-[[data]]
+[[dataStream]]
 name = "Measured engine speed"
 type = "Mechanical"
 colour = "green"
@@ -30,7 +30,7 @@ multiplier = 1000
 warningThresholds = [0, 7250]
 typicalValues = [19800, 20200]
 
-[[data]]
+[[dataStream]]
 name = "Throttle position"
 type = "Mechanical"
 colour = "blue"
@@ -39,7 +39,7 @@ multiplier = 100
 warningThresholds = [0, 100]
 typicalValues = [0, 200]
 
-[[data]]
+[[dataStream]]
 name = "Bus voltage"
 type = "Electrical"
 colour = "red"
@@ -48,7 +48,7 @@ multiplier = 1000
 warningThresholds = [22, 26]
 typicalValues = [45000, 72000]
 
-[[data]]
+[[dataStream]]
 name = "Battery current"
 type = "Electrical"
 colour = "green"
@@ -57,7 +57,7 @@ multiplier = 1
 warningThresholds = [-10, 60]
 typicalValues = [-1, 25]
 
-[[data]]
+[[dataStream]]
 name = "Commanded phase current"
 type = "Electrical"
 colour = "blue"
@@ -66,7 +66,7 @@ multiplier = 1
 warningThresholds = [0, 60]
 typicalValues = [0, 36]
 
-[[data]]
+[[dataStream]]
 name = "Measured phase current"
 type = "Electrical"
 colour = "black"
@@ -75,7 +75,7 @@ multiplier = 1
 warningThresholds = [0, 60]
 typicalValues = [0, 40]
 
-[[data]]
+[[dataStream]]
 name = "Engine state"
 type = "CurrentEngineState"
 colour = "none"

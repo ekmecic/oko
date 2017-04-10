@@ -7,7 +7,7 @@ std::vector<dataStream> readConfig(ConfigData& ConfigData) {
   ConfigData.MACAddress  = QString::fromStdString(*config->get_qualified_as<std::string>("application.MACAddress"));
   ConfigData.plotWidth   = *config->get_qualified_as<int32_t>("application.plotWidth");
 
-  auto                    tarr = config->get_table_array("data");
+  auto                    tarr = config->get_table_array("dataStream");
   std::vector<dataStream> vec;
   for (const auto& table : *tarr) {
     auto            name              = *table->get_as<std::string>("name");

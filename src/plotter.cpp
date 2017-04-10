@@ -72,10 +72,10 @@ void Plotter::onPlotToggled(dataStream stream) {
 
 void Plotter::onAxisToggled(dataStream stream) {
   if (stream.dataType == DataType::Electrical) {
-    this->electricalPlot->yAxis2->setRange(stream.typMin, stream.typMax);
+    this->electricalPlot->yAxis2->setRange(stream.typicalValues[0], stream.typicalValues[1]);
     this->electricalPlot->yAxis2->setVisible(true);
   } else if (stream.dataType == DataType::Mechanical) {
-    this->mechanicalPlot->yAxis2->setRange(stream.typMin, stream.typMax);
+    this->mechanicalPlot->yAxis2->setRange(stream.typicalValues[0], stream.typicalValues[1]);
     this->mechanicalPlot->yAxis2->setVisible(true);
   }
 }

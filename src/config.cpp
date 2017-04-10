@@ -10,15 +10,13 @@ std::vector<dataStream> readConfig(ConfigData& ConfigData) {
   auto                    tarr = config->get_table_array("data");
   std::vector<dataStream> vec;
   for (const auto& table : *tarr) {
-    auto            name       = *table->get_as<std::string>("name");
-    auto            type       = *table->get_as<std::string>("type");
-    auto            colour     = *table->get_as<std::string>("colour");
-    auto            position   = *table->get_as<uint8_t>("position");
-    auto            multiplier = *table->get_as<double>("multiplier");
-    auto            minWarning = *table->get_as<double>("minWarning");
-    auto            maxWarning = *table->get_as<double>("maxWarning");
-    auto            typMin     = *table->get_as<double>("typMin");
-    auto            typMax     = *table->get_as<double>("typMax");
+    auto            name              = *table->get_as<std::string>("name");
+    auto            type              = *table->get_as<std::string>("type");
+    auto            colour            = *table->get_as<std::string>("colour");
+    auto            position          = *table->get_as<uint8_t>("position");
+    auto            multiplier        = *table->get_as<double>("multiplier");
+    auto            warningThresholds = *table->get_qualified_array_of<double>("warningThresholds");
+    auto            typicalValues     = *table->get_qualified_array_of<double>("typicalValues");
     DataType        actualType;
     Qt::GlobalColor actualColour;
 
@@ -57,10 +55,8 @@ std::vector<dataStream> readConfig(ConfigData& ConfigData) {
     // clang-format off
     vec.push_back(dataStream(QString::fromStdString(name),
                              multiplier,
-                             minWarning,
-                             maxWarning,
-                             typMin,
-                             typMax,
+                             warningThresholds,
+                             typicalValues,
                              position,
                              actualType,
                              actualColour));

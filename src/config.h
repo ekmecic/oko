@@ -7,6 +7,7 @@
 #include <QColor>
 #include <exception>
 #include <string>
+#include <vector>
 
 typedef struct {
   QString logFilePath;

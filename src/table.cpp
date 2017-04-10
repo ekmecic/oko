@@ -51,7 +51,7 @@ void Table::update(std::vector<dataStream>& dataStreams) {
   for (auto& stream : dataStreams) {
     if (stream.dataType != DataType::CurrentEngineState && stream.dataType != DataType::Time) {
       this->table->setItem(stream.position, TableColumn::Value, new QTableWidgetItem(QString::number(stream.value)));
-      if ((stream.value > stream.maxWarning || stream.value < stream.minWarning) && stream.dataType != DataType::Time) {
+      if ((stream.value > stream.warningThresholds[1] || stream.value < stream.warningThresholds[0]) && stream.dataType != DataType::Time) {
         this->table->item(stream.position, TableColumn::Value)->setBackground(Qt::yellow);
       }
       if (stream.value < this->table->item(stream.position, TableColumn::Min)->text().toDouble()) {

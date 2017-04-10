@@ -9,10 +9,8 @@ type = "Time"
 colour = "none"
 position = 0
 multiplier = 1
-minWarning = 0
-maxWarning = 0
-typMin = 0
-typMax = 0
+warningThresholds = [0, 0]
+typicalValues = [0, 0]
 
 [[data]]
 name = "Commanded engine speed"
@@ -20,10 +18,8 @@ type = "Mechanical"
 colour = "red"
 position = 1
 multiplier = 1000
-minWarning = 0
-maxWarning = 7250
-typMin = 27000
-typMax = 33000
+warningThresholds = [0, 7250]
+typicalValues = [27000, 33000]
 
 [[data]]
 name = "Measured engine speed"
@@ -31,10 +27,8 @@ type = "Mechanical"
 colour = "green"
 position = 2
 multiplier = 1000
-minWarning = 0
-maxWarning = 7250
-typMin = 19800
-typMax = 20200
+warningThresholds = [0, 7250]
+typicalValues = [19800, 20200]
 
 [[data]]
 name = "Throttle position"
@@ -42,10 +36,8 @@ type = "Mechanical"
 colour = "blue"
 position = 3
 multiplier = 100
-minWarning = 0
-maxWarning = 100
-typMin = 0
-typMax = 200
+warningThresholds = [0, 100]
+typicalValues = [0, 200]
 
 [[data]]
 name = "Bus voltage"
@@ -53,10 +45,8 @@ type = "Electrical"
 colour = "red"
 position = 4
 multiplier = 1000
-minWarning = 22
-maxWarning = 26
-typMin = 45000
-typMax = 72000
+warningThresholds = [22, 26]
+typicalValues = [45000, 72000]
 
 [[data]]
 name = "Battery current"
@@ -64,10 +54,8 @@ type = "Electrical"
 colour = "green"
 position = 5
 multiplier = 1
-minWarning = -10
-maxWarning = 60
-typMin = -1
-typMax = 25
+warningThresholds = [-10, 60]
+typicalValues = [-1, 25]
 
 [[data]]
 name = "Commanded phase current"
@@ -75,10 +63,8 @@ type = "Electrical"
 colour = "blue"
 position = 6
 multiplier = 1
-minWarning = 0
-maxWarning = 60
-typMin = 0
-typMax = 36
+warningThresholds = [0, 60]
+typicalValues = [0, 36]
 
 [[data]]
 name = "Measured phase current"
@@ -86,10 +72,8 @@ type = "Electrical"
 colour = "black"
 position = 7
 multiplier = 1
-minWarning = 0
-maxWarning = 60
-typMin = 0
-typMax = 40
+warningThresholds = [0, 60]
+typicalValues = [0, 40]
 
 [[data]]
 name = "Engine state"
@@ -97,7 +81,5 @@ type = "CurrentEngineState"
 colour = "none"
 position = 8
 multiplier = 1
-minWarning = 0
-maxWarning = 0
-typMin = 0
-typMax = 0
+warningThresholds = [0, 0]
+typicalValues = [0, 0]

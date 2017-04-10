@@ -4,6 +4,7 @@
 #include <QColor>
 #include <cstdint>
 #include <string>
+#include <vector>
 
 typedef enum {
   Time,
@@ -14,38 +15,32 @@ typedef enum {
 
 class dataStream {
 public:
-  dataStream(QString         _name,
-             double          _multiplier,
-             double          _minWarning,
-             double          _maxWarning,
-             double          _typMin,
-             double          _typMax,
-             double          _position,
-             DataType        _dataType,
-             Qt::GlobalColor _colour)
+  dataStream(QString             _name,
+             double              _multiplier,
+             std::vector<double> _warningThresholds,
+             std::vector<double> _typicalValues,
+             double              _position,
+             DataType            _dataType,
+             Qt::GlobalColor     _colour)
       // clang-format off
       : name(_name),
         multiplier(_multiplier),
-        minWarning(_minWarning),
-        maxWarning(_maxWarning),
-        typMin(_typMin),
-        typMax(_typMax),
+        warningThresholds(_warningThresholds),
+        typicalValues(_typicalValues),
         position(_position),
         dataType(_dataType),
         colour(_colour) {}
   // clang-format on
 
-  QString         name;
-  double          value;
-  double          scaledValue;
-  double          multiplier;
-  double          minWarning;
-  double          maxWarning;
-  double          typMin;
-  double          typMax;
-  double          scaleFactor;
-  uint8_t         position;
-  DataType        dataType;
-  Qt::GlobalColor colour;
-  uint8_t         graphNum;
+  QString             name;
+  double              value;
+  double              scaledValue;
+  double              multiplier;
+  std::vector<double> warningThresholds;
+  std::vector<double> typicalValues;
+  double              scaleFactor;
+  uint8_t             position;
+  DataType            dataType;
+  Qt::GlobalColor     colour;
+  uint8_t             graphNum;
 };

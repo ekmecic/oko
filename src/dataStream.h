@@ -2,7 +2,6 @@
 #pragma once
 
 #include <QColor>
-#include <cstdint>
 #include <string>
 #include <vector>
 

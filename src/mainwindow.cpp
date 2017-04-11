@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   connectionHandler = new ConnectionHandler(configData);
   connectionHandler->setup(*socket);
 
+  parser = new SerialParser();
+
   plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot, configData);
   plots->setup(dataStreams);
 
@@ -33,7 +35,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::onNewDataAvailable() {
-  parseSerial(socket, dataStreams);
+  parser->update(socket, dataStreams);
   for (auto& stream : dataStreams) {
     stream.scaledValue =
         (stream.value - stream.typicalValues[0]) * 100 / (stream.typicalValues[1] - stream.typicalValues[0]);

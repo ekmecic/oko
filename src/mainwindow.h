@@ -40,5 +40,6 @@ private:
   Table*             table;
   Logger*            logs;
   ConnectionHandler* connectionHandler;
+  SerialParser*      parser;
   Ui::MainWindow*    ui;
 };

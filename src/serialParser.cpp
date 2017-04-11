@@ -1,6 +1,6 @@
 #include "src/serialParser.h"
 
-void parseSerial(QBluetoothSocket* socket, std::vector<dataStream>& vec) {
+void SerialParser::update(QBluetoothSocket* socket, std::vector<dataStream>& vec) {
   QByteArray line;
   while (socket->canReadLine()) {
     line = socket->readLine().trimmed();

@@ -7,6 +7,7 @@
 #include "src/dataStream.h"
 #include "src/engineState.h"
 #include "src/logging.h"
+#include "src/logger.h"
 #include "src/plotter.h"
 #include "src/serialParser.h"
 #include "src/table.h"
@@ -40,6 +41,7 @@ public slots:
 private:
   Plotter*           plots;
   Table*             table;
+  Logger*            logs;
   ConnectionHandler* connectionHandler;
   Ui::MainWindow*    ui;
 };

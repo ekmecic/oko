@@ -21,7 +21,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   table = new Table(ui->dataTable, configData);
   table->setup(dataStreams);
 
-  setupLogging(dataStreams, configData.logFolderPath);
+  logs = new Logger(configData);
+  logs->setup(dataStreams);
+
   connect(table, &Table::plotToggled, plots, &Plotter::onPlotToggled);
   connect(table, &Table::axisToggled, plots, &Plotter::onAxisToggled);
 }
@@ -38,5 +40,5 @@ void MainWindow::onNewDataAvailable() {
   }
   plots->update(dataStreams);
   table->update(dataStreams);
-  logData(dataStreams);
+  logs->update(dataStreams);
 }

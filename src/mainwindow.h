@@ -6,14 +6,11 @@
 #include "src/connectionHandler.h"
 #include "src/dataStream.h"
 #include "src/engineState.h"
-#include "src/logging.h"
 #include "src/logger.h"
 #include "src/plotter.h"
 #include "src/serialParser.h"
 #include "src/table.h"
 
-#include <QBluetoothServiceInfo>
-#include <QBluetoothSocket>
 #include <QMainWindow>
 #include <QTableWidget>
 

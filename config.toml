@@ -1,85 +1,85 @@
 [application]
-MACAddress = "00:06:66:82:79:5C"
-plotWidth = 40
-logFolderPath = "./logs/" # There must be a slash after the logFilePath
+MACAddress        = "00:06:66:82:79:5C"
+plotWidth         = 40
+logFolderPath     = "./logs/" # There must be a slash after the logFilePath
 
 [[dataStream]]
-name = "Time since engine start"
-type = "Time"
-colour = "none"
-position = 0
-multiplier = 1
+name              = "Time since engine start"
+type              = "Time"
+colour            = "none"
+position          = 0
+multiplier        = 1
 warningThresholds = [0, 0]
-typicalValues = [0, 0]
+typicalValues     = [0, 0]
 
 [[dataStream]]
-name = "Commanded engine speed"
-type = "Mechanical"
-colour = "red"
-position = 1
-multiplier = 1000
+name              = "Commanded engine speed"
+type              = "Mechanical"
+colour            = "red"
+position          = 1
+multiplier        = 1000
 warningThresholds = [0, 7250]
-typicalValues = [27000, 33000]
+typicalValues     = [27000, 33000]
 
 [[dataStream]]
-name = "Measured engine speed"
-type = "Mechanical"
-colour = "green"
-position = 2
-multiplier = 1000
+name              = "Measured engine speed"
+type              = "Mechanical"
+colour            = "green"
+position          = 2
+multiplier        = 1000
 warningThresholds = [0, 7250]
-typicalValues = [19800, 20200]
+typicalValues     = [19800, 20200]
 
 [[dataStream]]
-name = "Throttle position"
-type = "Mechanical"
-colour = "blue"
-position = 3
-multiplier = 100
+name              = "Throttle position"
+type              = "Mechanical"
+colour            = "blue"
+position          = 3
+multiplier        = 100
 warningThresholds = [0, 100]
-typicalValues = [0, 200]
+typicalValues     = [0, 200]
 
 [[dataStream]]
-name = "Bus voltage"
-type = "Electrical"
-colour = "red"
-position = 4
-multiplier = 1000
+name              = "Bus voltage"
+type              = "Electrical"
+colour            = "red"
+position          = 4
+multiplier        = 1000
 warningThresholds = [22, 26]
-typicalValues = [45000, 72000]
+typicalValues     = [45000, 72000]
 
 [[dataStream]]
-name = "Battery current"
-type = "Electrical"
-colour = "green"
-position = 5
-multiplier = 1
+name              = "Battery current"
+type              = "Electrical"
+colour            = "green"
+position          = 5
+multiplier        = 1
 warningThresholds = [-10, 60]
-typicalValues = [-1, 25]
+typicalValues     = [-1, 25]
 
 [[dataStream]]
-name = "Commanded phase current"
-type = "Electrical"
-colour = "blue"
-position = 6
-multiplier = 1
+name              = "Commanded phase current"
+type              = "Electrical"
+colour            = "blue"
+position          = 6
+multiplier        = 1
 warningThresholds = [0, 60]
-typicalValues = [0, 36]
+typicalValues     = [0, 36]
 
 [[dataStream]]
-name = "Measured phase current"
-type = "Electrical"
-colour = "black"
-position = 7
-multiplier = 1
+name              = "Measured phase current"
+type              = "Electrical"
+colour            = "black"
+position          = 7
+multiplier        = 1
 warningThresholds = [0, 60]
-typicalValues = [0, 40]
+typicalValues     = [0, 40]
 
 [[dataStream]]
-name = "Engine state"
-type = "CurrentEngineState"
-colour = "none"
-position = 8
-multiplier = 1
+name              = "Engine state"
+type              = "CurrentEngineState"
+colour            = "none"
+position          = 8
+multiplier        = 1
 warningThresholds = [0, 0]
-typicalValues = [0, 0]
+typicalValues     = [0, 0]

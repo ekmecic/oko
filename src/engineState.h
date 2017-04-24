@@ -1,4 +1,5 @@
+// -*-c++-*-
 #pragma once
 #include <QString>
 
-QString parseEngineState(double value);
+QString parseEngineState(const double value);

@@ -25,13 +25,13 @@ typedef enum {
 class Table : public QObject {
   Q_OBJECT
 public:
-  Table(QTableWidget* _table, ConfigData _configData);
+  Table(QTableWidget* _table, const ConfigData _configData);
   void setup(std::vector<dataStream>& dataStreams);
   void update(std::vector<dataStream>& dataStreams);
 
 signals:
-  void plotToggled(dataStream stream);
-  void axisToggled(dataStream stream);
+  void plotToggled(const dataStream stream);
+  void axisToggled(const dataStream stream);
 
 private:
   QTableWidget* table;

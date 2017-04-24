@@ -11,7 +11,7 @@
 class ConnectionHandler : public QObject {
   Q_OBJECT
 public:
-  ConnectionHandler(ConfigData _configData);
+  ConnectionHandler(const ConfigData _configData);
   void setup(QBluetoothSocket& socket);
 
 private:

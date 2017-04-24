@@ -9,7 +9,7 @@
 class Logger : public QObject {
   Q_OBJECT
 public:
-  Logger(ConfigData _configData);
+  Logger(const ConfigData _configData);
   void setup(std::vector<dataStream>& dataStreams);
   void update(std::vector<dataStream>& dataStreams);
 

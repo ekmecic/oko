@@ -1,6 +1,6 @@
 #include "src/table.h"
 
-Table::Table(QTableWidget* _table, ConfigData _configData) {
+Table::Table(QTableWidget* _table, const ConfigData _configData) {
   table      = _table;
   configData = _configData;
 }

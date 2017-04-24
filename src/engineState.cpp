@@ -1,6 +1,6 @@
 #include "src/engineState.h"
 
-QString parseEngineState(double value) {
+QString parseEngineState(const double value) {
   switch ((int)value) {
   case 0: {
     return "Init";

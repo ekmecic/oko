@@ -1,6 +1,6 @@
 #include "src/plotter.h"
 
-Plotter::Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, ConfigData _configData) {
+Plotter::Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, const ConfigData _configData) {
   mechanicalPlot = _mechanicalPlot;
   electricalPlot = _electricalPlot;
   configData     = _configData;
@@ -59,7 +59,7 @@ void Plotter::update(std::vector<dataStream>& dataStreams) {
   electricalPlot->replot();
 }
 
-void Plotter::onPlotToggled(dataStream stream) {
+void Plotter::onPlotToggled(const dataStream stream) {
   if (stream.dataType == DataType::Electrical && electricalPlot->graph(stream.graphNum)->visible())
     electricalPlot->graph(stream.graphNum)->setVisible(false);
   else if (stream.dataType == DataType::Electrical && !electricalPlot->graph(stream.graphNum)->visible())
@@ -70,7 +70,7 @@ void Plotter::onPlotToggled(dataStream stream) {
     mechanicalPlot->graph(stream.graphNum)->setVisible(true);
 }
 
-void Plotter::onAxisToggled(dataStream stream) {
+void Plotter::onAxisToggled(const dataStream stream) {
   if (stream.dataType == DataType::Electrical) {
     electricalPlot->yAxis2->setRange(stream.typicalValues[0], stream.typicalValues[1]);
     electricalPlot->yAxis2->setVisible(true);

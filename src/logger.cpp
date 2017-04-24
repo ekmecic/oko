@@ -1,6 +1,6 @@
 #include "src/logger.h"
 
-Logger::Logger(ConfigData _configData) {
+Logger::Logger(const ConfigData _configData) {
   configData = _configData;
 }
 

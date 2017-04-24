@@ -8,13 +8,13 @@
 class Plotter : public QObject {
   Q_OBJECT
 public:
-  Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, ConfigData configData);
+  Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, const ConfigData configData);
   void setup(std::vector<dataStream>& dataStreams);
   void update(std::vector<dataStream>& dataStreams);
 
 public slots:
-  void onPlotToggled(dataStream stream);
-  void onAxisToggled(dataStream stream);
+  void onPlotToggled(const dataStream stream);
+  void onAxisToggled(const dataStream stream);
 
 private:
   QCustomPlot* mechanicalPlot;

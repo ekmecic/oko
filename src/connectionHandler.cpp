@@ -1,6 +1,6 @@
 #include "src/connectionHandler.h"
 
-ConnectionHandler::ConnectionHandler(ConfigData _configData) {
+ConnectionHandler::ConnectionHandler(const ConfigData _configData) {
   configData = _configData;
 }
 

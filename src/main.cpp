@@ -1,9 +1,9 @@
-#include "mainwindow.h"
+#include "src/oko.h"
 #include <QApplication>
 
 int main(int argc, char* argv[]) {
   QApplication a(argc, argv);
-  MainWindow   w;
+  oko   w;
   w.show();
 
   return a.exec();

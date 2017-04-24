@@ -14,16 +14,12 @@
 #include <QMainWindow>
 #include <QTableWidget>
 
-namespace Ui {
-class MainWindow;
-}
-
-class MainWindow : public QMainWindow {
+class oko : public QMainWindow {
   Q_OBJECT
 
 public:
-  explicit MainWindow(QWidget* parent = 0);
-  ~MainWindow();
+  explicit oko(QWidget* parent = 0);
+  ~oko();
 
   std::vector<dataStream> dataStreams;
   QBluetoothSocket*       socket;

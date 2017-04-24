@@ -1,8 +1,8 @@
-#include "src/mainwindow.h"
+#include "src/oko.h"
 
 INITIALIZE_EASYLOGGINGPP
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
+oko::oko(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
   ui->dataTable->setColumnWidth(0, 180);
@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   dataStreams = readConfig(configData);
   socket      = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
 
-  connect(socket, &QBluetoothSocket::readyRead, this, &MainWindow::onNewDataAvailable);
+  connect(socket, &QBluetoothSocket::readyRead, this, &oko::onNewDataAvailable);
   connectionHandler = new ConnectionHandler(configData);
   connectionHandler->setup(*socket);
 
@@ -30,11 +30,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   connect(table, &Table::axisToggled, plots, &Plotter::onAxisToggled);
 }
 
-MainWindow::~MainWindow() {
+oko::~oko() {
   delete ui;
 }
 
-void MainWindow::onNewDataAvailable() {
+void oko::onNewDataAvailable() {
   parser->update(socket, dataStreams);
   for (auto& stream : dataStreams) {
     stream.scaledValue =

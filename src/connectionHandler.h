@@ -5,8 +5,6 @@
 
 #include <QBluetoothServiceInfo>
 #include <QBluetoothSocket>
-#include <QTime>
-#include <QTimer>
 
 class ConnectionHandler : public QObject {
   Q_OBJECT
@@ -17,5 +15,4 @@ public:
 private:
   QBluetoothSocket* socket;
   ConfigData        configData;
-  QTime             timestamp;
 };

@@ -38,7 +38,7 @@ void MainWindow::onNewDataAvailable() {
   parser->update(socket, dataStreams);
   for (auto& stream : dataStreams) {
     stream.scaledValue =
-        (stream.value - stream.typicalValues[0]) * 100 / (stream.typicalValues[1] - stream.typicalValues[0]);
+      (stream.value - stream.typicalValues[0]) * 100 / (stream.typicalValues[1] - stream.typicalValues[0]);
   }
   plots->update(dataStreams);
   table->update(dataStreams);

@@ -37,7 +37,6 @@ public:
   double              multiplier;
   std::vector<double> warningThresholds;
   std::vector<double> typicalValues;
-  double              scaleFactor;
   uint8_t             position;
   DataType            dataType;
   Qt::GlobalColor     colour;

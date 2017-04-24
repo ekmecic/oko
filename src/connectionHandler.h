@@ -13,7 +13,6 @@ class ConnectionHandler : public QObject {
 public:
   ConnectionHandler(ConfigData _configData);
   void setup(QBluetoothSocket& socket);
-  void updateTimestamp();
 
 private:
   QBluetoothSocket* socket;

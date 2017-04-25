@@ -1,6 +1,6 @@
 // -*-c++-*-
 #pragma once
-#include "lib/qcustomplot/qcustomplot.h"
+#include "qcustomplot.h"
 #include "src/config.h"
 #include "src/dataStream.h"
 #include <QFont>

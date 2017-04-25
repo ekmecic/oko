@@ -1,7 +1,7 @@
 // -*-c++-*-
 #pragma once
 
-#include "lib/easylogging++/easylogging++.h"
+#include "easylogging++.h"
 #include "src/config.h"
 #include "src/dataStream.h"
 #include <QObject>

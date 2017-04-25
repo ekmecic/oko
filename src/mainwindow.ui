@@ -541,7 +541,7 @@
   <customwidget>
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
-   <header>../lib/qcustomplot/qcustomplot.h</header>
+   <header>../include/qcustomplot/qcustomplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

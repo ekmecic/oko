@@ -1,7 +1,7 @@
 // -*-c++-*-
 #pragma once
 
-#include "lib/cpptoml/cpptoml.h"
+#include "cpptoml.h"
 #include "src/dataStream.h"
 
 #include <QColor>

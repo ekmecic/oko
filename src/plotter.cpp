@@ -7,8 +7,9 @@ Plotter::Plotter(QCustomPlot* _mechanicalPlot, QCustomPlot* _electricalPlot, con
 }
 
 void Plotter::setup(std::vector<dataStream>& dataStreams) {
-  QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
-  uint8_t                           i = 0;
+  uint8_t i = 0;
+  // Assign all of the mechanical datastreams to the mechanical plot,
+  // set their name and colour, and remember their graph number
   for (auto& stream : dataStreams) {
     if (stream.dataType == DataType::Mechanical) {
       mechanicalPlot->addGraph();
@@ -19,6 +20,7 @@ void Plotter::setup(std::vector<dataStream>& dataStreams) {
     }
   }
   i = 0;
+  // Do the same, but for the electrical streams
   for (auto& stream : dataStreams) {
     if (stream.dataType == DataType::Electrical) {
       electricalPlot->addGraph();
@@ -28,11 +30,14 @@ void Plotter::setup(std::vector<dataStream>& dataStreams) {
       i++;
     }
   }
+  // Set the xAxis to time and the yAxis to 0-100
+  QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
   mechanicalPlot->xAxis->setTicker(timeTicker);
   mechanicalPlot->yAxis->setRange(0, 100);
   electricalPlot->xAxis->setTicker(timeTicker);
   electricalPlot->yAxis->setRange(0, 100);
 
+  // Enable the legends and put them at the top left
   mechanicalPlot->legend->setVisible(true);
   mechanicalPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignLeft | Qt::AlignTop);
   electricalPlot->legend->setVisible(true);
@@ -59,7 +64,9 @@ void Plotter::update(std::vector<dataStream>& dataStreams) {
   electricalPlot->replot();
 }
 
-void Plotter::onPlotToggled(const dataStream stream) {
+void Plotter::onGraphToggled(const dataStream stream) {
+  // The logic here is overcomplicated for what it's actually doing
+  // which is only checking what type a stream is and if it's visible or not
   if (stream.dataType == DataType::Electrical && electricalPlot->graph(stream.graphNum)->visible())
     electricalPlot->graph(stream.graphNum)->setVisible(false);
   else if (stream.dataType == DataType::Electrical && !electricalPlot->graph(stream.graphNum)->visible())

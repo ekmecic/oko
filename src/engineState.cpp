@@ -1,7 +1,8 @@
 #include "src/engineState.h"
 
 QString parseEngineState(const double value) {
-  switch ((int)value) {
+  // Sample values
+  switch (static_cast<int>(value)) {
   case 0: {
     return "Init";
     break;

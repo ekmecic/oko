@@ -1,15 +1,20 @@
 #include "src/config.h"
 
 std::vector<dataStream> readConfig(ConfigData& ConfigData) {
+  // Open up config.toml, read all of the "basic" values, and populate ConfigData with them.
   auto config = cpptoml::parse_file("../config.toml");
+  ConfigData.logFolderPath =
 
-  ConfigData.logFolderPath = QString::fromStdString(*config->get_qualified_as<std::string>("application.logFolderPath"));
-  ConfigData.MACAddress  = QString::fromStdString(*config->get_qualified_as<std::string>("application.MACAddress"));
-  ConfigData.plotWidth   = *config->get_qualified_as<int32_t>("application.plotWidth");
+    QString::fromStdString(*config->get_qualified_as<std::string>("application.logFolderPath"));
+  ConfigData.MACAddress = QString::fromStdString(*config->get_qualified_as<std::string>("application.MACAddress"));
+  ConfigData.plotWidth  = *config->get_qualified_as<int32_t>("application.plotWidth");
 
+  // The rest of this function processes all of the dataStream tables in config.toml
+  // Open up the table array
   auto                    tarr = config->get_table_array("dataStream");
   std::vector<dataStream> vec;
   for (const auto& table : *tarr) {
+    // Read all of the values into temporary variables
     auto            name              = *table->get_as<std::string>("name");
     auto            type              = *table->get_as<std::string>("type");
     auto            colour            = *table->get_as<std::string>("colour");
@@ -20,6 +25,7 @@ std::vector<dataStream> readConfig(ConfigData& ConfigData) {
     DataType        actualType;
     Qt::GlobalColor actualColour;
 
+    // Match the DataType and color to the correct values
     // Boy, sure wish I had a match statement right about now...
     if (type == "Time") {
       actualType = DataType::Time;
@@ -32,7 +38,6 @@ std::vector<dataStream> readConfig(ConfigData& ConfigData) {
     } else {
       throw std::logic_error("Invalid data.type specified in config.toml.");
     }
-
     if (colour == "red") {
       actualColour = Qt::red;
     } else if (colour == "green") {
@@ -46,13 +51,13 @@ std::vector<dataStream> readConfig(ConfigData& ConfigData) {
     } else if (colour == "magenta") {
       actualColour = Qt::magenta;
     } else if (colour == "none") {
-      // Not going to be displayed anyway, so make it the worst color there is
-      actualColour = Qt::yellow;
+      actualColour = Qt::yellow; // Not going to be displayed anyway, who cares if it's yellow
     } else {
       throw std::logic_error("Invalid data.type specified in config.toml.");
     }
 
     // clang-format off
+    // Create a dataStream with the information we've read and add it to the vector
     vec.push_back(dataStream(QString::fromStdString(name),
                              multiplier,
                              warningThresholds,

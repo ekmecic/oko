@@ -27,3 +27,9 @@ target_link_libraries(${TARGET} ${QT5_LIBRARIES})
 target_link_libraries(${TARGET} cpptoml)
 target_link_libraries(${TARGET} easylogging++)
 target_link_libraries(${TARGET} qcustomplot)
+
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+  add_custom_target(doc COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/docs")
+endif()

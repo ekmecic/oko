@@ -5,3 +5,4 @@ compile_commands.json
 notes.org
 *.pro.user
 *.pro.user.*
+docs/html/

@@ -7,6 +7,7 @@ Logger::Logger(const ConfigData _configData) {
 void Logger::setup(std::vector<dataStream>& dataStreams) {
   el::Configurations loggingConf;
   loggingConf.setToDefault();
+  // Set the name of the logfile to "oko-FineDate"
   loggingConf.set(el::Level::Global,
                   el::ConfigurationType::Filename,
                   configData.logFolderPath.toStdString().append("oko-%datetime{%Y-%M-%d-T%H:%m:%s}.log"));
@@ -17,22 +18,24 @@ void Logger::setup(std::vector<dataStream>& dataStreams) {
 
   el::Loggers::reconfigureAllLoggers(loggingConf);
   LOG(INFO) << "FORMAT:";
-  QString fmt;
+  QString line;
+  // Construct the header of the file with the names of each column
   for (auto& stream : dataStreams) {
-    fmt.append(stream.name);
-    fmt.append(",");
+    line.append(stream.name);
+    line.append(",");
   }
-  fmt.chop(1); // Remove the trailing comma
-  LOG(INFO) << fmt.toStdString();
+  line.chop(1); // Remove the trailing comma
+  LOG(INFO) << line.toStdString();
 }
 
 void Logger::update(std::vector<dataStream>& dataStreams) {
-  QString data;
+  QString line;
+  // Construct a line with all of the data seperated by commas
   for (auto& stream : dataStreams) {
     auto str = QString::number(stream.value);
-    data.append(str);
-    data.append(",");
+    line.append(str);
+    line.append(",");
   }
-  data.chop(1);
-  LOG(INFO) << data.toStdString();
+  line.chop(1); // Remove the trailing comma
+  LOG(INFO) << line.toStdString();
 }

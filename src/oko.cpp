@@ -12,21 +12,22 @@ oko::oko(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   socket      = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
 
   connect(socket, &QBluetoothSocket::readyRead, this, &oko::onNewDataAvailable);
-  connectionHandler = new ConnectionHandler(configData);
-  connectionHandler->setup(*socket);
+  connectionHandler = new ConnectionHandler(socket, configData);
+  connectionHandler->setup();
 
   parser = new SerialParser();
 
   plots = new Plotter(ui->mechanicalPlot, ui->electricalPlot, configData);
   plots->setup(dataStreams);
 
-  table = new Table(ui->dataTable, configData);
+  table = new Table(ui->dataTable);
   table->setup(dataStreams);
 
   logs = new Logger(configData);
   logs->setup(dataStreams);
 
-  connect(table, &Table::plotToggled, plots, &Plotter::onPlotToggled);
+  // Toggle the axes and lines when the user clicks the checkboxes/radio buttons
+  connect(table, &Table::graphToggled, plots, &Plotter::onGraphToggled);
   connect(table, &Table::axisToggled, plots, &Plotter::onAxisToggled);
 }
 
@@ -35,11 +36,14 @@ oko::~oko() {
 }
 
 void oko::onNewDataAvailable() {
+  // Parse the raw ASCII and update the dataStreams with the new data
   parser->update(socket, dataStreams);
+  // Scale values to be plotted, i.e. map the values from 0-100
   for (auto& stream : dataStreams) {
     stream.scaledValue =
       (stream.value - stream.typicalValues[0]) * 100 / (stream.typicalValues[1] - stream.typicalValues[0]);
   }
+  // Update the plots, table, and logs
   plots->update(dataStreams);
   table->update(dataStreams);
   logs->update(dataStreams);

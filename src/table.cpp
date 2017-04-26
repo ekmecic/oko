@@ -13,8 +13,8 @@ void Table::setup(std::vector<dataStream>& dataStreams) {
   for (auto& stream : dataStreams) {
     // For all of the mechanical
     if (stream.dataType != DataType::CurrentEngineState && stream.dataType != DataType::Time) {
-      // Set the "Field" cell to the stream name and then set all numerical cells to 0
-      table->setItem(stream.position, TableColumn::Field, new QTableWidgetItem(stream.name));
+      // Set the "Name" cell to the stream name and then set all numerical cells to 0
+      table->setItem(stream.position, TableColumn::Name, new QTableWidgetItem(stream.name));
       table->setItem(stream.position, TableColumn::Value, new QTableWidgetItem(QString::number(0)));
       table->setItem(stream.position, TableColumn::Min, new QTableWidgetItem(QString::number(0)));
       table->setItem(stream.position, TableColumn::Max, new QTableWidgetItem(QString::number(0)));
@@ -28,7 +28,7 @@ void Table::setup(std::vector<dataStream>& dataStreams) {
       plotHorizontalLayout->setAlignment(Qt::AlignCenter);
       plotHorizontalLayout->addWidget(plotCheckBox);
       plotLayoutWidget->setLayout(plotHorizontalLayout);
-      table->setCellWidget(stream.position, TableColumn::Plot, plotLayoutWidget);
+      table->setCellWidget(stream.position, TableColumn::Plotted, plotLayoutWidget);
       plotCheckBox->setChecked(true);
 
       QRadioButton* axisRadioButton      = new QRadioButton();
@@ -37,7 +37,7 @@ void Table::setup(std::vector<dataStream>& dataStreams) {
       axisHorizontalLayout->setAlignment(Qt::AlignCenter);
       axisHorizontalLayout->addWidget(axisRadioButton);
       axisLayoutWidget->setLayout(axisHorizontalLayout);
-      table->setCellWidget(stream.position, TableColumn::Axis, axisLayoutWidget);
+      table->setCellWidget(stream.position, TableColumn::AxisVisible, axisLayoutWidget);
 
       // Assign the radio button to the correct exclusion group
       if (stream.dataType == DataType::Mechanical) {
@@ -50,9 +50,9 @@ void Table::setup(std::vector<dataStream>& dataStreams) {
       connect(plotCheckBox, &QCheckBox::stateChanged, this, [&] { emit graphToggled(stream); });
       connect(axisRadioButton, &QCheckBox::pressed, this, [&] { emit axisToggled(stream); });
     }
-    // Just set the "Field" cell for the Time and EngineState dataStreams
+    // Just set the "Name" cell for the Time and EngineState dataStreams
     else {
-      table->setItem(stream.position, TableColumn::Field, new QTableWidgetItem(stream.name));
+      table->setItem(stream.position, TableColumn::Name, new QTableWidgetItem(stream.name));
     }
   }
 }

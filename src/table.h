@@ -18,12 +18,12 @@
     This stops us from referring to columns in the UI with magic numbers,
     and instead lets us refer to them by their column labels. */
 typedef enum {
-  Field,
+  Name,
   Value,
   Min,
   Max,
-  Plot,
-  Axis,
+  Plotted,
+  AxisVisible,
 } TableColumn;
 
 /** @brief Initializes the Table in the UI and updates it with new values.
@@ -40,7 +40,7 @@ public:
   /** @brief Initializes the Table with the dataStreams
       @param dataStreams All of the dataStreams.
 
-      Sets the "Field" column of all dataStreams, initializes all of the numerical columns to 0 for Mechanical and
+      Sets the "Name" column of all dataStreams, initializes all of the numerical columns to 0 for Mechanical and
       Electrical dataStreams, and sets up the checkboxes/radio buttons for graph/axis toggling. */
   void setup(std::vector<dataStream>& dataStreams);
 
@@ -55,13 +55,13 @@ public:
   void update(std::vector<dataStream>& dataStreams);
 
 signals:
-  /** @brief Emitted when the "Plot" checkbox is toggled
+  /** @brief Emitted when the "Plotted" checkbox is toggled
       @param stream The dataStream that was toggled
 
       Connects to the onGraphToggled slot which toggles the visibility of the toggled dataStream. */
   void graphToggled(const dataStream stream);
 
-  /** @brief Emitted when the "Axis" radio button is toggled
+  /** @brief Emitted when the "Axis enabled" radio button is toggled
       @param stream The dataStream that was toggled
 
       Connects to the onGraphToggled slot which toggles the visibility of the toggled dataStream's "real" axis. */

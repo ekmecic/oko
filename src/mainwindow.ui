@@ -305,7 +305,7 @@
           <row/>
           <column>
            <property name="text">
-            <string>Field</string>
+            <string>Name</string>
            </property>
            <property name="font">
             <font>
@@ -349,12 +349,12 @@
           </column>
           <column>
            <property name="text">
-            <string>Plot</string>
+            <string>Plotted</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Axis</string>
+            <string>Axis visible</string>
            </property>
           </column>
           <item row="0" column="0">

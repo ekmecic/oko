@@ -4,7 +4,6 @@
 #include "easylogging++.h"
 #include "src/config.h"
 #include "src/dataStream.h"
-
 #include <QObject>
 
 /** @brief Logs all Bluetooth module data to a text file.
@@ -13,7 +12,7 @@
 
     Each time new data is received from the Bluetooth module it is logged to a text file using this object.
     Data is outputted in CSV format and each line is dated down to the millisecond.
-    Logger is indiscriminate in what it logs, it logs all the value field of every dataStream passed to it. */
+    Logger is indiscriminate in what it logs, it logs all the value fields of every dataStream passed to it. */
 class Logger : public QObject {
   Q_OBJECT
 public:

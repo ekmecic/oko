@@ -1,7 +1,7 @@
 // -*-c++-*-
 #pragma once
 
-#include "build/ui_mainwindow.h"
+#include "ui_mainwindow.h"
 #include "src/config.h"
 #include "src/connectionHandler.h"
 #include "src/dataStream.h"
